@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-background-dark text-white font-sans overflow-x-hidden;
+    background-image: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.15) 0%, rgba(10, 10, 18, 0) 50%);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold;
+  }
+}
+
+@layer components {
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24;
+  }
+  
+  .section-title {
+    @apply text-3xl sm:text-4xl font-bold mb-12 flex items-center;
+  }
+  
+  .section-title-line {
+    @apply w-8 h-px bg-primary mr-3;
+  }
+  
+  .glass-panel {
+    @apply bg-background-glass backdrop-blur-md border border-white/10 rounded-xl shadow-lg;
+  }
+  
+  .btn-primary {
+    @apply bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-full font-medium transition-all duration-300 inline-flex items-center justify-center;
+  }
+  
+  .btn-outline {
+    @apply border border-accent text-accent hover:bg-accent hover:text-background-dark px-6 py-2.5 rounded-full font-medium transition-all duration-300 inline-flex items-center justify-center;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-[0_0_15px_rgba(138,43,226,0.3)] hover:-translate-y-1;
+  }
+  
+  .network-bg {
+    @apply after:absolute after:inset-0 after:bg-grid-pattern after:opacity-10 after:z-[-1];
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-background-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 rounded-full hover:bg-primary/50 transition-colors;
+}
