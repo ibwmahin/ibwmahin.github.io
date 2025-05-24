@@ -34,10 +34,10 @@ const projects = [
       "Automated tools for scanning common web vulnerabilities and security flaws.",
     image:
       "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    tags: ["Python", "Security", "OWASP"],
+    tags: ["React", "Javascript", "OWASP"],
     category: "Cybersecurity",
     demoLink: "https://ibwmahin.github.io/cyber-scan-guardian-shield/",
-    githubLink: "#",
+    githubLink: "https://github.com/ibwmahin/cyber-scan-guardian-shield",
   },
   {
     id: 4,
