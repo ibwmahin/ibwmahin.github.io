@@ -36,7 +36,7 @@ const projects = [
       "https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     tags: ["Python", "Security", "OWASP"],
     category: "Cybersecurity",
-    demoLink: "#",
+    demoLink: "https://ibwmahin.github.io/cyber-scan-guardian-shield/",
     githubLink: "#",
   },
   {
