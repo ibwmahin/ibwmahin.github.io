@@ -38,7 +38,7 @@ const Contact: React.FC = () => {
         Have a project in mind or want to collaborate? Feel free to reach out!
       </p>
       {/* lg:grid-cols-2 */}
-      <div className="grid grid-cols-1  gap-12">
+      <div className="grid grid-cols-1 px-5 gap-12">
         {/* Contact form */}
         <motion.div
           className="glass-panel p-8 rounded-xl"
