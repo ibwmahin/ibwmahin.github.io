@@ -1,11 +1,17 @@
-import React from 'react';
-import { Github as GitHub, Twitter, Linkedin, Mail, ArrowUp } from 'lucide-react';
+import React from "react";
+import {
+  Github as GitHub,
+  Twitter,
+  Linkedin,
+  Mail,
+  ArrowUp,
+} from "lucide-react";
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
 
@@ -17,7 +23,7 @@ const Footer: React.FC = () => {
           <div className="text-gray-400 text-sm mb-4 md:mb-0">
             © {new Date().getFullYear()} AbdulLa Al Mahin. All Rights Reserved.
           </div>
-          
+
           {/* Back to top button */}
           <button
             onClick={scrollToTop}
@@ -26,32 +32,36 @@ const Footer: React.FC = () => {
           >
             <ArrowUp size={20} />
           </button>
-          
+
           {/* Social links */}
           <div className="flex space-x-4">
-            <a 
-              href="#" 
+            <a
+              target="_blank"
+              href="https://github.com/ibwmahin/"
               className="text-gray-400 hover:text-accent transition-colors"
               aria-label="GitHub"
             >
               <GitHub size={20} />
             </a>
-            <a 
-              href="#" 
+            <a
+              target="_blank"
+              href="https://x.com/ibwmahin"
               className="text-gray-400 hover:text-accent transition-colors"
               aria-label="Twitter"
             >
               <Twitter size={20} />
             </a>
-            <a 
-              href="#" 
+            <a
+              target="_blank"
+              href="https://www.linkedin.com/in/ibwmahin/"
               className="text-gray-400 hover:text-accent transition-colors"
               aria-label="LinkedIn"
             >
               <Linkedin size={20} />
             </a>
-            <a 
-              href="mailto:example@mail.com" 
+            <a
+              target="_blank"
+              href="mailto:ibwmahin@mail.com"
               className="text-gray-400 hover:text-accent transition-colors"
               aria-label="Email"
             >
@@ -65,3 +75,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+
