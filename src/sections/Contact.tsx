@@ -96,6 +96,7 @@ const Contact: React.FC = () => {
               <Linkedin size={20} />
             </a>
             <a
+              target="_blank"
               href="https://x.com/ibwmahin"
               className="bg-background-dark p-3 rounded-full text-gray-400 hover:text-accent hover:border-accent transition-colors"
               aria-label="Twitter"

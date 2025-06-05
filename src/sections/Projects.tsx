@@ -53,7 +53,7 @@ const projects = [
   },
   {
     id: 5,
-    title: "Linux Config Manager",
+    title: "Linux Config Manager (coming soon)",
     description:
       "A tool to manage and deploy Linux configurations for system admins.",
     image:
@@ -65,7 +65,7 @@ const projects = [
   },
   {
     id: 6,
-    title: "API Security Gateway",
+    title: "API Security Gateway (coming soon)",
     description:
       "Protects backend APIs from common security vulnerabilities with rate-limiting.",
     image:

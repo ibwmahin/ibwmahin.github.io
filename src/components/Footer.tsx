@@ -59,9 +59,10 @@ const Footer: React.FC = () => {
             >
               <Linkedin size={20} />
             </a>
+
             <a
               target="_blank"
-              href="mailto:ibwmahin@mail.com"
+              href="mailto:ibwmahin@gmail.com"
               className="text-gray-400 hover:text-accent transition-colors"
               aria-label="Email"
             >
