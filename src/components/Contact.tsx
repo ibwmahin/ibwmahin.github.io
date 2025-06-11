@@ -39,9 +39,9 @@ const Contact = () => {
   };
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" },
+    { icon: Github, href: "https://www.github.com/ibwmahin/", label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/ibwmahin/", label: "LinkedIn" },
+    { icon: Instagram, href: "https://www.instagram.com/ibwmahin", label: "Instagram" },
   ];
 
   return (
@@ -82,7 +82,7 @@ const Contact = () => {
                     <div>
                       <h4 className="font-semibold text-foreground">Email</h4>
                       <p className="text-foreground/70">
-                        abdulla.almahin@gmail.com
+                        <span>ibwmahin@gmail.com</span>
                       </p>
                     </div>
                   </div>

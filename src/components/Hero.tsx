@@ -108,9 +108,9 @@ const Hero = () => {
                 <div className="relative w-full h-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl p-6">
                   <div className="w-full h-64 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
                     <img
-                      src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=300&h=400&fit=crop&crop=face"
+                      src="../../public/pfp.png"
                       alt="Abdulla Al Mahin"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-center  object-cover"
                     />
                   </div>
 

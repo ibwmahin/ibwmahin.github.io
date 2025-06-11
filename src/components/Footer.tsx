@@ -1,11 +1,18 @@
-
 import { Github, Linkedin, Instagram, Heart } from "lucide-react";
 
 const Footer = () => {
   const socialLinks = [
-    { icon: Github, href: "https://github.com", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Instagram, href: "https://instagram.com", label: "Instagram" }
+    { icon: Github, href: "https://www.github.com/ibwmahin/", label: "GitHub" },
+    {
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/ibwmahin/",
+      label: "LinkedIn",
+    },
+    {
+      icon: Instagram,
+      href: "https://www.instagram.com/ibwmahin",
+      label: "Instagram",
+    },
   ];
 
   return (
@@ -14,7 +21,9 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Copyright */}
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
-            <span className="text-foreground/70">© 2025 Abdulla Al Mahin. Made with</span>
+            <span className="text-foreground/70">
+              © 2025 Abdulla Al Mahin. Made with
+            </span>
             <Heart className="w-4 h-4 text-red-500 fill-current" />
             <span className="text-foreground/70">in Bangladesh</span>
           </div>
