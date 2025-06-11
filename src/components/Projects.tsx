@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 import { motion, useAnimation, useInView } from "framer-motion";
@@ -9,39 +8,65 @@ const Projects = () => {
     {
       id: 1,
       title: "Gaming Website",
-      description: "Interactive gaming platform with modern UI/UX and responsive design for enhanced user experience",
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
-      stack: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "UI/UX"],
+      description:
+        "Interactive gaming platform with modern UI/UX and responsive design for enhanced user experience",
+      image:
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop",
+      stack: ["HTML5", "CSS3", "JavaScript", "Responsive Design", "UI/UX" , "ReactJs"],
       liveDemo: "https://ibwmahin.github.io/Gaming_Website/",
-      github: "https://github.com/ibwmahin/Gaming_Website"
+      github: "https://github.com/ibwmahin/Gaming_Website",
     },
     {
       id: 2,
       title: "Cyber Scan Guardian Shield",
-      description: "Advanced cybersecurity scanning tool with real-time threat detection and comprehensive security analysis",
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
-      stack: ["JavaScript", "Security", "Real-time Scanning", "Threat Detection", "Web Security"],
+      description:
+        "Advanced cybersecurity scanning tool with real-time threat detection and comprehensive security analysis",
+      image:
+        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=400&fit=crop",
+      stack: [
+        "JavaScript",
+        "Security",
+        "Real-time Scanning",
+        "Threat Detection",
+        "Web Security",
+      ],
       liveDemo: "https://ibwmahin.github.io/cyber-scan-guardian-shield/",
-      github: "https://github.com/ibwmahin/cyber-scan-guardian-shield"
+      github: "https://github.com/ibwmahin/cyber-scan-guardian-shield",
     },
     {
       id: 3,
       title: "DevBoard",
-      description: "Developer dashboard with project management tools and analytics for enhanced productivity tracking",
-      image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
-      stack: ["React", "Dashboard", "Analytics", "Project Management", "Developer Tools"],
+      description:
+        "Developer dashboard with project management tools and analytics for enhanced productivity tracking",
+      image:
+        "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=600&h=400&fit=crop",
+      stack: [
+        "React",
+        "Dashboard",
+        "Analytics",
+        "Project Management",
+        "Developer Tools",
+      ],
       liveDemo: "https://ibwmahin.github.io/DevBoard/",
-      github: "https://github.com/ibwmahin/DevBoard"
+      github: "https://github.com/ibwmahin/DevBoard",
     },
     {
       id: 4,
       title: "Udbudo",
-      description: "Modern web application with clean interface and optimized performance for seamless user interaction",
-      image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop",
-      stack: ["Modern Web", "Clean UI", "Performance", "User Experience", "Optimization"],
+      description:
+        "Modern web application with clean interface and optimized performance for seamless user interaction",
+      image:
+        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&h=400&fit=crop",
+      stack: [
+        "Modern Web",
+        "Clean UI",
+        "Performance",
+        "User Experience",
+        "Optimization",
+      ],
       liveDemo: "https://ibwmahin.github.io/udbudo/",
-      github: "https://github.com/ibwmahin/udbudo"
-    }
+      github: "https://github.com/ibwmahin/udbudo",
+    },
   ];
 
   const ref = useRef(null);
@@ -58,30 +83,33 @@ const Projects = () => {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.2
-      }
-    }
+        staggerChildren: 0.2,
+      },
+    },
   };
 
   const itemVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: 50,
-      rotateX: -15
+      rotateX: -15,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       rotateX: 0,
       transition: {
         duration: 0.8,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   return (
-    <section id="projects" className="py-20 bg-background relative overflow-hidden">
+    <section
+      id="projects"
+      className="py-20 bg-background relative overflow-hidden"
+    >
       {/* Floating particles */}
       {[...Array(15)].map((_, i) => (
         <motion.div
@@ -106,12 +134,12 @@ const Projects = () => {
       <div className="container mx-auto px-4" ref={ref}>
         <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <motion.div 
+          <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={controls}
             variants={{
-              visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
             }}
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -123,35 +151,45 @@ const Projects = () => {
           </motion.div>
 
           {/* Projects Grid */}
-          <motion.div 
+          <motion.div
             className="grid md:grid-cols-2 gap-8"
             variants={containerVariants}
             initial="hidden"
             animate={controls}
           >
             {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} variants={itemVariants} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                variants={itemVariants}
+              />
             ))}
           </motion.div>
 
           {/* View More Button */}
-          <motion.div 
+          <motion.div
             className="text-center mt-12"
             initial={{ opacity: 0 }}
             animate={controls}
             variants={{
-              visible: { opacity: 1, transition: { duration: 0.8, delay: 0.8 } }
+              visible: {
+                opacity: 1,
+                transition: { duration: 0.8, delay: 0.8 },
+              },
             }}
           >
             <motion.div
               whileHover={{ scale: 1.05, rotateX: 5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 size="lg"
                 className="border-primary/50 hover:border-primary hover:bg-primary/10 px-8 py-3 backdrop-blur-sm"
-                onClick={() => window.open('https://github.com/ibwmahin', '_blank')}
+                onClick={() =>
+                  window.open("https://github.com/ibwmahin", "_blank")
+                }
               >
                 View All Projects on GitHub
                 <Github className="ml-2 h-5 w-5" />
@@ -164,7 +202,15 @@ const Projects = () => {
   );
 };
 
-const ProjectCard = ({ project, index, variants }: { project: any, index: number, variants: any }) => {
+const ProjectCard = ({
+  project,
+  index,
+  variants,
+}: {
+  project: any;
+  index: number;
+  variants: any;
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -198,31 +244,32 @@ const ProjectCard = ({ project, index, variants }: { project: any, index: number
         style={{ transformStyle: "preserve-3d" }}
       >
         {/* Reduced floating particles from 8 to 4 */}
-        {isHovered && [...Array(4)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-primary/60 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ 
-              opacity: [0, 1, 0], 
-              scale: [0, 1, 0],
-              y: [0, -20]
-            }}
-            transition={{
-              duration: 1.5,
-              delay: i * 0.1,
-            }}
-          />
-        ))}
+        {isHovered &&
+          [...Array(4)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-primary/60 rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{
+                opacity: [0, 1, 0],
+                scale: [0, 1, 0],
+                y: [0, -20],
+              }}
+              transition={{
+                duration: 1.5,
+                delay: i * 0.1,
+              }}
+            />
+          ))}
 
         {/* Project Image */}
         <div className="relative overflow-hidden h-64">
-          <motion.img 
-            src={project.image} 
+          <motion.img
+            src={project.image}
             alt={project.title}
             className="w-full h-full object-cover"
             animate={{
@@ -231,39 +278,33 @@ const ProjectCard = ({ project, index, variants }: { project: any, index: number
             transition={{ duration: 0.6 }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60" />
-          
+
           {/* Overlay buttons */}
-          <motion.div 
+          <motion.div
             className="absolute inset-0 flex items-center justify-center gap-4"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: isHovered ? 1 : 0, 
-              y: isHovered ? 0 : 20 
+            animate={{
+              opacity: isHovered ? 1 : 0,
+              y: isHovered ? 0 : 20,
             }}
             transition={{ duration: 0.3 }}
           >
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Button 
-                size="sm" 
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                size="sm"
                 className="bg-primary hover:bg-primary/80 backdrop-blur-sm"
-                onClick={() => window.open(project.liveDemo, '_blank')}
+                onClick={() => window.open(project.liveDemo, "_blank")}
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Live Demo
               </Button>
             </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Button 
-                size="sm" 
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Button
+                size="sm"
                 variant="outline"
                 className="border-white/30 hover:border-white/50 backdrop-blur-sm"
-                onClick={() => window.open(project.github, '_blank')}
+                onClick={() => window.open(project.github, "_blank")}
               >
                 <Github className="w-4 h-4 mr-2" />
                 GitHub
@@ -274,7 +315,7 @@ const ProjectCard = ({ project, index, variants }: { project: any, index: number
 
         {/* Project Info */}
         <div className="p-6 relative" style={{ transform: "translateZ(20px)" }}>
-          <motion.h3 
+          <motion.h3
             className="text-2xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors"
             animate={{ scale: isHovered ? 1.02 : 1 }} // Reduced from 1.05 to 1.02
             transition={{ duration: 0.3 }}
@@ -288,7 +329,7 @@ const ProjectCard = ({ project, index, variants }: { project: any, index: number
           {/* Tech Stack with tooltip effect */}
           <div className="flex flex-wrap gap-2 mb-6">
             {project.stack.map((tech, techIndex) => (
-              <motion.span 
+              <motion.span
                 key={tech}
                 className="px-3 py-1 text-sm bg-primary/10 text-primary rounded-full border border-primary/20 hover:bg-primary/20 transition-colors cursor-default"
                 whileHover={{ scale: 1.05, rotateZ: 1 }} // Reduced rotation from 2 to 1
@@ -303,28 +344,22 @@ const ProjectCard = ({ project, index, variants }: { project: any, index: number
 
           {/* Action Buttons */}
           <div className="flex gap-3">
-            <motion.div
-              className="flex-1"
-              whileHover={{ scale: 1.02 }}
-            >
-              <Button 
-                size="sm" 
+            <motion.div className="flex-1" whileHover={{ scale: 1.02 }}>
+              <Button
+                size="sm"
                 className="w-full bg-button-gradient hover:scale-105 transition-transform"
-                onClick={() => window.open(project.liveDemo, '_blank')}
+                onClick={() => window.open(project.liveDemo, "_blank")}
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
                 Live Demo
               </Button>
             </motion.div>
-            <motion.div
-              className="flex-1"
-              whileHover={{ scale: 1.02 }}
-            >
-              <Button 
-                size="sm" 
+            <motion.div className="flex-1" whileHover={{ scale: 1.02 }}>
+              <Button
+                size="sm"
                 variant="outline"
                 className="w-full border-primary/50 hover:border-primary hover:bg-primary/10"
-                onClick={() => window.open(project.github, '_blank')}
+                onClick={() => window.open(project.github, "_blank")}
               >
                 <Github className="w-4 h-4 mr-2" />
                 Code
