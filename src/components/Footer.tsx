@@ -1,73 +1,38 @@
-import React from "react";
-import {
-  Github as GitHub,
-  Twitter,
-  Linkedin,
-  Mail,
-  ArrowUp,
-} from "lucide-react";
 
-const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+import { Github, Linkedin, Instagram, Heart } from "lucide-react";
+
+const Footer = () => {
+  const socialLinks = [
+    { icon: Github, href: "https://github.com", label: "GitHub" },
+    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
+    { icon: Instagram, href: "https://instagram.com", label: "Instagram" }
+  ];
 
   return (
-    <footer className="bg-background-glass backdrop-blur-md border-t border-white/5 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center">
+    <footer className="bg-card border-t border-border">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           {/* Copyright */}
-          <div className="text-gray-400 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} AbdulLa Al Mahin. All Rights Reserved.
+          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <span className="text-foreground/70">© 2025 Abdulla Al Mahin. Made with</span>
+            <Heart className="w-4 h-4 text-red-500 fill-current" />
+            <span className="text-foreground/70">in Bangladesh</span>
           </div>
 
-          {/* Back to top button */}
-          <button
-            onClick={scrollToTop}
-            className="fixed bottom-20 right-6 bg-primary hover:bg-primary-dark text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:-translate-y-1"
-            aria-label="Back to top"
-          >
-            <ArrowUp size={20} />
-          </button>
-
-          {/* Social links */}
+          {/* Social Links */}
           <div className="flex space-x-4">
-            <a
-              target="_blank"
-              href="https://github.com/ibwmahin/"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="GitHub"
-            >
-              <GitHub size={20} />
-            </a>
-            <a
-              target="_blank"
-              href="https://x.com/ibwmahin"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="Twitter"
-            >
-              <Twitter size={20} />
-            </a>
-            <a
-              target="_blank"
-              href="https://www.linkedin.com/in/ibwmahin/"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="LinkedIn"
-            >
-              <Linkedin size={20} />
-            </a>
-
-            <a
-              target="_blank"
-              href="mailto:ibwmahin@gmail.com"
-              className="text-gray-400 hover:text-accent transition-colors"
-              aria-label="Email"
-            >
-              <Mail size={20} />
-            </a>
+            {socialLinks.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center hover:bg-primary/20 transition-colors group"
+                aria-label={social.label}
+              >
+                <social.icon className="w-5 h-5 text-primary group-hover:scale-110 transition-transform" />
+              </a>
+            ))}
           </div>
         </div>
       </div>
@@ -76,4 +41,3 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
-
