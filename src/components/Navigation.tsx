@@ -33,7 +33,7 @@ const Navigation = ({ onSearchOpen }) => {
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4"
       >
-        <div className="container mx-auto">
+        <div className="container mx-auto w-[70%]">
           <motion.div
             animate={{
               backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
