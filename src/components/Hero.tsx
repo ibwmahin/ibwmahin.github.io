@@ -128,14 +128,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      {/* back to top */}
-      <a href="#home">
-        <div className="flex justify-center items-center">
-          <div className="flex justify-center items-center text-3xl z-50 bg-orange-400 h-10 w-20 fixed right-5 bottom-20 rounded-full hover:scale-105 hover:text-white transition-all duration-300">
-            <i className="bx bx-arrow-big-up-line"></i>
-          </div>
-        </div>
-      </a>
     </section>
   );
 };

@@ -7,14 +7,14 @@ const CustomCursor = () => {
   const cursorY = useMotionValue(-100);
 
   // Smooth cursor movement with spring animation
-  const springConfig = { damping: 25, stiffness: 120 };
+  const springConfig = { damping: 15, stiffness: 120 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     const moveCursor = (e) => {
-      cursorX.set(e.clientX - 8); // Adjust for cursor size (16px / 2)
-      cursorY.set(e.clientY - 8);
+      cursorX.set(e.clientX - 16); // Adjust for cursor size (16px / 2)
+      cursorY.set(e.clientY - 16);
     };
 
     // Track mouse movement
@@ -48,16 +48,21 @@ const CustomCursor = () => {
       style={{
         translateX: cursorXSpring,
         translateY: cursorYSpring,
+        backdropFilter: isHoveringInteractive
+          ? "invert(100%) blur(6px)"
+          : "invert(80%) blur(4px)",
+        WebkitBackdropFilter: isHoveringInteractive
+          ? "invert(100%) blur(6px)"
+          : "invert(80%) blur(4px)", // For Safari compatibility
       }}
       animate={{
-        scale: isHoveringInteractive ? 2.5 : 1,
-        opacity: isHoveringInteractive ? 0.6 : 1,
+        opacity: isHoveringInteractive ? 0.7 : 0.9,
         backgroundColor: isHoveringInteractive
-          ? "rgba(59, 130, 246, 0.5)"
-          : "rgba(100, 100, 100, 0.8)",
+          ? "rgba(255, 255, 255, 0.1)"
+          : "rgba(255, 255, 255, 0.2)",
         border: isHoveringInteractive
-          ? "2px solid rgba(59, 130, 246, 1)"
-          : "none",
+          ? "2px solid rgba(59, 130, 246, 0.8)"
+          : "1px solid rgba(255, 255, 255, 0.5)",
       }}
       transition={{ type: "spring", stiffness: 200, damping: 20 }}
     />

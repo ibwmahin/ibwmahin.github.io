@@ -4,7 +4,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
@@ -16,19 +16,30 @@ body::-webkit-scrollbar {
   display: none;
 }
 
-/* Ensure custom cursor is visible above other elements */
+/* Custom cursor styling */
 .custom-cursor {
   position: fixed;
-  width: 16px;
-  height: 16px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background-color: rgba(100, 100, 100, 0.8);
-  pointer-events: none; /* Prevent cursor from interfering with clicks */
-  z-index: 10000; /* Ensure it's above all other elements */
-  transform: translate(-50%, -50%); /* Center the cursor dot */
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.2); /* Subtle base background */
+  backdrop-filter: invert(80%) blur(4px); /* Default invert glass effect */
+  -webkit-backdrop-filter: invert(80%) blur(4px); /* Safari compatibility */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
 }
 
-/* Optional: Hide custom cursor on touch devices */
+/* Fallback for browsers without backdrop-filter support */
+@supports not (backdrop-filter: invert(80%)) {
+  .custom-cursor {
+    background-color: rgba(100, 100, 100, 0.5); /* Fallback solid color */
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+}
+
+/* Hide custom cursor on touch devices */
 @media (hover: none) {
   .custom-cursor {
     display: none;
@@ -37,4 +48,3 @@ body::-webkit-scrollbar {
     cursor: auto !important;
   }
 }
-
