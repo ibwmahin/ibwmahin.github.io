@@ -16,4 +16,25 @@ body::-webkit-scrollbar {
   display: none;
 }
 
+/* Ensure custom cursor is visible above other elements */
+.custom-cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: rgba(100, 100, 100, 0.8);
+  pointer-events: none; /* Prevent cursor from interfering with clicks */
+  z-index: 10000; /* Ensure it's above all other elements */
+  transform: translate(-50%, -50%); /* Center the cursor dot */
+}
+
+/* Optional: Hide custom cursor on touch devices */
+@media (hover: none) {
+  .custom-cursor {
+    display: none;
+  }
+  body {
+    cursor: auto !important;
+  }
+}
 

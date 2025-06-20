@@ -9,6 +9,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import SpotlightSearch from "./components/SpotlightSearch";
 import { useKeyboardShortcut } from "./hooks/useKeyboardShortcut";
+import CustomCursor from "./components/CusotmCurosr";
 
 function App() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -66,6 +67,7 @@ function App() {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
+      <CustomCursor />
       <Navigation onSearchOpen={() => setIsSearchOpen(true)} />
 
       {/* Page Sections */}
