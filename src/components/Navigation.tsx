@@ -83,7 +83,7 @@ const Navigation = ({ onSearchOpen }) => {
         animate="visible"
         className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4"
       >
-        <div className="container mx-auto w-[70%]">
+        <div className="container mx-auto w-full md:w-[70%]">
           <motion.div
             animate={{
               backdropFilter: isScrolled ? "blur(20px)" : "blur(10px)",
@@ -98,16 +98,18 @@ const Navigation = ({ onSearchOpen }) => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-pink-500/5 animate-pulse" />
 
             <div className="relative flex items-center justify-between px-6 py-3">
+              {/* Show name on desktop only */}
               <motion.div
                 variants={navItemVariants}
                 whileTap={{ scale: 0.95 }}
-                className="flex items-center space-x-2"
+                className="hidden md:flex items-center space-x-2"
               >
                 <span className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-600 bg-clip-text text-transparent">
                   Abdulla Al Mahin
                 </span>
               </motion.div>
 
+              {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center">
                 <motion.button
                   variants={navItemVariants}
@@ -175,6 +177,7 @@ const Navigation = ({ onSearchOpen }) => {
                 </motion.div>
               </nav>
 
+              {/* Connect Button - Desktop Only */}
               <motion.div 
                 variants={navItemVariants}
                 whileHover={{ scale: 1.05 }} 
@@ -194,6 +197,7 @@ const Navigation = ({ onSearchOpen }) => {
                 </div>
               </motion.div>
 
+              {/* Hamburger Menu - Mobile Only */}
               <motion.div 
                 whileTap={{ scale: 0.95 }} 
                 onClick={toggleMobileMenu}
@@ -265,7 +269,7 @@ const Navigation = ({ onSearchOpen }) => {
                     <span className="font-medium">Search</span>
                   </motion.button>
 
-                  {["Home", "About", "Skills", "Projects", "Contact"].map((item, index) => (
+                  {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
                     <motion.button
                       key={item}
                       variants={navItemVariants}
@@ -283,7 +287,7 @@ const Navigation = ({ onSearchOpen }) => {
                   <motion.div variants={mobileMenuVariants} className="space-y-2">
                     <p className="text-sm font-medium text-slate-500 px-3">Connect</p>
                     <motion.div className="grid grid-cols-3 gap-2" variants={headerVariants}>
-                      {socialLinks.map(({ icon: Icon, href, label, color }, index) => (
+                      {socialLinks.map(({ icon: Icon, href, label, color }) => (
                         <motion.a
                           key={label}
                           href={href}

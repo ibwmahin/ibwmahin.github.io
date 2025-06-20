@@ -94,7 +94,7 @@ function App() {
 
       {/* Scroll Progress Indicator */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-blue-600 transform-gpu z-50"
+        className="fixed top-0 left-0 right-0 h-1 bg-orange-600 transform-gpu z-50"
         style={{
           scaleX: 0,
           transformOrigin: "0%",
@@ -111,10 +111,13 @@ function App() {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsSearchOpen(true)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-40 md:hidden"
+        className="fixed bottom-5 right-5 w-20 h-10 bg-orange-400 hover:bg-orange-700 text-black rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-40 gap-3 flex-row md:hidden"
         aria-label="Open search"
       >
-        <span className="text-xs font-mono">⌘K</span>
+        <span className="text-xs font-mono flex items-center justify-center flex-row gap-2">
+          <i className="bx bx-command flex items-center justify-center flex-row"></i>
+          K
+        </span>
       </motion.button>
     </div>
   );

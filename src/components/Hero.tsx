@@ -58,12 +58,18 @@ const Hero = () => {
 
             {/* Interactive CTA Buttons */}
             <div className="flex flex-wrap gap-4">
-              <button className="relative overflow-hidden bg-white hover:bg-gray-100 text-black px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group">
-                <span className="relative">Explore My Work</span>
-              </button>
-              <button className="px-8 py-4 rounded-full font-semibold border-2 border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-sm hover:bg-white/10 text-white transition-all duration-300 hover:scale-105">
-                Let's Collaborate
-              </button>
+              <a href="#projects">
+                <button className="relative overflow-hidden bg-white hover:bg-gray-100 text-black px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group">
+                  <span className="relative">
+                    <a href="#projects">Explore My Work</a>
+                  </span>
+                </button>
+              </a>
+              <a href="#contact">
+                <button className="px-8 py-4 rounded-full font-semibold border-2 border-white/20 hover:border-white/40 bg-white/5 backdrop-blur-sm hover:bg-white/10 text-white transition-all duration-300 hover:scale-105">
+                  Let's Collaborate
+                </button>
+              </a>
             </div>
 
             {/* Feature Cards */}
@@ -125,7 +131,7 @@ const Hero = () => {
       {/* back to top */}
       <a href="#home">
         <div className="flex justify-center items-center">
-          <div className="flex justify-center items-center text-3xl z-50 bg-white h-10 w-20 fixed right-5 bottom-5 rounded-full hover:scale-105 hover:text-orange-500 transition-all duration-300">
+          <div className="flex justify-center items-center text-3xl z-50 bg-orange-400 h-10 w-20 fixed right-5 bottom-20 rounded-full hover:scale-105 hover:text-white transition-all duration-300">
             <i className="bx bx-arrow-big-up-line"></i>
           </div>
         </div>

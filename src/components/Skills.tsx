@@ -327,7 +327,7 @@ const Skills: React.FC = () => {
                     delay: index * 0.1,
                     ease: "easeOut",
                   }}
-                  className="px-4 py-2  bg-white text-black rounded-full text-sm font-medium border-2 hover:bg-black border-orange-700  cursor-default transition-colors duration-200"
+                  className="px-4 py-2  bg-white text-black rounded-full text-sm font-medium border-2 hover:bg-black hover:text-white border-orange-700  cursor-default transition-colors duration-200"
                 >
                   {tech}
                 </motion.span>
