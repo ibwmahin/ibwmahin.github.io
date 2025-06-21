@@ -10,6 +10,7 @@ html {
 
 body {
   font-family: "Offside", sans-serif;
+  cursor: default;
 }
 
 body::-webkit-scrollbar {
@@ -25,10 +26,10 @@ body::-webkit-scrollbar {
   pointer-events: none;
   z-index: 9999;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.2); /* Subtle base background */
-  backdrop-filter: invert(80%) blur(4px); /* Default invert glass effect */
-  -webkit-backdrop-filter: invert(80%) blur(4px); /* Safari compatibility */
-  border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: invert(80%) blur(4px);
+  -webkit-backdrop-filter: invert(80%) blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 /* Fallback for browsers without backdrop-filter support */
