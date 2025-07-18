@@ -1,271 +1,221 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, X, ArrowLeft, ArrowRight } from 'lucide-react';
-import { projects } from '../data/portfolio';
-import { Project } from '../types';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, Github, Zap, Shield, Smartphone } from 'lucide-react';
 
-const Projects: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [filter, setFilter] = useState<'all' | 'web' | 'mobile' | 'fullstack'>('all');
+interface ProjectsProps {
+  nextPage: () => void;
+  prevPage: () => void;
+  currentPage: number;
+  totalPages: number;
+}
 
-  const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'fullstack', label: 'Full Stack' },
-    { id: 'web', label: 'Web Apps' },
-    { id: 'mobile', label: 'Mobile' }
+const Projects: React.FC<ProjectsProps> = ({ nextPage }) => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
+  const projects = [
+    {
+      id: 1,
+      title: "E-Commerce Platform",
+      description: "A full-stack e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, payment processing, and real-time inventory management.",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe", "JWT"],
+      image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-latte-blue to-latte-sapphire dark:from-mocha-blue dark:to-mocha-sapphire"
+    },
+    {
+      id: 2,
+      title: "Task Management App",
+      description: "A collaborative task management application with real-time updates, drag-and-drop functionality, and team collaboration features.",
+      technologies: ["React", "TypeScript", "Socket.io", "Express", "PostgreSQL"],
+      image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-latte-mauve to-latte-pink dark:from-mocha-mauve dark:to-mocha-pink"
+    },
+    {
+      id: 3,
+      title: "Weather Dashboard",
+      description: "A responsive weather dashboard that provides detailed forecasts, interactive maps, and location-based weather alerts using multiple weather APIs.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      image: "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-latte-green to-latte-teal dark:from-mocha-green dark:to-mocha-teal"
+    },
+    {
+      id: 4,
+      title: "Social Media Analytics",
+      description: "A comprehensive analytics platform for social media management with advanced reporting, scheduling, and audience insights.",
+      technologies: ["React", "D3.js", "Python", "FastAPI", "Redis"],
+      image: "https://images.pexels.com/photos/265087/pexels-photo-265087.jpeg?auto=compress&cs=tinysrgb&w=800",
+      github: "https://github.com",
+      demo: "https://demo.com",
+      color: "from-latte-peach to-latte-yellow dark:from-mocha-peach dark:to-mocha-yellow"
+    }
   ];
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === filter);
-
-  const openProjectModal = (project: Project) => {
-    setSelectedProject(project);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeProjectModal = () => {
-    setSelectedProject(null);
-    document.body.style.overflow = 'unset';
-  };
-
-  const navigateProject = (direction: 'prev' | 'next') => {
-    if (!selectedProject) return;
-    
-    const currentIndex = filteredProjects.findIndex(p => p.id === selectedProject.id);
-    let newIndex;
-    
-    if (direction === 'next') {
-      newIndex = (currentIndex + 1) % filteredProjects.length;
-    } else {
-      newIndex = (currentIndex - 1 + filteredProjects.length) % filteredProjects.length;
+  const features = [
+    {
+      icon: <Zap size={24} />,
+      title: "High Performance",
+      description: "Optimized for speed and efficiency"
+    },
+    {
+      icon: <Shield size={24} />,
+      title: "Secure",
+      description: "Built with security best practices"
+    },
+    {
+      icon: <Smartphone size={24} />,
+      title: "Responsive",
+      description: "Works perfectly on all devices"
     }
-    
-    setSelectedProject(filteredProjects[newIndex]);
-  };
+  ];
 
   return (
-    <section id="projects" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="container mx-auto max-w-7xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            A showcase of my recent work, demonstrating expertise in modern web technologies 
-            and user-centered design principles.
-          </p>
+          {/* Header */}
+          <motion.div variants={itemVariants} className="text-center">
+            <h2 className="text-4xl md:text-6xl font-bold text-latte-text dark:text-mocha-text mb-4">
+              My Projects
+            </h2>
+            <p className="text-xl text-latte-subtext1 dark:text-mocha-subtext1 max-w-3xl mx-auto">
+              A collection of projects that showcase my skills and passion for creating meaningful digital experiences.
+            </p>
+          </motion.div>
 
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setFilter(category.id as any)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  filter === category.id
-                    ? 'bg-orange-600 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {category.label}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div 
-          layout
-          className="grid md:grid-cols-2 lg:grid-cols-2 gap-8"
-        >
-          <AnimatePresence>
-            {filteredProjects.map((project, index) => (
+          {/* Projects Grid */}
+          <motion.div variants={itemVariants} className="grid md:grid-cols-2 gap-8">
+            {projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                layout
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -8 }}
-                className="group cursor-pointer"
-                onClick={() => openProjectModal(project)}
+                className="group relative overflow-hidden rounded-2xl bg-latte-surface0 dark:bg-mocha-surface0 hover:bg-latte-surface1 dark:hover:bg-mocha-surface1 transition-all duration-300"
+                whileHover={{ scale: 1.02, y: -5 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100">
-                  <div className="relative overflow-hidden">
-                    <img
-                      src={project.imageUrl}
-                      alt={project.title}
-                      className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="flex gap-2">
-                        {project.liveUrl && (
-                          <div className="p-2 bg-white/90 rounded-lg backdrop-blur-sm">
-                            <ExternalLink className="w-4 h-4 text-gray-800" />
-                          </div>
-                        )}
-                        {project.githubUrl && (
-                          <div className="p-2 bg-white/90 rounded-lg backdrop-blur-sm">
-                            <Github className="w-4 h-4 text-gray-800" />
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-orange-600 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-2">
-                      {project.description}
-                    </p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.technologies.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.technologies.length > 3 && (
-                        <span className="px-3 py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-full">
-                          +{project.technologies.length - 3} more
-                        </span>
-                      )}
-                    </div>
+                {/* Project Image */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${project.color} opacity-20 group-hover:opacity-30 transition-opacity`} />
+                </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500 capitalize">
-                        {project.category} Project
+                {/* Project Content */}
+                <div className="p-6 space-y-4">
+                  <h3 className="text-xl font-bold text-latte-text dark:text-mocha-text">
+                    {project.title}
+                  </h3>
+                  
+                  <p className="text-latte-subtext1 dark:text-mocha-subtext1 text-sm leading-relaxed">
+                    {project.description}
+                  </p>
+
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, techIndex) => (
+                      <span
+                        key={techIndex}
+                        className="px-3 py-1 bg-latte-surface1 dark:bg-mocha-surface1 text-latte-text dark:text-mocha-text text-xs rounded-full"
+                      >
+                        {tech}
                       </span>
-                      <div className="text-orange-600 text-sm font-medium group-hover:underline">
-                        View Details →
-                      </div>
-                    </div>
+                    ))}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex space-x-4 pt-4">
+                    <a
+                      href={project.demo}
+                      className="inline-flex items-center px-4 py-2 bg-latte-blue dark:bg-mocha-blue text-latte-base dark:text-mocha-base rounded-lg hover:shadow-lg transition-shadow text-sm"
+                    >
+                      <ExternalLink size={16} className="mr-2" />
+                      Live Demo
+                    </a>
+                    <a
+                      href={project.github}
+                      className="inline-flex items-center px-4 py-2 bg-latte-surface1 dark:bg-mocha-surface1 text-latte-text dark:text-mocha-text rounded-lg hover:bg-latte-surface2 dark:hover:bg-mocha-surface2 transition-colors text-sm"
+                    >
+                      <Github size={16} className="mr-2" />
+                      Code
+                    </a>
                   </div>
                 </div>
               </motion.div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </motion.div>
 
-        {/* Project Modal */}
-        <AnimatePresence>
-          {selectedProject && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm"
-              onClick={closeProjectModal}
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                className="w-full max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="relative">
-                  <img
-                    src={selectedProject.imageUrl}
-                    alt={selectedProject.title}
-                    className="w-full h-64 object-cover"
-                  />
-                  <div className="absolute top-4 right-4 flex gap-2">
-                    <button
-                      onClick={() => navigateProject('prev')}
-                      className="p-2 bg-white/90 rounded-lg backdrop-blur-sm hover:bg-white transition-colors"
-                    >
-                      <ArrowLeft className="w-5 h-5 text-gray-800" />
-                    </button>
-                    <button
-                      onClick={() => navigateProject('next')}
-                      className="p-2 bg-white/90 rounded-lg backdrop-blur-sm hover:bg-white transition-colors"
-                    >
-                      <ArrowRight className="w-5 h-5 text-gray-800" />
-                    </button>
-                    <button
-                      onClick={closeProjectModal}
-                      className="p-2 bg-white/90 rounded-lg backdrop-blur-sm hover:bg-white transition-colors"
-                    >
-                      <X className="w-5 h-5 text-gray-800" />
-                    </button>
+          {/* Features */}
+          <motion.div variants={itemVariants} className="space-y-8">
+            <h3 className="text-3xl font-bold text-latte-text dark:text-mocha-text text-center">
+              What I Focus On
+            </h3>
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center p-6 rounded-xl bg-latte-surface0 dark:bg-mocha-surface0 hover:bg-latte-surface1 dark:hover:bg-mocha-surface1 transition-colors"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-latte-blue dark:text-mocha-blue mb-4 flex justify-center">
+                    {feature.icon}
                   </div>
-                </div>
-
-                <div className="p-8">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-4">
-                    {selectedProject.title}
-                  </h2>
-                  
-                  <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-                    {selectedProject.longDescription}
+                  <h4 className="text-lg font-semibold text-latte-text dark:text-mocha-text mb-2">
+                    {feature.title}
+                  </h4>
+                  <p className="text-latte-subtext1 dark:text-mocha-subtext1 text-sm">
+                    {feature.description}
                   </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-                  <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-3">Technologies Used</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedProject.technologies.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-4 py-2 bg-orange-50 text-orange-600 font-medium rounded-lg"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex gap-4">
-                    {selectedProject.liveUrl && (
-                      <motion.a
-                        href={selectedProject.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold flex items-center gap-2 hover:bg-orange-700 transition-colors"
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                        View Live Demo
-                      </motion.a>
-                    )}
-                    
-                    {selectedProject.githubUrl && (
-                      <motion.a
-                        href={selectedProject.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold flex items-center gap-2 hover:bg-gray-900 transition-colors"
-                      >
-                        <Github className="w-5 h-5" />
-                        View Source Code
-                      </motion.a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* CTA */}
+          <motion.div variants={itemVariants} className="text-center">
+            <motion.button
+              onClick={nextPage}
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-latte-blue to-latte-mauve dark:from-mocha-blue dark:to-mocha-mauve text-latte-base dark:text-mocha-base font-semibold rounded-full hover:shadow-lg transition-shadow"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Get In Touch
+            </motion.button>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

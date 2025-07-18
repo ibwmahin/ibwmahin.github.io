@@ -1,66 +1,182 @@
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { User, Award, Target, Heart } from 'lucide-react';
 
-const About = () => {
+interface AboutProps {
+  nextPage: () => void;
+  prevPage: () => void;
+  currentPage: number;
+  totalPages: number;
+}
+
+const About: React.FC<AboutProps> = ({ nextPage }) => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
+  const skills = [
+    { name: "JavaScript", level: 95 },
+    { name: "React", level: 90 },
+    { name: "TypeScript", level: 85 },
+    { name: "Node.js", level: 80 },
+    { name: "Python", level: 75 },
+    { name: "UI/UX Design", level: 85 },
+  ];
+
+  const values = [
+    {
+      icon: <User size={24} />,
+      title: "User-Centered",
+      description: "I prioritize user experience in every design decision"
+    },
+    {
+      icon: <Award size={24} />,
+      title: "Quality First",
+      description: "Delivering excellence through attention to detail"
+    },
+    {
+      icon: <Target size={24} />,
+      title: "Goal-Oriented",
+      description: "Focused on achieving measurable business objectives"
+    },
+    {
+      icon: <Heart size={24} />,
+      title: "Passionate",
+      description: "Genuine love for creating impactful digital solutions"
+    }
+  ];
+
   return (
-    <section
-      id="about"
-      className="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50 min-h-screen flex items-center flex-col justify-center"
-    >
-      <div className="container mx-auto w-full sm:w-[90%] lg:w-[70%]">
-        <div className="text-center mb-8 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-7xl mb-4 sm:mb-6 bg-gradient-to-l from-orange-500 to-orange-400 font-black bg-clip-text text-transparent">
-            About Me
-          </h2>
-          <p className="font-black text-base sm:text-lg text-black leading-relaxed max-w-full sm:max-w-xl md:max-w-2xl mx-auto">
-            I'm
-            <span className="font-black bg-gradient-to-l from-orange-700 to-orange-400 bg-clip-text text-transparent">
-              {" "}
-              AlexDev
-            </span>
-            , a full-stack developer and AI enthusiast with a passion for
-            crafting high-performance, elegant web solutions. As the founder &
-            lead developer of{" "}
-            <span className="font-black bg-gradient-to-l from-orange-700 to-orange-400 bg-clip-text text-transparent">
-              AlexDev Studio
-            </span>
-            , I specialize in building production-grade apps and custom websites
-            using code and modern tools.
-          </p>
-          <p className="font-semibold text-base sm:text-lg text-gray-950 leading-relaxed max-w-full sm:max-w-xl md:max-w-2xl mx-auto mt-4">
-            I follow an{" "}
-            <span className="text-black">AI-assisted development mindset</span>{" "}
-            — integrating intelligent tools and clean code from day one — and
-            promote maintainable, scalable systems. I actively contribute to
-            open-source projects and constantly innovate to stay at the edge of
-            modern software.
-          </p>
-        </div>
-
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="container mx-auto max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-8 sm:mt-16 bg-gradient-to-r from-slate-50 to-slate-100 rounded-2xl p-6 sm:p-8 text-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-16"
         >
-          <h3 className="text-xl sm:text-2xl font-bold mb-4 text-slate-900">
-            My Development Philosophy
-          </h3>
-          <p className="text-base sm:text-lg text-slate-600 max-w-full sm:max-w-xl md:max-w-3xl mx-auto leading-relaxed">
-            I believe in{" "}
-            <span className="font-semibold text-slate-800">
-              clean code & architecture
-            </span>{" "}
-            with modular, reusable components and well-organized structure. My{" "}
-            <span className="font-semibold text-slate-800">
-              AI-first development
-            </span>{" "}
-            approach uses intelligent tools and APIs to build faster, smarter
-            solutions while maintaining modern tools & frameworks expertise.
-          </p>
+          {/* Header */}
+          <motion.div variants={itemVariants} className="text-center">
+            <h2 className="text-4xl md:text-6xl font-bold text-latte-text dark:text-mocha-text mb-4">
+              About Me
+            </h2>
+            <p className="text-xl text-latte-subtext1 dark:text-mocha-subtext1 max-w-3xl mx-auto">
+              I'm a passionate developer who loves creating beautiful, functional, and user-friendly digital experiences.
+            </p>
+          </motion.div>
+
+          {/* Main Content Grid */}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column - Story */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <div className="prose prose-lg max-w-none">
+                <p className="text-latte-subtext1 dark:text-mocha-subtext1 leading-relaxed">
+                  With over 5 years of experience in web development, I've had the privilege of working with 
+                  diverse clients and projects. My journey started with a curiosity about how websites work, 
+                  and has evolved into a deep passion for creating digital solutions that make a difference.
+                </p>
+                
+                <p className="text-latte-subtext1 dark:text-mocha-subtext1 leading-relaxed">
+                  I believe that great design is not just about aesthetics—it's about creating intuitive, 
+                  accessible, and meaningful experiences that connect with people. Every project is an 
+                  opportunity to push boundaries and explore new possibilities.
+                </p>
+              </div>
+
+              <motion.button
+                onClick={nextPage}
+                className="inline-flex items-center px-6 py-3 bg-latte-blue dark:bg-mocha-blue text-latte-base dark:text-mocha-base rounded-lg font-medium hover:shadow-lg transition-shadow"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                View My Work
+              </motion.button>
+            </motion.div>
+
+            {/* Right Column - Skills */}
+            <motion.div variants={itemVariants} className="space-y-6">
+              <h3 className="text-2xl font-bold text-latte-text dark:text-mocha-text mb-6">
+                Skills & Expertise
+              </h3>
+              
+              <div className="space-y-4">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="space-y-2"
+                  >
+                    <div className="flex justify-between items-center">
+                      <span className="text-latte-text dark:text-mocha-text font-medium">
+                        {skill.name}
+                      </span>
+                      <span className="text-latte-subtext1 dark:text-mocha-subtext1">
+                        {skill.level}%
+                      </span>
+                    </div>
+                    <div className="w-full bg-latte-surface0 dark:bg-mocha-surface0 rounded-full h-2">
+                      <motion.div
+                        className="h-2 bg-gradient-to-r from-latte-blue to-latte-mauve dark:from-mocha-blue dark:to-mocha-mauve rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1 }}
+                      />
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Values Section */}
+          <motion.div variants={itemVariants} className="space-y-8">
+            <h3 className="text-3xl font-bold text-latte-text dark:text-mocha-text text-center">
+              My Values
+            </h3>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {values.map((value, index) => (
+                <motion.div
+                  key={index}
+                  className="text-center p-6 rounded-xl bg-latte-surface0 dark:bg-mocha-surface0 hover:bg-latte-surface1 dark:hover:bg-mocha-surface1 transition-colors"
+                  whileHover={{ scale: 1.05, y: -10 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="text-latte-blue dark:text-mocha-blue mb-4 flex justify-center">
+                    {value.icon}
+                  </div>
+                  <h4 className="text-lg font-semibold text-latte-text dark:text-mocha-text mb-2">
+                    {value.title}
+                  </h4>
+                  <p className="text-latte-subtext1 dark:text-mocha-subtext1 text-sm">
+                    {value.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 };
 

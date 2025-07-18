@@ -1,124 +1,176 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Navigation from "./components/Navigation";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
-import SpotlightSearch from "./components/SpotlightSearch";
-import { useKeyboardShortcut } from "./hooks/useKeyboardShortcut";
-import CustomCursor from "./components/CusotmCurosr";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Moon, Sun, Menu, X } from 'lucide-react';
+import Home from './components/Home';
+import About from './components/About';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
+import Footer from './components/Footer';
+import Navigation from './components/Navigation';
+
+const pages = [
+  { id: 'home', component: Home, title: 'Home' },
+  { id: 'about', component: About, title: 'About' },
+  { id: 'projects', component: Projects, title: 'Projects' },
+  { id: 'contact', component: Contact, title: 'Contact' },
+];
 
 function App() {
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isDark, setIsDark] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Keyboard shortcut for spotlight search
-  useKeyboardShortcut(["mod", "k"], () => {
-    setIsSearchOpen(true);
-  });
-
-  // Loading effect
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+    document.documentElement.classList.toggle('dark', isDark);
+  }, [isDark]);
 
-    return () => clearTimeout(timer);
-  }, []);
+  const nextPage = () => {
+    setCurrentPage((prev) => (prev + 1) % pages.length);
+  };
 
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-gradient-to-tl from-black via-gray-950 to-black flex items-center justify-center z-50">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center"
-        >
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-6xl font-bold bg-gradient-to-tl from-gray-600 via-gray-400 to-gray-600 bg-clip-text text-transparent tracking-tight mb-2"
-          >
-            Abdulla Developer{" "}
-          </motion.h2>
+  const prevPage = () => {
+    setCurrentPage((prev) => (prev - 1 + pages.length) % pages.length);
+  };
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="text-gray-600 flex items-center justify-center"
-          >
-            Loading portfolio...
-          </motion.p>
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-            className="w-8 h-8 border-4 border-blue-200 border-t-gray-600 rounded-full mx-auto mt-8 "
-          />
-        </motion.div>
-      </div>
-    );
-  }
+  const goToPage = (index: number) => {
+    setCurrentPage(index);
+    setIsMenuOpen(false);
+  };
+
+  const toggleTheme = () => {
+    setIsDark(!isDark);
+  };
+
+  const pageVariants = {
+    initial: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    in: {
+      x: 0,
+      opacity: 1,
+    },
+    out: (direction: number) => ({
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+  };
+
+  const pageTransition = {
+    type: 'tween',
+    ease: 'anticipate',
+    duration: 0.5,
+  };
+
+  const CurrentPageComponent = pages[currentPage].component;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <CustomCursor />
-      <Navigation onSearchOpen={() => setIsSearchOpen(true)} />
+    <div className="min-h-screen bg-latte-base dark:bg-mocha-base text-latte-text dark:text-mocha-text transition-colors duration-300">
+      {/* Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-latte-base/80 dark:bg-mocha-base/80 backdrop-blur-md border-b border-latte-surface0 dark:border-mocha-surface0">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <motion.h1 
+            className="text-2xl font-bold bg-gradient-to-r from-latte-blue to-latte-mauve dark:from-mocha-blue dark:to-mocha-mauve bg-clip-text text-transparent"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            Portfolio
+          </motion.h1>
 
-      {/* Page Sections */}
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-      </motion.main>
+          {/* Desktop Navigation */}
+          <Navigation 
+            pages={pages}
+            currentPage={currentPage}
+            onPageChange={goToPage}
+            isDark={isDark}
+            className="hidden md:flex"
+          />
+
+          {/* Theme Toggle & Mobile Menu */}
+          <div className="flex items-center space-x-4">
+            <motion.button
+              onClick={toggleTheme}
+              className="p-2 rounded-lg bg-latte-surface0 dark:bg-mocha-surface0 hover:bg-latte-surface1 dark:hover:bg-mocha-surface1 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </motion.button>
+
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-lg bg-latte-surface0 dark:bg-mocha-surface0 hover:bg-latte-surface1 dark:hover:bg-mocha-surface1 transition-colors"
+            >
+              {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden border-t border-latte-surface0 dark:border-mocha-surface0 bg-latte-base/95 dark:bg-mocha-base/95 backdrop-blur-md"
+            >
+              <Navigation 
+                pages={pages}
+                currentPage={currentPage}
+                onPageChange={goToPage}
+                isDark={isDark}
+                className="flex flex-col p-4 space-y-2"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* Page Content */}
+      <main className="pt-20 relative overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentPage}
+            custom={1}
+            variants={pageVariants}
+            initial="initial"
+            animate="in"
+            exit="out"
+            transition={pageTransition}
+            className="min-h-screen"
+          >
+            <CurrentPageComponent 
+              nextPage={nextPage} 
+              prevPage={prevPage}
+              currentPage={currentPage}
+              totalPages={pages.length}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </main>
 
       {/* Footer */}
       <Footer />
 
-      {/* Spotlight Search */}
-      <SpotlightSearch
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
+      {/* Page Indicators */}
+      <div className="fixed right-6 top-1/2 transform -translate-y-1/2 z-40 flex flex-col space-y-2">
+        {pages.map((_, index) => (
+          <motion.button
+            key={index}
+            onClick={() => goToPage(index)}
+            className={`w-3 h-3 rounded-full border-2 transition-colors ${
+              index === currentPage
+                ? 'bg-latte-blue dark:bg-mocha-blue border-latte-blue dark:border-mocha-blue'
+                : 'bg-transparent border-latte-overlay0 dark:border-mocha-overlay0 hover:border-latte-blue dark:hover:border-mocha-blue'
+            }`}
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 0.8 }}
+          />
+        ))}
+      </div>
 
-      {/* Scroll Progress Indicator */}
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-orange-600 transform-gpu z-50"
-        style={{
-          scaleX: 0,
-          transformOrigin: "0%",
-        }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: false, amount: 0 }}
-      />
-
-      {/* Floating Action Button for Search */}
-      <motion.button
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 2 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsSearchOpen(true)}
-        className="fixed bottom-5 right-5 w-20 h-10 bg-orange-400 hover:bg-orange-700 text-black rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center z-40 gap-3 flex-row md:hidden"
-        aria-label="Open search"
-      >
-        <span className="text-xs font-mono flex items-center justify-center flex-row gap-2">
-          <i className="bx bx-command flex items-center justify-center flex-row"></i>
-          K
-        </span>
-      </motion.button>
     </div>
   );
 }
