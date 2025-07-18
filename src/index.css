@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body::-webkit-scrollbar {
-  display: hidden;
+  display: none;
 }
