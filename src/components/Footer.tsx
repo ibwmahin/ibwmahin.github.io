@@ -1,122 +1,90 @@
+
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Facebook, Instagram, Linkedin, Github, Mail, Phone } from 'lucide-react';
+import { Github, Twitter, Linkedin, Mail, Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const socialLinks = [
-    {
-      name: 'Facebook',
-      icon: <Facebook size={20} />,
-      url: 'https://facebook.com/ibwmahin',
-      color: 'hover:text-latte-blue dark:hover:text-mocha-blue'
-    },
-    {
-      name: 'Instagram',
-      icon: <Instagram size={20} />,
-      url: 'https://instagram.com/ibwmahin',
-      color: 'hover:text-latte-pink dark:hover:text-mocha-pink'
-    },
-    {
-      name: 'LinkedIn',
-      icon: <Linkedin size={20} />,
-      url: 'https://linkedin.com/in/ibwmahin',
-      color: 'hover:text-latte-blue dark:hover:text-mocha-blue'
-    },
-    {
-      name: 'GitHub',
-      icon: <Github size={20} />,
-      url: 'https://github.com/ibwmahin',
-      color: 'hover:text-latte-subtext1 dark:hover:text-mocha-subtext1'
-    }
+    { icon: Github, href: "https://github.com/ibwmahin", label: "GitHub" },
+    { icon: Twitter, href: "https://twitter.com/ibwmahin", label: "Twitter" },
+    { icon: Linkedin, href: "https://linkedin.com/in/ibwmahin", label: "LinkedIn" },
+    { icon: Mail, href: "mailto:ibwmahin@gmail.com", label: "Email" },
   ];
 
-  const contactInfo = [
-    {
-      icon: <Mail size={16} />,
-      text: 'ibwmahin@gmail.com',
-      link: 'mailto:ibwmahin@gmail.com'
-    },
-    {
-      icon: <Phone size={16} />,
-      text: '+8801854333256',
-      link: 'tel:+8801854333256'
-    }
-  ];
+  const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-latte-surface0 dark:bg-mocha-surface0 border-t border-latte-surface1 dark:border-mocha-surface1 py-8 mt-16">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 items-center">
+    <footer className="bg-secondary/30 border-t border-border">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Brand */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-center md:text-left"
-          >
-            <h3 className="text-xl font-bold bg-gradient-to-r from-latte-blue to-latte-mauve dark:from-mocha-blue dark:to-mocha-mauve bg-clip-text text-transparent">
-              Portfolio
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold text-foreground">
+              Abdulla Al Mahin
             </h3>
-            <p className="text-latte-subtext1 dark:text-mocha-subtext1 text-sm mt-2">
-              Crafting digital experiences
+            <p className="text-muted-foreground">
+              Full Stack Web Developer passionate about creating beautiful, 
+              functional, and user-centered digital experiences.
             </p>
-          </motion.div>
+          </div>
 
-          {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex justify-center space-x-6"
-          >
-            {socialLinks.map((social, index) => (
-              <motion.a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`text-latte-subtext1 dark:text-mocha-subtext1 ${social.color} transition-colors`}
-                whileHover={{ scale: 1.1, y: -2 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {social.icon}
-              </motion.a>
-            ))}
-          </motion.div>
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-foreground">Quick Links</h4>
+            <nav className="flex flex-col space-y-2">
+              <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                Home
+              </a>
+              <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                Blog
+              </a>
+              <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                Contact
+              </a>
+              <a href="https://github.com/ibwmahin" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+                Projects
+              </a>
+            </nav>
+          </div>
 
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-center md:text-right space-y-2"
-          >
-            {contactInfo.map((info, index) => (
-              <div key={index} className="flex items-center justify-center md:justify-end space-x-2">
-                <div className="text-latte-blue dark:text-mocha-blue">
-                  {info.icon}
-                </div>
-                <a
-                  href={info.link}
-                  className="text-latte-subtext1 dark:text-mocha-subtext1 hover:text-latte-blue dark:hover:text-mocha-blue transition-colors text-sm"
+          {/* Connect */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-foreground">Connect</h4>
+            <div className="flex space-x-4">
+              {socialLinks.map((social) => (
+                <motion.a
+                  key={social.label}
+                  href={social.href}
+                  target={social.label !== 'Email' ? "_blank" : undefined}
+                  rel={social.label !== 'Email' ? "noopener noreferrer" : undefined}
+                  className="p-2 rounded-lg bg-secondary hover:bg-accent transition-all duration-300"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {info.text}
-                </a>
-              </div>
-            ))}
-          </motion.div>
+                  <social.icon className="h-5 w-5" />
+                  <span className="sr-only">{social.label}</span>
+                </motion.a>
+              ))}
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Feel free to reach out for collaborations or just a friendly hello!
+            </p>
+          </div>
         </div>
 
-        {/* Copyright */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="mt-8 pt-8 border-t border-latte-surface1 dark:border-mocha-surface1 text-center"
-        >
-          <p className="text-latte-subtext0 dark:text-mocha-subtext0 text-sm">
-            © 2024 Portfolio. Built with React, Tailwind CSS, and Framer Motion.
-          </p>
-        </motion.div>
+        {/* Bottom Section */}
+        <div className="border-t border-border pt-8 mt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+            <p className="text-sm text-muted-foreground flex items-center">
+              © {currentYear} Abdulla Al Mahin. Made with{' '}
+              <Heart className="h-4 w-4 mx-1 text-red-500" />{' '}
+              and lots of coffee.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Built with React, Tailwind CSS, and Framer Motion
+            </p>
+          </div>
+        </div>
       </div>
     </footer>
   );
