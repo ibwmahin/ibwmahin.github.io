@@ -89,19 +89,23 @@ const HeroSection: React.FC = () => {
             className="flex justify-center space-x-6 mb-12"
           >
             {socialLinks.map((social, index) => (
-              <motion.a
+                <motion.a
                 key={social.label}
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-secondary hover:bg-accent transition-all duration-300 hover:scale-110"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                className="p-3 rounded-full bg-secondary hover:bg-accent transition-all duration-300 group relative overflow-hidden"
+                whileHover={{ scale: 1.15, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 + index * 0.1 }}
               >
-                <social.icon className="h-6 w-6" />
+                <motion.div
+                  className="absolute inset-0 bg-primary opacity-0 group-hover:opacity-10 transition-opacity duration-300"
+                  initial={false}
+                />
+                <social.icon className="h-6 w-6 relative z-10 group-hover:text-primary transition-colors duration-300" />
                 <span className="sr-only">{social.label}</span>
               </motion.a>
             ))}
@@ -114,18 +118,41 @@ const HeroSection: React.FC = () => {
             transition={{ duration: 0.6, delay: 1.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <button
+            <motion.button
               onClick={scrollToNext}
-              className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 hover:transform hover:scale-105"
+              className="px-8 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              View My Work
-            </button>
-            <a
+              <span className="flex items-center gap-2">
+                View My Work
+                <motion.span
+                  className="inline-block"
+                  animate={{ x: [0, 4, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  →
+                </motion.span>
+              </span>
+            </motion.button>
+            <motion.a
               href="/contact"
-              className="px-8 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-secondary transition-all duration-300 hover:transform hover:scale-105"
+              className="px-8 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-secondary hover:border-primary transition-all duration-300 group"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
             >
-              Get In Touch
-            </a>
+              <span className="flex items-center gap-2">
+                Get In Touch
+                <motion.span
+                  className="inline-block"
+                  initial={{ rotate: 0 }}
+                  whileHover={{ rotate: 12 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  ✉️
+                </motion.span>
+              </span>
+            </motion.a>
           </motion.div>
         </div>
       </div>
