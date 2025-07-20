@@ -1,35 +1,49 @@
-
-import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
-import { Mail, MapPin, Phone, Send, Github, Twitter, Linkedin } from 'lucide-react';
-import Navigation from '../components/Navigation';
-import Footer from '../components/Footer';
-import { toast } from '@/hooks/use-toast';
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import {
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+  Github,
+  Twitter,
+  Linkedin,
+} from "lucide-react";
+import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
+import { toast } from "@/hooks/use-toast";
 
 const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.subject ||
+      !formData.message
+    ) {
       toast({
         title: "Error",
         description: "Please fill in all fields.",
@@ -47,15 +61,15 @@ const Contact: React.FC = () => {
         email: formData.email,
         subject: formData.subject,
         message: formData.message,
-        to_email: 'ibwmahin@gmail.com',
-        time: new Date().toLocaleString()
+        to_email: "ibwmahin@gmail.com",
+        time: new Date().toLocaleString(),
       };
 
       await emailjs.send(
-        'service_li5izpc',  // Service ID
-        'template_2ag350j', // Template ID
+        "service_li5izpc", // Service ID
+        "template_2ag350j", // Template ID
         templateParams,
-        'GWvjXulV3i2NZJ5jo' // Public Key
+        "GWvjXulV3i2NZJ5jo", // Public Key
       );
 
       toast({
@@ -65,17 +79,17 @@ const Contact: React.FC = () => {
 
       // Reset form
       setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
       });
-
     } catch (error) {
-      console.error('EmailJS error:', error);
+      console.error("EmailJS error:", error);
       toast({
         title: "Error",
-        description: "Failed to send message. Please try again or contact me directly.",
+        description:
+          "Failed to send message. Please try again or contact me directly.",
         variant: "destructive",
       });
     } finally {
@@ -88,37 +102,41 @@ const Contact: React.FC = () => {
       icon: Mail,
       title: "Email",
       details: "ibwmahin@gmail.com",
-      href: "mailto:ibwmahin@gmail.com"
+      href: "mailto:ibwmahin@gmail.com",
     },
     {
       icon: MapPin,
       title: "Location",
       details: "Bangladesh",
-      href: null
+      href: null,
     },
     {
       icon: Phone,
       title: "Available",
       details: "Mon - Fri, 9 AM - 6 PM",
-      href: null
-    }
+      href: null,
+    },
   ];
 
   const socialLinks = [
     { icon: Github, href: "https://github.com/ibwmahin", label: "GitHub" },
     { icon: Twitter, href: "https://twitter.com/ibwmahin", label: "Twitter" },
-    { icon: Linkedin, href: "https://linkedin.com/in/ibwmahin", label: "LinkedIn" },
+    {
+      icon: Linkedin,
+      href: "https://linkedin.com/in/ibwmahin",
+      label: "LinkedIn",
+    },
   ];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
-      
+
       <main className="pt-20">
         {/* Hero Section */}
         <section className="py-16 bg-secondary/20">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -128,8 +146,8 @@ const Contact: React.FC = () => {
                 Get In Touch
               </h1>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Have a project in mind or want to collaborate? I'd love to hear from you. 
-                Let's create something amazing together!
+                Have a project in mind or want to collaborate? I'd love to hear
+                from you. Let's create something amazing together!
               </p>
             </motion.div>
           </div>
@@ -151,9 +169,9 @@ const Contact: React.FC = () => {
                     Let's Connect
                   </h2>
                   <p className="text-lg text-muted-foreground mb-8">
-                    Whether you have a question, want to discuss a project, or just 
-                    want to say hello, feel free to reach out. I'm always open to 
-                    interesting conversations and opportunities.
+                    Whether you have a question, want to discuss a project, or
+                    just want to say hello, feel free to reach out. I'm always
+                    open to interesting conversations and opportunities.
                   </p>
                 </div>
 
@@ -171,16 +189,20 @@ const Contact: React.FC = () => {
                         <info.icon className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground">{info.title}</h3>
+                        <h3 className="font-semibold text-foreground">
+                          {info.title}
+                        </h3>
                         {info.href ? (
-                          <a 
+                          <a
                             href={info.href}
                             className="text-muted-foreground hover:text-primary transition-colors"
                           >
                             {info.details}
                           </a>
                         ) : (
-                          <p className="text-muted-foreground">{info.details}</p>
+                          <p className="text-muted-foreground">
+                            {info.details}
+                          </p>
                         )}
                       </div>
                     </motion.div>
@@ -194,7 +216,9 @@ const Contact: React.FC = () => {
                   transition={{ duration: 0.6, delay: 0.4 }}
                   className="pt-8"
                 >
-                  <h3 className="font-semibold text-foreground mb-4">Follow Me</h3>
+                  <h3 className="font-semibold text-foreground mb-4">
+                    Follow Me
+                  </h3>
                   <div className="flex space-x-4">
                     {socialLinks.map((social) => (
                       <motion.a
@@ -224,11 +248,18 @@ const Contact: React.FC = () => {
                 <h2 className="text-2xl font-bold mb-6 text-card-foreground">
                   Send Message
                 </h2>
-                
-                <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+
+                <form
+                  ref={formRef}
+                  onSubmit={handleSubmit}
+                  className="space-y-6"
+                >
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-card-foreground mb-2">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-card-foreground mb-2"
+                      >
                         Your Name
                       </label>
                       <input
@@ -242,9 +273,12 @@ const Contact: React.FC = () => {
                         placeholder="John Doe"
                       />
                     </div>
-                    
+
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-card-foreground mb-2">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-card-foreground mb-2"
+                      >
                         Email Address
                       </label>
                       <input
@@ -261,7 +295,10 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label
+                      htmlFor="subject"
+                      className="block text-sm font-medium text-card-foreground mb-2"
+                    >
                       Subject
                     </label>
                     <input
@@ -277,7 +314,10 @@ const Contact: React.FC = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-card-foreground mb-2">
+                    <label
+                      htmlFor="message"
+                      className="block text-sm font-medium text-card-foreground mb-2"
+                    >
                       Message
                     </label>
                     <textarea

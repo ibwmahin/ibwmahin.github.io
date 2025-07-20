@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -75,7 +74,9 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
 
   html {
@@ -88,7 +89,7 @@
   .text-gradient {
     @apply bg-gradient-to-r from-portfolio-light-gray to-portfolio-almost-white bg-clip-text text-transparent;
   }
-  
+
   .dark .text-gradient {
     @apply from-portfolio-almost-white to-portfolio-light-gray;
   }
