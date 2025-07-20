@@ -1,8 +1,7 @@
-
-import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { gsap } from 'gsap';
-import { Github, Twitter, Linkedin, ArrowDown } from 'lucide-react';
+import React, { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { Github, Twitter, Linkedin, ArrowDown } from "lucide-react";
 
 const HeroSection: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -12,11 +11,11 @@ const HeroSection: React.FC = () => {
     // Simple GSAP entrance animation only
     if (textRef.current) {
       const tl = gsap.timeline();
-      
+
       tl.fromTo(
         textRef.current.children,
         { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" }
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power2.out" },
       );
     }
   }, []);
@@ -24,23 +23,27 @@ const HeroSection: React.FC = () => {
   const socialLinks = [
     { icon: Github, href: "https://github.com/ibwmahin", label: "GitHub" },
     { icon: Twitter, href: "https://twitter.com/ibwmahin", label: "Twitter" },
-    { icon: Linkedin, href: "https://linkedin.com/in/ibwmahin", label: "LinkedIn" },
+    {
+      icon: Linkedin,
+      href: "https://linkedin.com/in/ibwmahin",
+      label: "LinkedIn",
+    },
   ];
 
   const scrollToNext = () => {
-    const nextSection = document.getElementById('about');
-    nextSection?.scrollIntoView({ behavior: 'smooth' });
+    const nextSection = document.getElementById("about");
+    nextSection?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <section 
+    <section
       ref={heroRef}
       className="min-h-screen pt-16 flex items-center justify-center relative bg-gradient-to-br from-background to-secondary/20"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div ref={textRef}>
           {/* Animated greeting */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -50,7 +53,7 @@ const HeroSection: React.FC = () => {
           </motion.p>
 
           {/* Main heading with staggered animation */}
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -60,7 +63,7 @@ const HeroSection: React.FC = () => {
           </motion.h1>
 
           {/* Subtitle with typewriter effect */}
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
@@ -70,26 +73,26 @@ const HeroSection: React.FC = () => {
           </motion.h2>
 
           {/* Description */}
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            I craft modern, responsive web applications using React, Tailwind CSS, 
-            and JavaScript. Passionate about creating exceptional user experiences 
-            and clean, maintainable code.
+            I craft modern, responsive web applications using React, Tailwind
+            CSS, and JavaScript. Passionate about creating exceptional user
+            experiences and clean, maintainable code.
           </motion.p>
 
           {/* Social Links */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1 }}
             className="flex justify-center space-x-6 mb-12"
           >
             {socialLinks.map((social, index) => (
-                <motion.a
+              <motion.a
                 key={social.label}
                 href={social.href}
                 target="_blank"
@@ -112,7 +115,7 @@ const HeroSection: React.FC = () => {
           </motion.div>
 
           {/* CTA Buttons */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.4 }}
@@ -135,30 +138,12 @@ const HeroSection: React.FC = () => {
                 </motion.span>
               </span>
             </motion.button>
-            <motion.a
-              href="/contact"
-              className="px-8 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-secondary hover:border-primary transition-all duration-300 group"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="flex items-center gap-2">
-                Get In Touch
-                <motion.span
-                  className="inline-block"
-                  initial={{ rotate: 0 }}
-                  whileHover={{ rotate: 12 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  ✉️
-                </motion.span>
-              </span>
-            </motion.a>
           </motion.div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 2 }}
