@@ -2,95 +2,392 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom portfolio theme with grayscale palette */
-@layer base {
+/* Import Roboto font matching template */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+
+/* CSS Variables matching template */
+:root {
+  --heading-font: "Roboto", Verdana, serif;
+  --heading-font-weight: 700;
+  --heading-color: #212529;
+  --heading-line-height: 1.2;
+
+  --bs-body-font-family: "Roboto", Verdana, sans-serif;
+  --bs-body-font-size: 0.9rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.7;
+  --bs-body-color: #333;
+
+  --bs-primary: #ff534a;
+  --bs-primary-dark: #d33a32;
+  --bs-secondary: #fdeee9;
+  --bs-black: #111;
+  --bs-light: #f1f1f0;
+  --bs-dark: #212529;
+  --bs-gray: #949494;
+
+  /* Added responsive spacing variables */
+  --container-padding: 1rem;
+  --section-padding: 3rem 0;
+  --sidebar-width: 16rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--bs-body-font-family);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  scroll-behavior: smooth;
+}
+
+/* Headings matching template */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading-font);
+  font-weight: var(--heading-font-weight);
+  line-height: var(--heading-line-height);
+  color: var(--heading-color);
+}
+
+/* Mobile menu button styles matching template */
+.menu-btn > span,
+.menu-btn > span::before,
+.menu-btn > span::after {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background-color: #212529;
+  transition-duration: 0.25s;
+}
+
+.menu-btn > span::before {
+  content: "";
+  top: -8px;
+}
+
+.menu-btn > span::after {
+  content: "";
+  top: 8px;
+}
+
+.nav-active .menu-btn > span {
+  transform: rotate(45deg);
+}
+
+.nav-active .menu-btn > span::before {
+  top: 0;
+  transform: rotate(0);
+}
+
+.nav-active .menu-btn > span::after {
+  top: 0;
+  transform: rotate(90deg);
+}
+
+/* Skill chart styles matching template */
+.skill-chart li {
+  width: 100%;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+.chart-border {
+  width: 100%;
+  height: 4px;
+  background-color: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.chart-percentage {
+  height: 100%;
+  background-color: #ff534a;
+  border-radius: 2px;
+  transition: width 1s ease-in-out;
+}
+
+.ninety-percent {
+  width: 90%;
+}
+.seventy-five-percent {
+  width: 75%;
+}
+.eighty-percent {
+  width: 80%;
+}
+.seventy-percent {
+  width: 70%;
+}
+.ninety-five-percent {
+  width: 95%;
+}
+
+/* Text effects matching template */
+.txt-fx {
+  overflow: hidden;
+  display: inline-block;
+}
+
+.txt-fx.slide-up .letter {
+  transform: translate3d(0, 1.2em, 0);
+  transition: transform 0.9s cubic-bezier(0.5, 0, 0.53, 1);
+}
+
+.aos-animate .txt-fx.slide-up .letter {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff534a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d33a32;
+}
+
+/* Focus styles for accessibility */
+button:focus,
+input:focus,
+textarea:focus,
+a:focus {
+  outline: 2px solid #ff534a;
+  outline-offset: 2px;
+}
+
+/* Enhanced responsive design with comprehensive breakpoints */
+
+/* Mobile (up to 576px) */
+@media (max-width: 576px) {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 6.7%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 6.7%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 6.7%;
-
-    --primary: 220 14.3% 95.9%;
-    --primary-foreground: 220.9 39.3% 11%;
-
-    --secondary: 220 14.3% 95.9%;
-    --secondary-foreground: 220.9 39.3% 11%;
-
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 6.7%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 6.7%;
-
-    --radius: 0.5rem;
+    --container-padding: 0.75rem;
+    --section-padding: 2rem 0;
+    --bs-body-font-size: 0.8rem;
   }
 
-  .dark {
-    --background: 0 0% 6.7%;
-    --foreground: 0 0% 93.3%;
+  .container {
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+  }
 
-    --card: 0 0% 6.7%;
-    --card-foreground: 0 0% 93.3%;
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5 {
+    font-size: 1.1rem;
+  }
+  h6 {
+    font-size: 1rem;
+  }
 
-    --popover: 0 0% 6.7%;
-    --popover-foreground: 0 0% 93.3%;
-
-    --primary: 0 0% 93.3%;
-    --primary-foreground: 0 0% 6.7%;
-
-    --secondary: 0 0% 13.3%;
-    --secondary-foreground: 0 0% 93.3%;
-
-    --muted: 0 0% 13.3%;
-    --muted-foreground: 0 0% 63.9%;
-
-    --accent: 0 0% 13.3%;
-    --accent-foreground: 0 0% 93.3%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-
-    --border: 0 0% 13.3%;
-    --input: 0 0% 13.3%;
-    --ring: 0 0% 83.1%;
+  .skill-chart li {
+    margin-bottom: 30px;
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+/* Tablet (577px - 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  :root {
+    --container-padding: 1rem;
+    --section-padding: 2.5rem 0;
+    --bs-body-font-size: 0.85rem;
   }
 
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings:
-      "rlig" 1,
-      "calt" 1;
+  h1 {
+    font-size: 2.5rem;
   }
-
-  html {
-    scroll-behavior: smooth;
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1.5rem;
+  }
+  h5 {
+    font-size: 1.25rem;
+  }
+  h6 {
+    font-size: 1.1rem;
   }
 }
 
-/* Custom animations */
-@layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-portfolio-light-gray to-portfolio-almost-white bg-clip-text text-transparent;
+/* Large Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  :root {
+    --container-padding: 1.25rem;
+    --section-padding: 3rem 0;
+    --sidebar-width: 18rem;
   }
 
-  .dark .text-gradient {
-    @apply from-portfolio-almost-white to-portfolio-light-gray;
+  h1 {
+    font-size: 3rem;
+  }
+  h2 {
+    font-size: 2.5rem;
+  }
+  h3 {
+    font-size: 2rem;
+  }
+  h4 {
+    font-size: 1.75rem;
+  }
+  h5 {
+    font-size: 1.5rem;
+  }
+  h6 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Desktop (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  :root {
+    --container-padding: 1.5rem;
+    --section-padding: 4rem 0;
+    --sidebar-width: 20rem;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+  }
+  h2 {
+    font-size: 3rem;
+  }
+  h3 {
+    font-size: 2.5rem;
+  }
+  h4 {
+    font-size: 2rem;
+  }
+  h5 {
+    font-size: 1.75rem;
+  }
+  h6 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Large Desktop (1441px and above) */
+@media (min-width: 1441px) {
+  :root {
+    --container-padding: 2rem;
+    --section-padding: 5rem 0;
+    --sidebar-width: 22rem;
+    --bs-body-font-size: 1rem;
+  }
+
+  h1 {
+    font-size: 4rem;
+  }
+  h2 {
+    font-size: 3.5rem;
+  }
+  h3 {
+    font-size: 3rem;
+  }
+  h4 {
+    font-size: 2.5rem;
+  }
+  h5 {
+    font-size: 2rem;
+  }
+  h6 {
+    font-size: 1.75rem;
+  }
+
+  .container {
+    max-width: 1600px;
+  }
+}
+
+/* Mobile and Tablet Navigation */
+@media (max-width: 1024px) {
+  header {
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.3s ease-out;
+    z-index: 40;
+    width: 100% !important;
+  }
+
+  .nav-active header {
+    transform: translate3d(0, 0, 0);
+  }
+
+  main {
+    margin-left: 0 !important;
+  }
+}
+
+/* Desktop Navigation */
+@media (min-width: 1025px) {
+  header {
+    width: var(--sidebar-width);
+  }
+
+  main {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+/* Enhanced responsive utilities */
+.responsive-text {
+  font-size: clamp(0.875rem, 2.5vw, 1.125rem);
+}
+
+.responsive-heading {
+  font-size: clamp(1.5rem, 5vw, 4rem);
+}
+
+.responsive-spacing {
+  padding: clamp(1rem, 3vw, 3rem);
+}
+
+/* Smooth transitions for responsive changes */
+* {
+  transition: font-size 0.3s ease, padding 0.3s ease, margin 0.3s ease;
+}
+
+/* Print styles */
+@media print {
+  header {
+    display: none;
+  }
+
+  main {
+    margin-left: 0 !important;
+  }
+
+  .no-print {
+    display: none;
   }
 }
