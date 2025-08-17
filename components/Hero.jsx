@@ -176,19 +176,19 @@ const Hero = () => {
           <div className="relative inline-block">
             <div
               ref={shapeRef}
-              className="absolute inset-0 bg-amber-400 transform scale-125 w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[400px] xl:h-[400px] 2xl:w-[450px] 2xl:h-[450px]"
-              style={{
-                borderRadius: "60% 40% 30% 70% / 60% 30% 70% 40%",
-                top: "-40px",
-                left: "-40px",
-              }}
+              className="absolute inset-0 w-60 sm:w-72 md:w-80 lg:w-96 
+              xl:w-[400px] 2xl:w-[450px] aspect-square transform scale-125 transition-all duration-700"
+             
             />
-            <img
-              ref={imageRef}
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-07-19%20at%2002.18.11_f8dd750c-Photoroom-TZmcTlozNQCAxnGaJDjLEzI6XUe7kH.png"
-              alt="Mahin"
-              className="relative z-10 w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 xl:w-80 xl:h-80 2xl:w-96 2xl:h-96 rounded-full object-cover object-center mx-auto"
-            />
+            <div className="relative z-10 w-48 sm:w-56 md:w-64 lg:w-80 xl:w-80 2xl:w-96 aspect-square overflow-hidden mx-auto rounded-full">
+
+              <img
+                ref={imageRef}
+                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202025-07-19%20at%2002.18.11_f8dd750c-Photoroom-TZmcTlozNQCAxnGaJDjLEzI6XUe7kH.png"
+                alt="Mahin"
+                className="w-full h-full object-cover object-center"
+              />
+            </div>
           </div>
         </div>
 
