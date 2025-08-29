@@ -14,10 +14,10 @@ interface HeaderProps {
 
 const Header = ({
   links = [
-    { label: "Home", href: "#hero" },
+    { label: "Home", href: "/" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
-    { label: "Newsletter", href: "/Newsletter" },
+    { label: "DevDiaries", href: "/DevDiaries" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Contact", href: "#contact" },
   ],
@@ -117,7 +117,9 @@ const Header = ({
               onClick={onSignIn}
               className="bg-[hsl(var(--background))] text-[hsl(var(--dark))] border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase px-4 py-2 hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
             >
-              Connect <span className="text-xl">☎</span>
+              <a href="#">
+                Connect <span className="text-xl">☎</span>
+              </a>{" "}
             </button>
           </div>
         </div>

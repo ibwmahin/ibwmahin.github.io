@@ -2,31 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+body::-webkit-scrollbar {
+  display: none;
+}
 /* Portfolio Design System - Minimal & Editorial */
 @layer base {
   :root {
     /* Base Colors */
     --background: 0 0% 100%;
     --foreground: 0 0% 6.7%;
-    
+
     /* Neutral Palette */
     --muted: 0 0% 42%;
     --muted-light: 0 0% 95%;
     --border: 0 0% 90%;
     --border-light: 0 0% 96%;
-    
+
     /* Dark Theme */
     --dark: 0 0% 5.1%;
     --dark-foreground: 0 0% 98%;
-    
+
     /* Accent Colors */
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 6.7%;
-    
+
     /* Interactive States */
     --hover: 0 0% 92%;
     --active: 0 0% 88%;
-    
+
     /* Spacing Scale */
     --space-xs: 0.5rem;
     --space-sm: 0.75rem;
@@ -36,14 +39,14 @@
     --space-2xl: 3rem;
     --space-3xl: 4rem;
     --space-4xl: 6rem;
-    
+
     /* Border Radius */
     --radius-sm: 0.5rem;
     --radius: 0.75rem;
     --radius-lg: 1rem;
     --radius-xl: 1.5rem;
     --radius-pill: 999px;
-    
+
     /* Typography Scale */
     --font-display: clamp(2.5rem, 8vw, 5rem);
     --font-hero: clamp(1.75rem, 4vw, 3rem);
@@ -53,21 +56,24 @@
     --font-body: 1rem;
     --font-small: 0.875rem;
     --font-xs: 0.75rem;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
-    --shadow: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
-    --shadow-xl: 0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
-    
+    --shadow:
+      0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg:
+      0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-xl:
+      0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
+
     /* Animations */
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
+
     /* Container */
     --container-max: 1200px;
     --container-padding: var(--space-lg);
-    
+
     /* Header */
     --header-height: 4rem;
   }
@@ -80,11 +86,17 @@
 
   body {
     @apply bg-white text-[hsl(var(--foreground))] font-sans antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     line-height: 1.6;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-medium tracking-tight;
   }
 }
@@ -94,67 +106,67 @@
   .container {
     @apply max-w-[var(--container-max)] mx-auto px-[var(--container-padding)];
   }
-  
+
   .btn {
     @apply inline-flex items-center justify-center rounded-[var(--radius)] px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
   }
-  
+
   .btn-primary {
     @apply bg-[hsl(var(--foreground))] text-white hover:bg-[hsl(var(--foreground))]/90;
   }
-  
+
   .btn-secondary {
     @apply bg-white border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--hover))];
   }
-  
+
   .btn-ghost {
     @apply hover:bg-[hsl(var(--hover))] text-[hsl(var(--foreground))];
   }
-  
+
   .card {
     @apply bg-white rounded-[var(--radius-lg)] border border-[hsl(var(--border-light))] shadow-[var(--shadow)] transition-shadow hover:shadow-[var(--shadow-lg)];
   }
-  
+
   .card-interactive {
     @apply cursor-pointer transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-xl)];
   }
-  
+
   .section-padding {
     @apply py-[var(--space-4xl)];
   }
-  
+
   .text-display {
     font-size: var(--font-display);
     @apply font-bold leading-tight tracking-tight;
   }
-  
+
   .text-hero {
     font-size: var(--font-hero);
     @apply font-semibold leading-tight tracking-tight;
   }
-  
+
   .text-h1 {
     font-size: var(--font-h1);
     @apply font-semibold leading-tight;
   }
-  
+
   .text-h2 {
     font-size: var(--font-h2);
     @apply font-semibold leading-tight;
   }
-  
+
   .text-muted {
     @apply text-[hsl(var(--muted))];
   }
-  
+
   .animate-fade-up {
     @apply opacity-0 translate-y-6 transition-all duration-700 ease-out;
   }
-  
+
   .animate-fade-up.in-view {
     @apply opacity-100 translate-y-0;
   }
-  
+
   .logo-pill {
     @apply inline-flex items-center justify-center px-6 py-3 rounded-full border border-[hsl(var(--border))] bg-white transition-all hover:scale-105 hover:shadow-[var(--shadow)];
   }
@@ -189,3 +201,4 @@
     outline-offset: 2px !important;
   }
 }
+
