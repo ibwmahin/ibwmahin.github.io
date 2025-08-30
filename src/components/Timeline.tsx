@@ -15,33 +15,25 @@ interface TimelineProps {
 const Timeline = ({
   items = [
     {
-      title: "Graphic Designer at Dewa-Dewi Tech",
+      title: "Freelance Graphic Designer",
       company: "",
       description:
-        "Graphic Designer at Dewa-Dewi Tech, creating creative and functional visual designs to support brands and digital products.",
-      years: "2015 - 2017",
-    },
-    {
-      title: "UI/UX Designer at Odama Studio",
-      company: "",
-      description:
-        "UI/UX Designer at Odama Studio, creating intuitive and engaging digital experiences through functional and aesthetic design.",
+        "Crafted visually striking graphics for startups, helping them build a powerful brand presence. Designed eye-catching visuals that boosted marketing impact and streamlined brand management.",
       years: "2017 - 2019",
     },
     {
-      title: "UX Researcher at Korsa Studio",
+      title: "UI/UX Designer at DataxPie",
       company: "",
       description:
-        "UX Researcher at Korsa Studio, connecting data and design to create intuitive and effective user experiences.",
-      years: "2018 - 2021",
+        "Designed intuitive and engaging digital experiences, blending functionality with aesthetics. Focused on user-centered design to deliver seamless interfaces that elevate customer satisfaction.",
+      years: "2019 - 2021",
     },
     {
-      title: "Product Designer at Apple, Inc",
+      title: "Web Developer at DigitalPathways & Visqode",
       company: "",
       description:
-        "Product Designer at Apple Inc., designing innovative experiences that connect technology and aesthetics to create iconic products",
-      years: "2021 - Now",
-      variant: "highlight",
+        "Developed dynamic and visually captivating websites by merging expertise in UI/UX, graphic design, and creative video editing. Integrated innovative AI solutions to create modern, high-performing digital platforms.",
+      years: "2022 - 2025",
     },
   ],
 }: TimelineProps) => {

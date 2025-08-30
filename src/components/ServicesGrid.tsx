@@ -15,23 +15,23 @@ const ServicesGrid = ({
     {
       title: "Responsive Web Development",
       description:
-        "Crafting modern, fast websites using HTML, CSS, Tailwind, GSAP, Framer Motion, JavaScript, and React.",
+        "Designing lightning-fast, mobile-first websites with HTML, CSS, Tailwind, GSAP, Framer Motion, JavaScript, and React—crafted for performance and elegance.",
       variant: "highlight",
     },
     {
-      title: "Start-up WordPress Development",
+      title: "Startup Solutions For WordPress Development",
       description:
-        "Building robust and scalable WordPress solutions for startups.",
+        "Delivering scalable, secure, and growth-focused WordPress platforms tailored to empower startups and ignite their digital presence.",
     },
     {
-      title: "Video Editing for Social Media & Ads",
+      title: "Social Media & Ad Video Production",
       description:
-        "Creating engaging video content to enhance social media presence and ad campaigns.",
+        "Producing scroll-stopping, high-converting video content that captivates audiences and elevates brand storytelling across social platforms.",
     },
     {
-      title: "Branding & UI/UX Desing",
+      title: "Brand Identity & UI/UX Design",
       description:
-        "Designing unique visuals to strengthen brand identity. & Developing intuitive and user-friendly interfaces to elevate user experiences.",
+        "Shaping distinctive brand identities and designing intuitive, user-centered interfaces that seamlessly blend aesthetics with functionality.",
     },
   ],
 }: ServicesGridProps) => {

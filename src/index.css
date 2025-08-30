@@ -2,8 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-body::-webkit-scrollbar {
-  display: none;
+/* Global.css (or index.css if you use Vite+React+Tailwind) */
+
+/* For Chrome, Edge, Safari */
+
+/* Global.css or index.css */
+
+/* For Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 10px; /* adjust thickness */
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111; /* dark track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff; /* white thumb */
+  border: 2px solid #111; /* pixel-box border */
+  border-radius: 1px; /* sharp edges */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ccc; /* hover effect */
+  border-radius: 1px; /* ensure still sharp */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #fff #111; /* thumb | track */
 }
 /* Portfolio Design System - Minimal & Editorial */
 @layer base {
@@ -201,4 +230,3 @@ body::-webkit-scrollbar {
     outline-offset: 2px !important;
   }
 }
-
