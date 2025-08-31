@@ -28,7 +28,7 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "lumen-ui-kit",
     title: "Lumen UI Kit",
     category: "Design System",
-    imageUrl: "https://images.unsplash.com/photo-1526045612212-70caf35c14df",
+    imageUrl: "https://images.ui8.net/redesign/hero-home.jpg",
     variant: "highlight",
     liveUrl: "https://lumen-ui.example.com",
     caseStudyUrl: "/case-studies/lumen-ui-kit",
@@ -39,7 +39,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "atlas-dashboard",
     title: "Atlas Dashboard",
     category: "Dashboard",
-    imageUrl: "https://images.unsplash.com/photo-1555949963-aa79dcee981d",
+    imageUrl:
+      "https://colorlib.com/wp/wp-content/uploads/sites/2/free-dashboard-templates-1.jpg",
     liveUrl: "https://atlas-dashboard.example.com",
     caseStudyUrl: "/case-studies/atlas-dashboard",
     description:
@@ -49,7 +50,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "orbit-landing",
     title: "Orbit Landing",
     category: "Landing Page",
-    imageUrl: "https://images.unsplash.com/photo-1509395176047-4a66953fd231",
+    imageUrl:
+      "https://images.ui8.net/uploads/detail-images-3_1582489903000.png",
     liveUrl: "https://orbit-landing.example.com",
     caseStudyUrl: "/case-studies/orbit-landing",
     description:
@@ -59,7 +61,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "flux-store",
     title: "Flux Store",
     category: "E-commerce",
-    imageUrl: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d",
+    imageUrl:
+      "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
     liveUrl: "https://flux-store.example.com",
     caseStudyUrl: "/case-studies/flux-store",
     description:
@@ -69,7 +72,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "motion-lab",
     title: "Motion Lab",
     category: "Animations",
-    imageUrl: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f",
+    imageUrl:
+      "https://cdn.dribbble.com/userupload/37694283/file/original-d4cfbafe2a3a0354ecdedec001ad9b9e.png?resize=752x&vertical=center",
     liveUrl: "https://motion-lab.example.com",
     caseStudyUrl: "/case-studies/motion-lab",
     description:
@@ -79,7 +83,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "edge-starter",
     title: "Edge Starter",
     category: "Starter Kit",
-    imageUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+    imageUrl:
+      "https://s3-alpha.figma.com/hub/file/2205264642510556532/1eb59d61-c481-44f1-8c6c-d28d531fe771-cover.png",
     liveUrl: "https://edge-starter.example.com",
     caseStudyUrl: "/case-studies/edge-starter",
     description:
@@ -121,7 +126,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "studio-cms",
     title: "Studio CMS",
     category: "Web Portal",
-    imageUrl: "https://images.unsplash.com/photo-1486953890729-3a6f8c5f7f1a",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsx4i9rJZPTLQQ0Vy0yWQjpVjj-SVi5Ya-DA&s",
     liveUrl: "https://studio-cms.example.com",
     caseStudyUrl: "/case-studies/studio-cms",
     description:
@@ -142,7 +148,8 @@ const DEFAULT_PROJECTS: Project[] = [
     id: "vector-ux",
     title: "Vector UX",
     category: "Design System",
-    imageUrl: "https://images.unsplash.com/photo-1532619187606-2f4f2b7016a8",
+    imageUrl:
+      "https://blog.thenounproject.com/wp-content/uploads/2023/04/figma-design-systems.png",
     liveUrl: "https://vector-ux.example.com",
     caseStudyUrl: "/case-studies/vector-ux",
     description:

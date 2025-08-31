@@ -14,7 +14,7 @@ interface HeaderProps {
 
 const Header = ({
   links = [
-    { label: "Home", href: "/" },
+    { label: "Home", href: "#hero" },
     { label: "About", href: "#about" },
     { label: "Services", href: "#services" },
     { label: "Portfolio", href: "#portfolio" },
@@ -116,7 +116,7 @@ const Header = ({
               onClick={onSignIn}
               className="bg-[hsl(var(--background))] text-[hsl(var(--dark))] border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase px-4 py-2 hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
             >
-              <a href="#">
+              <a href="#contact">
                 Connect <span className="text-xl">☎</span>
               </a>{" "}
             </button>

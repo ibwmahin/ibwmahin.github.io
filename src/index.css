@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Global.css (or index.css if you use Vite+React+Tailwind) */
 
 /* For Chrome, Edge, Safari */
