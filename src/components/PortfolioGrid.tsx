@@ -1,3 +1,35 @@
+// 📂 Categories
+// ├── Commercial Websites
+// │   ├── Business/Corporate
+// │   ├── E-commerce
+// │   ├── Landing Page
+// │   ├── Starter Kit
+// │   ├── Tooling
+// │   └── Dashboard
+// │
+// ├── Content and Media
+// │   ├── Blog/Personal
+// │   ├── News and Media
+// │   ├── Docs
+// │   └── Animations
+// │
+// ├── Community and Social Platforms
+// │   ├── Social Media
+// │   └── Forum/Community
+// │
+// ├── Portfolio and Showcase
+// │   ├── Portfolio
+// │   └── Design System
+// │
+// ├── Educational and Non-profit
+// │   ├── Educational
+// │   ├── Non-profit
+// │   └── Web Portal
+// │
+// └── Other
+//     └── (anything not listed above)
+//
+
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 type Project = {
@@ -23,120 +55,43 @@ const INITIAL_VISIBLE = 6;
   - Replace liveUrl / caseStudyUrl when ready
   - Each project has a sub-category (category) that maps to a major group
 --------------------------*/
+
+// =========================
+// 📂 Commercial Websites
+// Use one of these categories:
+// "Business/Corporate", "E-commerce", "Landing Page", "Starter Kit", "
+
+// Main categories:
+// 1. Commercial Websites
+// 2. Content and Media
+// 3. Community and Social Platforms
+// 4. Portfolio and Showcase
+// 5. Educational and Non-profit
+// 6. Other
+
 const DEFAULT_PROJECTS: Project[] = [
+  // -------------------------
+  // 1) Commercial Websites
+  // sub-category examples: "E-commerce", "Dashboard", "Landing Page", etc.
   {
-    id: "lumen-ui-kit",
-    title: "Lumen UI Kit",
-    category: "Design System",
-    imageUrl: "https://images.ui8.net/redesign/hero-home.jpg",
-    variant: "highlight",
-    liveUrl: "https://lumen-ui.example.com",
-    caseStudyUrl: "/case-studies/lumen-ui-kit",
-    description:
-      "Reusable component library (React + Tailwind) with Storybook docs and Figma token sync. Focus: accessibility and minimal bundle size.",
-  },
-  {
-    id: "atlas-dashboard",
-    title: "Atlas Dashboard",
-    category: "Dashboard",
-    imageUrl:
-      "https://colorlib.com/wp/wp-content/uploads/sites/2/free-dashboard-templates-1.jpg",
-    liveUrl: "https://atlas-dashboard.example.com",
-    caseStudyUrl: "/case-studies/atlas-dashboard",
-    description:
-      "High-density analytics dashboard using Next.js and client hydration strategies for fast UX.",
-  },
-  {
-    id: "orbit-landing",
-    title: "Orbit Landing",
-    category: "Landing Page",
-    imageUrl:
-      "https://images.ui8.net/uploads/detail-images-3_1582489903000.png",
-    liveUrl: "https://orbit-landing.example.com",
-    caseStudyUrl: "/case-studies/orbit-landing",
-    description:
-      "Performance-first marketing site built in Next.js. Figma -> pixel-perfect, GSAP hero interactions.",
-  },
-  {
-    id: "flux-store",
-    title: "Flux Store",
-    category: "E-commerce",
+    id: "Dlux-store",
+    title: "Dlux-store",
+    category: "E-commerce", // -> Commercial Websites
     imageUrl:
       "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
-    liveUrl: "https://flux-store.example.com",
-    caseStudyUrl: "/case-studies/flux-store",
+    liveUrl: "",
+    caseStudyUrl: "",
     description:
-      "Headless storefront with SSR and optimized checkout flow. Focus on LCP and conversion UX.",
-  },
-  {
-    id: "motion-lab",
-    title: "Motion Lab",
-    category: "Animations",
-    imageUrl:
-      "https://cdn.dribbble.com/userupload/37694283/file/original-d4cfbafe2a3a0354ecdedec001ad9b9e.png?resize=752x&vertical=center",
-    liveUrl: "https://motion-lab.example.com",
-    caseStudyUrl: "/case-studies/motion-lab",
-    description:
-      "Experiment playground for Framer Motion + GSAP sequences, with reduced-motion accessibility options.",
-  },
-  {
-    id: "edge-starter",
-    title: "Edge Starter",
-    category: "Starter Kit",
-    imageUrl:
-      "https://s3-alpha.figma.com/hub/file/2205264642510556532/1eb59d61-c481-44f1-8c6c-d28d531fe771-cover.png",
-    liveUrl: "https://edge-starter.example.com",
-    caseStudyUrl: "/case-studies/edge-starter",
-    description:
-      "Opinionated Next.js + Tailwind starter with edge functions, image optimization and Figma token workflow.",
+      "A E-commerce website for clothing, the websie this website is build for the cloting store (it's demo webesite for unlocking website contract me.)",
   },
 
-  // more projects (6)
-  {
-    id: "aria-access",
-    title: "Aria Access",
-    category: "Tooling",
-    imageUrl: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f",
-    liveUrl: "https://aria-access.example.com",
-    caseStudyUrl: "/case-studies/aria-access",
-    description:
-      "Accessibility audit tooling (frontend utilities) to catch regressions and speed up remediations.",
-  },
-  {
-    id: "glass-commerce",
-    title: "Glass Commerce",
-    category: "E-commerce",
-    imageUrl: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f",
-    liveUrl: "https://glass-commerce.example.com",
-    caseStudyUrl: "/case-studies/glass-commerce",
-    description:
-      "Fast browsing experience with ISR, smart caching and optimized media for product lists.",
-  },
-  {
-    id: "grid-portfolio",
-    title: "Grid Portfolio",
-    category: "Portfolio",
-    imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
-    liveUrl: "https://grid-portfolio.example.com",
-    caseStudyUrl: "/case-studies/grid-portfolio",
-    description:
-      "A performant portfolio template showing masonry grids, image streaming and minimal JS transitions.",
-  },
-  {
-    id: "studio-cms",
-    title: "Studio CMS",
-    category: "Web Portal",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsx4i9rJZPTLQQ0Vy0yWQjpVjj-SVi5Ya-DA&s",
-    liveUrl: "https://studio-cms.example.com",
-    caseStudyUrl: "/case-studies/studio-cms",
-    description:
-      "Headless CMS frontend with preview and design-token driven editor styles.",
-  },
+  // -------------------------
+  // 2) Content and Media
+  // sub-category examples: "Docs", "Animations", "Blog/Personal", etc.
   {
     id: "spark-docs",
     title: "Spark Docs",
-    category: "Docs",
+    category: "Docs", // -> Content and Media
     imageUrl:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3",
     liveUrl: "https://spark-docs.example.com",
@@ -144,19 +99,66 @@ const DEFAULT_PROJECTS: Project[] = [
     description:
       "MDX documentation site with live examples, copyable snippets and performance tuned builds.",
   },
+
+  // -------------------------
+  // 3) Community and Social Platforms
+  // sub-category examples: "Social Media", "Forum/Community"
   {
-    id: "vector-ux",
-    title: "Vector UX",
-    category: "Design System",
+    id: "dev-forum",
+    title: "Dev Forum",
+    category: "Forum/Community", // -> Community and Social Platforms
     imageUrl:
-      "https://blog.thenounproject.com/wp-content/uploads/2023/04/figma-design-systems.png",
-    liveUrl: "https://vector-ux.example.com",
-    caseStudyUrl: "/case-studies/vector-ux",
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
+    liveUrl: "https://forum.example.com",
+    caseStudyUrl: "/case-studies/dev-forum",
     description:
-      "Design system with Figma tokens mapped to code, emphasis on rhythm, spacing and typography scales.",
+      "Community forum with threads, replies, and reputation — focused on developer collaboration.",
+  },
+
+  // -------------------------
+  // 4) Portfolio and Showcase
+  // sub-category examples: "Portfolio", "Design System"
+  {
+    id: "grid-portfolio",
+    title: "Grid Portfolio",
+    category: "Portfolio", // -> Portfolio and Showcase
+    imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
+    liveUrl: "https://grid-portfolio.example.com",
+    caseStudyUrl: "/case-studies/grid-portfolio",
+    description:
+      "A performant portfolio template showing masonry grids, image streaming and minimal JS transitions.",
+  },
+
+  // -------------------------
+  // 5) Educational and Non-profit
+  // sub-category examples: "Educational", "Non-profit", "Web Portal"
+  {
+    id: "studio-cms",
+    title: "Studio CMS",
+    category: "Web Portal", // -> Educational and Non-profit
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsx4i9rJZPTLQQ0Vy0yWQjpVjj-SVi5Ya-DA&s",
+    liveUrl: "https://studio-cms.example.com",
+    caseStudyUrl: "/case-studies/studio-cms",
+    description:
+      "Headless CMS frontend with preview and design-token driven editor styles.",
+  },
+
+  // -------------------------
+  // 6) Other
+  // Any category not present in SUB_TO_MAJOR will fall here.
+  {
+    id: "ai-lab",
+    title: "AI Playground",
+    category: "AI Project", // -> not mapped, will show under "Other"
+    imageUrl:
+      "https://images.unsplash.com/photo-1531497865142-1ec9f3a5b1a8?auto=format&fit=crop&w=1400&q=80",
+    liveUrl: "https://ai-playground.example.com",
+    caseStudyUrl: "/case-studies/ai-lab",
+    description:
+      "Playground for AI/ML experiments, visualizations, and prototypes.",
   },
 ];
-
 /* -------------------------
   Mapping: sub-category -> major group
   Major groups (order preserved): 
@@ -197,6 +199,7 @@ const SUB_TO_MAJOR: Record<string, string> = {
   "Non-profit": "Educational and Non-profit",
   "Web Portal": "Educational and Non-profit",
 };
+
 /* preferred order for UI */
 const MAJOR_ORDER = [
   "All",
