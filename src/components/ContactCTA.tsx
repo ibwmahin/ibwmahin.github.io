@@ -66,7 +66,7 @@ export default function ContactSection() {
   return (
     <motion.section
       id="contact"
-      className="py-16 px-4 sm:py-20 bg-gray-50"
+      className="py-16 px-4 sm:py-20 bg-black"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -96,7 +96,7 @@ export default function ContactSection() {
               value={formData.from_name}
               onChange={handleInputChange}
               required
-              className="flex-1 h-10 bg-white border border-[#e5e5e5] rounded text-sm sm:text-base"
+              className="flex-1 h-10 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base"
             />
             <Input
               type="email"
@@ -105,7 +105,7 @@ export default function ContactSection() {
               value={formData.reply_to}
               onChange={handleInputChange}
               required
-              className="flex-1 h-10 bg-white border border-[#e5e5e5] rounded text-sm sm:text-base"
+              className="flex-1 h-10 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base"
             />
           </motion.div>
 
@@ -115,7 +115,7 @@ export default function ContactSection() {
             placeholder="Your Phone (optional)"
             value={formData.phone}
             onChange={handleInputChange}
-            className="h-10 bg-white border border-[#e5e5e5] rounded text-sm sm:text-base"
+            className="h-10 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base"
           />
 
           {/* Message */}
@@ -125,7 +125,7 @@ export default function ContactSection() {
             value={formData.message}
             onChange={handleInputChange}
             required
-            className="h-32 bg-white border border-[#e5e5e5] rounded text-sm sm:text-base resize-none"
+            className="h-32 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base resize-none"
           />
 
           {/* Submit Button */}
@@ -151,4 +151,3 @@ export default function ContactSection() {
     </motion.section>
   );
 }
-

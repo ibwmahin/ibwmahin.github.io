@@ -27,42 +27,69 @@ const Header = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu with Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const scrollToSection = (href: string) => {
-    if (href.startsWith("#")) {
-      const element = document.querySelector(href);
-      element?.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false);
-    }
+    if (!href.startsWith("#")) return;
+    const el = document.querySelector(href);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsMenuOpen(false);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const toggleMenu = () => setIsMenuOpen((s) => !s);
+
+  // only the nav links box will blur/become opaque when scrolled
+  const desktopNavBoxClass = `flex items-center space-x-6 px-4 py-2 border-2 shadow-sm rounded-lg transition-all duration-300 ${
+    isScrolled
+      ? "backdrop-blur-sm bg-slate-900/75 border-white/10"
+      : "bg-black/20 border-white/6"
+  }`;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
       <nav
         aria-label="Primary"
-        className="container flex items-center justify-center h-16 px-4"
+        className="container mx-auto max-w-6xl flex items-center justify-center h-16 px-4"
+        role="navigation"
       >
-        {/* Hamburger Button (visible on small screens) */}
+        {/* Mobile Hamburger */}
         <button
-          className="md:hidden absolute right-4 text-[hsl(var(--dark))] text-2xl font-bold focus:outline-none border-2 border-[hsl(var(--dark))] px-2 py-1"
+          type="button"
+          aria-expanded={isMenuOpen}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          className="md:hidden absolute right-4 top-3 z-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
         >
-          <i className={`fas ${isMenuOpen ? "fa-times" : "fa-bars"}`}></i>
+          {isMenuOpen ? (
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" aria-hidden>
+              <path
+                fill="currentColor"
+                d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7A1 1 0 0 0 5.7 7.11L10.59 12l-4.9 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.9a1 1 0 0 0 1.41-1.41L13.41 12l4.9-4.89a1 1 0 0 0 0-1.4z"
+              />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" aria-hidden>
+              <path
+                fill="currentColor"
+                d="M4 6h16a1 1 0 1 0 0-2H4a1 1 0 1 0 0 2zm16 7H4a1 1 0 1 0 0 2h16a1 1 0 1 0 0-2zM4 20h16a1 1 0 1 0 0-2H4a1 1 0 1 0 0 2z"
+              />
+            </svg>
+          )}
         </button>
 
-        {/* Desktop Layout: Logo, Nav Links, Connect Button */}
+        {/* Desktop layout */}
         <div className="hidden md:flex md:items-center md:justify-between md:w-full gap-12">
           {/* Logo */}
           <div
@@ -72,41 +99,42 @@ const Header = ({
           >
             <button
               onClick={() => scrollToSection("#hero")}
-              className="text-xl font-extrabold uppercase tracking-tighter text-[hsl(var(--dark))] hover:[text-shadow:2px_2px_4px_rgba(0,0,0,0.3)]"
+              className="text-xl font-extrabold uppercase tracking-tighter flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
-              {logoText}
+              <span>{logoText}</span>
+              <span
+                className="w-2 h-2 rounded-full bg-cyan-500 inline-block"
+                aria-hidden
+              />
             </button>
           </div>
 
-          {/* Navigation Links */}
-          <div
-            className={`flex items-center space-x-6 px-4 py-2 border-2 border-[hsl(var(--dark))] bg-[hsl(var(--background))] [filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] transition-all duration-300`}
-          >
+          {/* NAV LINKS BOX (only this area blurs on scroll) */}
+          <div className={desktopNavBoxClass}>
             {links.map((link) =>
               link.href.startsWith("#") ? (
                 <button
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
-                  className="text-sm font-bold uppercase text-[hsl(var(--dark))] hover:animate-glitch relative group"
+                  className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-300"
                 >
                   {link.label}
-                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-[hsl(var(--dark))] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </button>
               ) : (
                 <Link
                   key={link.href}
                   to={link.href}
-                  className="text-sm font-bold uppercase text-[hsl(var(--dark))] hover:animate-glitch relative group"
-                  onClick={() => setIsMenuOpen(false)}
+                  className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-300"
                 >
                   {link.label}
-                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-[hsl(var(--dark))] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </Link>
               ),
             )}
           </div>
 
-          {/* Connect Button */}
+          {/* Connect CTA (keeps its visibility; not blurred) */}
           <div
             className={`transition-opacity duration-300 ${
               isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"
@@ -114,62 +142,67 @@ const Header = ({
           >
             <button
               onClick={onSignIn}
-              className="bg-[hsl(var(--background))] text-[hsl(var(--dark))] border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase px-4 py-2 hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
+              className="inline-flex items-center gap-2 bg-cyan-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-md shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-300 transition"
             >
-              <a href="#contact">
-                Connect <span className="text-xl">☎</span>
-              </a>{" "}
+              <a href="#contact" className="flex items-center gap-2">
+                Connect{" "}
+                <span className="text-xl" aria-hidden>
+                  ☎
+                </span>
+              </a>
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu: Contains Logo, Nav Links, and Connect Button */}
+        {/* Mobile slide-in menu (unchanged) */}
         <div
-          className={`md:hidden fixed top-16 left-0 right-0 h-[calc(100vh-4rem)] bg-[hsl(var(--background))] [filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] transition-all duration-300 ease-in-out ${
+          aria-hidden={!isMenuOpen}
+          className={`md:hidden fixed top-16 left-0 right-0 h-[calc(100vh-4rem)] bg-slate-900 text-white transition-transform duration-300 ease-in-out transform ${
             isMenuOpen ? "translate-x-0" : "translate-x-full"
-          } flex flex-col items-center justify-center space-y-6`}
+          } flex flex-col items-center justify-center space-y-6 px-6`}
         >
-          {/* Logo */}
           <button
             onClick={() => scrollToSection("#hero")}
-            className="text-xl font-extrabold uppercase tracking-tighter text-[hsl(var(--dark))] hover:[text-shadow:2px_2px_4px_rgba(0,0,0,0.3)]"
+            className="text-xl font-extrabold uppercase tracking-tighter text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-cyan-300"
           >
             {logoText}
           </button>
 
-          {/* Navigation Links */}
-          {links.map((link) =>
-            link.href.startsWith("#") ? (
-              <button
-                key={link.href}
-                onClick={() => scrollToSection(link.href)}
-                className="text-sm font-bold uppercase text-[hsl(var(--dark))] hover:animate-glitch relative group"
-              >
-                {link.label}
-                <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-[hsl(var(--dark))] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              </button>
-            ) : (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="text-sm font-bold uppercase text-[hsl(var(--dark))] hover:animate-glitch relative group"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-                <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-[hsl(var(--dark))] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              </Link>
-            ),
-          )}
+          <nav className="flex flex-col items-center gap-4 w-full max-w-md">
+            {links.map((link) =>
+              link.href.startsWith("#") ? (
+                <button
+                  key={link.href}
+                  onClick={() => scrollToSection(link.href)}
+                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                >
+                  {link.label}
+                  <span className="absolute left-6 bottom-3 w-6 h-[2px] bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                </button>
+              ) : (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                >
+                  {link.label}
+                </Link>
+              ),
+            )}
+          </nav>
 
-          {/* Connect Button */}
           <button
             onClick={() => {
               onSignIn();
               setIsMenuOpen(false);
             }}
-            className="bg-[hsl(var(--background))] text-[hsl(var(--dark))] border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase px-4 py-2 hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
+            className="bg-cyan-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-md hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-300 transition"
           >
-            Connect <span className="text-xl">☎</span>
+            Connect{" "}
+            <span className="text-xl" aria-hidden>
+              ☎
+            </span>
           </button>
         </div>
       </nav>

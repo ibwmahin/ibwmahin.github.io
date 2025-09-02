@@ -6,64 +6,70 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Global.css (or index.css if you use Vite+React+Tailwind) */
-
-/* For Chrome, Edge, Safari */
-
-/* Global.css or index.css */
-
+/* Scrollbar Styles */
 /* For Chrome, Edge, Safari */
 ::-webkit-scrollbar {
-  width: 10px; /* adjust thickness */
+  width: 10px;
   height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #111; /* dark track */
+  background: #fff; /* Inverted from #111 to white */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #fff; /* white thumb */
-  border: 2px solid #111; /* pixel-box border */
-  border-radius: 1px; /* sharp edges */
+  background: #111; /* Inverted from #fff to dark */
+  border: 2px solid #fff; /* Inverted border to match track */
+  border-radius: 1px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ccc; /* hover effect */
-  border-radius: 1px; /* ensure still sharp */
+  background: #333; /* Adjusted hover for contrast (darker than #ccc) */
+  border-radius: 1px;
 }
 
 /* For Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #fff #111; /* thumb | track */
+  scrollbar-color: #111 #fff; /* Inverted: thumb #111, track #fff */
 }
-/* Portfolio Design System - Minimal & Editorial */
+
+/* Portfolio Design System */
 @layer base {
   :root {
     /* Base Colors */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 6.7%;
+    --background: 0 0% 5.1%; /* Inverted from 0 0% 100% to --dark */
+    --foreground: 0 0% 100%; /* Inverted from 0 0% 6.7% to white */
 
     /* Neutral Palette */
     --muted: 0 0% 42%;
     --muted-light: 0 0% 95%;
-    --border: 0 0% 90%;
-    --border-light: 0 0% 96%;
+    --border: 0 0% 20%; /* Darkened from 0 0% 90% for contrast */
+    --border-light: 0 0% 30%; /* Darkened from 0 0% 96% for contrast */
 
     /* Dark Theme */
-    --dark: 0 0% 5.1%;
-    --dark-foreground: 0 0% 98%;
+    --dark: 0 0% 100%; /* Inverted to white */
+    --dark-foreground: 0 0% 5.1%; /* Inverted to dark */
 
     /* Accent Colors */
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 6.7%;
+    --accent: 0 0% 20%; /* Darkened from 0 0% 96.1% for contrast */
+    --accent-foreground: 0 0% 100%; /* Inverted to white */
 
     /* Interactive States */
-    --hover: 0 0% 92%;
-    --active: 0 0% 88%;
+    --hover: 0 0% 15%; /* Darkened from 0 0% 92% for dark theme */
+    --active: 0 0% 10%; /* Darkened from 0 0% 88% for dark theme */
 
-    /* Spacing Scale */
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 100% / 0.05); /* Inverted shadow color */
+    --shadow:
+      0 4px 6px -1px hsl(0 0% 100% / 0.1), 0 2px 4px -2px hsl(0 0% 100% / 0.1);
+    --shadow-lg:
+      0 10px 15px -3px hsl(0 0% 100% / 0.1), 0 4px 6px -4px hsl(0 0% 100% / 0.1);
+    --shadow-xl:
+      0 20px 25px -5px hsl(0 0% 100% / 0.1),
+      0 8px 10px -6px hsl(0 0% 100% / 0.1);
+
+    /* Unchanged properties (spacing, radius, typography, etc.) */
     --space-xs: 0.5rem;
     --space-sm: 0.75rem;
     --space-md: 1rem;
@@ -72,15 +78,11 @@ html {
     --space-2xl: 3rem;
     --space-3xl: 4rem;
     --space-4xl: 6rem;
-
-    /* Border Radius */
     --radius-sm: 0.5rem;
     --radius: 0.75rem;
     --radius-lg: 1rem;
     --radius-xl: 1.5rem;
     --radius-pill: 999px;
-
-    /* Typography Scale */
     --font-display: clamp(2.5rem, 8vw, 5rem);
     --font-hero: clamp(1.75rem, 4vw, 3rem);
     --font-h1: clamp(1.5rem, 3vw, 2.25rem);
@@ -89,25 +91,10 @@ html {
     --font-body: 1rem;
     --font-small: 0.875rem;
     --font-xs: 0.75rem;
-
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
-    --shadow:
-      0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-lg:
-      0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
-    --shadow-xl:
-      0 20px 25px -5px hsl(0 0% 0% / 0.1), 0 8px 10px -6px hsl(0 0% 0% / 0.1);
-
-    /* Animations */
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-    /* Container */
     --container-max: 1200px;
     --container-padding: var(--space-lg);
-
-    /* Header */
     --header-height: 4rem;
   }
 }
@@ -118,7 +105,7 @@ html {
   }
 
   body {
-    @apply bg-white text-[hsl(var(--foreground))] font-sans antialiased;
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-sans antialiased;
     font-family:
       -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
     line-height: 1.6;
@@ -134,7 +121,6 @@ html {
   }
 }
 
-/* Component Styles */
 @layer components {
   .container {
     @apply max-w-[var(--container-max)] mx-auto px-[var(--container-padding)];
@@ -145,11 +131,11 @@ html {
   }
 
   .btn-primary {
-    @apply bg-[hsl(var(--foreground))] text-white hover:bg-[hsl(var(--foreground))]/90;
+    @apply bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--foreground))]/90;
   }
 
   .btn-secondary {
-    @apply bg-white border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--hover))];
+    @apply bg-[hsl(var(--background))] border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--hover))];
   }
 
   .btn-ghost {
@@ -157,7 +143,7 @@ html {
   }
 
   .card {
-    @apply bg-white rounded-[var(--radius-lg)] border border-[hsl(var(--border-light))] shadow-[var(--shadow)] transition-shadow hover:shadow-[var(--shadow-lg)];
+    @apply bg-[hsl(var(--background))] rounded-[var(--radius-lg)] border border-[hsl(var(--border-light))] shadow-[var(--shadow)] transition-shadow hover:shadow-[var(--shadow-lg)];
   }
 
   .card-interactive {
@@ -201,7 +187,7 @@ html {
   }
 
   .logo-pill {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full border border-[hsl(var(--border))] bg-white transition-all hover:scale-105 hover:shadow-[var(--shadow)];
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--background))] transition-all hover:scale-105 hover:shadow-[var(--shadow)];
   }
 
   /* Screen Reader Utilities */

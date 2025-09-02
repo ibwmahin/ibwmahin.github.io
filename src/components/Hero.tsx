@@ -48,9 +48,8 @@ const Hero: React.FC = () => {
   const paraRef = useRef<HTMLParagraphElement | null>(null);
   const ctaRefs = useRef<Array<HTMLAnchorElement | null>>([]);
 
-  // push refs helpers
+  // reset and push refs helpers
   ctaRefs.current = [];
-
   const addCtaRef = (el: HTMLAnchorElement | null) => {
     if (el && !ctaRefs.current.includes(el)) ctaRefs.current.push(el);
   };
@@ -58,7 +57,6 @@ const Hero: React.FC = () => {
   useEffect(() => {
     if (!heroRef.current) return;
     const ctx = gsap.context(() => {
-      // hero parallax on pointer move
       const headline = headlineRef.current;
       const para = paraRef.current;
       const ctas = ctaRefs.current.filter(Boolean) as HTMLAnchorElement[];
@@ -68,7 +66,7 @@ const Hero: React.FC = () => {
         const rect = heroRef.current!.getBoundingClientRect();
         const rx = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
         const ry = (e.clientY - rect.top) / rect.height - 0.5;
-        // small, subtle movements
+
         gsap.to(headline, {
           x: rx * 14,
           y: ry * 8,
@@ -102,24 +100,23 @@ const Hero: React.FC = () => {
       heroRef.current!.addEventListener("pointerleave", resetMotion);
       heroRef.current!.addEventListener("pointercancel", resetMotion);
 
-      // cleanup
       return () => {
         heroRef.current?.removeEventListener("pointermove", pm);
         heroRef.current?.removeEventListener("pointerleave", resetMotion);
         heroRef.current?.removeEventListener("pointercancel", resetMotion);
       };
     }, heroRef);
-    // ctx.revert will clean everything inside context
+
     return () => ctx.revert();
   }, []);
 
   return (
     <div
       ref={heroRef}
-      className="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-100 h-[90svh] flex justify-center items-center"
+      className="relative overflow-hidden h-[90svh] flex justify-center items-center bg-black"
     >
-      {/* socials inside hero: absolute on desktop, below CTAs on mobile */}
-      <div className="hidden sm:flex flex-row absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 gap-3">
+      {/* Desktop socials: absolute center-bottom */}
+      <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30 gap-3">
         {SOCIALS.map((s) => (
           <a
             key={s.id}
@@ -127,7 +124,7 @@ const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
-            className="w-10 h-10 flex items-center justify-center border-2 border-[hsl(var(--dark))] bg-[hsl(var(--background))] text-[hsl(var(--dark))] rounded-none hover:bg-[hsl(var(--dark))] hover:text-white transition-transform transform focus:outline-none focus-visible:ring-0"
+            className="w-10 h-10 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300"
           >
             <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
           </a>
@@ -142,13 +139,13 @@ const Hero: React.FC = () => {
         viewport={{ once: true, amount: 0.25 }}
         variants={sectionVariants}
       >
-        <p className="text-lg sm:text-xl mb-3 text-gray-700">
+        <p className="text-lg sm:text-xl mb-3 text-white">
           Hi! I'm Abdulla Al Mahin 👋
         </p>
 
         <motion.h1
           ref={headlineRef}
-          className="text-4xl sm:text-6xl font-bold mb-6 text-gray-900 leading-tight"
+          className="text-4xl sm:text-6xl font-bold mb-6 text-white leading-tight"
           initial={{ scale: 0.995 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -160,7 +157,7 @@ const Hero: React.FC = () => {
 
         <motion.p
           ref={paraRef}
-          className="text-base sm:text-lg text-gray-500 max-w-3xl mx-auto mb-8"
+          className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto mb-8"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.08, duration: 0.6 }}
@@ -174,9 +171,9 @@ const Hero: React.FC = () => {
           <motion.a
             ref={addCtaRef}
             href="#contact"
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 bg-black text-white border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase px-4 py-2 hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:text-black hover:bg-white hover:animate-glitch transition-all duration-300 rounded-none"
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 bg-cyan-500 text-black border-2 border-transparent text-sm font-bold uppercase px-5 py-3 hover:bg-cyan-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
           >
             CONNECT WITH ME{" "}
             <FontAwesomeIcon icon={faArrowRight} className="ml-1" />
@@ -187,15 +184,15 @@ const Hero: React.FC = () => {
             href="/resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 bg-[hsl(var(--background))] text-[hsl(var(--dark))] border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase px-4 py-2 hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300 rounded-none"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="inline-flex items-center gap-3 bg-transparent text-white border-2 border-white/10 text-sm font-bold uppercase px-5 py-3 hover:bg-white hover:text-black transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
           >
             MY RESUME <FontAwesomeIcon icon={faFile} className="ml-1" />
           </motion.a>
         </div>
 
-        {/* mobile socials: placed below CTAs */}
+        {/* mobile socials: below CTAs */}
         <div className="flex sm:hidden justify-center gap-3 mt-5">
           {SOCIALS.map((s) => (
             <a
@@ -204,7 +201,7 @@ const Hero: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-9 h-9 flex items-center justify-center border-2 border-[hsl(var(--dark))] bg-[hsl(var(--background))] text-[hsl(var(--dark))] rounded-none hover:bg-[hsl(var(--dark))] hover:text-white transition-transform transform hover:scale-105 focus:outline-none focus-visible:ring-0"
+              className="w-9 h-9 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
             </a>

@@ -26,7 +26,7 @@ const CompanyRow = ({
           {companies.map((company, index) => (
             <div
               key={company.name}
-              className="flex items-center space-x-6 px-4 py-2 border-2 border-[hsl(var(--dark))] bg-[hsl(var(--background))] [filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] transition-all duration-300"
+              className="flex items-center space-x-6 px-4 py-2 hover:scale-110 cursor-default duration-150 hover:text-cyan-300 hover:shadow-cyan-300/60 hover:shadow-lg rounded-sm "
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {company.logoUrl ? (

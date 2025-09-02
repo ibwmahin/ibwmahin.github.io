@@ -40,35 +40,28 @@ const Footer = ({
   };
 
   const renderSocialIcon = (iconName: string) => {
-    const iconProps = {
-      width: "20",
-      height: "20",
-      fill: "currentColor",
-      viewBox: "0 0 20 20",
-    };
-
     switch (iconName) {
       case "linkedin":
-        return <i className="bxl  bx-linkedin-square text-2xl"></i>;
+        return <i className="bxl bx-linkedin-square text-2xl"></i>;
       case "github":
-        return <i className="bxl  bx-github text-2xl"></i>;
+        return <i className="bxl bx-github text-2xl"></i>;
       case "instagram":
-        return <i className="bxl  bx-instagram text-2xl"></i>;
+        return <i className="bxl bx-instagram text-2xl"></i>;
       case "facebook":
-        return <i className="bxl  bx-facebook-square text-2xl"></i>;
+        return <i className="bxl bx-facebook-square text-2xl"></i>;
       default:
         return null;
     }
   };
 
   return (
-    <footer className="bg-[hsl(var(--dark))] text-white">
+    <footer className="bg-black text-white">
       <div className="container py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
             <h3 className="text-xl font-semibold mb-4">{logoText}</h3>
-            <p className="text-white/70 leading-relaxed mb-6 max-w-md">
+            <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
               {aboutText}
             </p>
             <div className="flex space-x-4">

@@ -79,7 +79,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
           {/* LEFT: badge, heading, large video image */}
           <div className="space-y-6">
             <div className="flex justify-start items-start">
-              <span className="flex items-center  space-x-6 px-4 py-2 border-2 border-[hsl(var(--dark))] bg-[hsl(var(--background))] [filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] transition-all duration-300">
+              <span className="flex items-center  space-x-6 px-4 py-2 rounded-sm border-2 border-cyan-300 hover:bg-cyan-700/20  transition-all ">
                 About Me
               </span>
             </div>
@@ -93,7 +93,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
               <button
                 onClick={() => setOpen(true)}
                 aria-label="Play video"
-                className="group w-full overflow-hidden aspect-[5/3] focus:outline-none    border-2 border-[hsl(var(--dark))] text-sm font-bold uppercase  hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
+                className="group w-full overflow-hidden aspect-[5/3] focus:outline-none    border-2 border-cyan-400 text-sm font-bold uppercase  hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
                 type="button"
               >
                 <img
@@ -105,7 +105,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
 
                 {/* Play overlay circle */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="pointer-events-none w-10 h-10 md:w-14 md:h-14 bg-white/95 flex items-center justify-center shadow-lg transform transition-all group-hover:scale-105 border-2 border-[hsl(var(--dark))] ">
+                  <div className="pointer-events-none w-10 h-10 md:w-14 md:h-14 bg-cyan-400/95 rounded-sm flex items-center justify-center shadow-lg transform transition-all group-hover:scale-105 border-2 border-[hsl(var(--dark))] ">
                     <svg
                       className="w-8 h-8 md:w-10 md:h-10"
                       viewBox="0 0 24 24"
@@ -130,7 +130,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
               <div className="flex flex-col items-end gap-10">
                 {stats.map((s, i) => (
                   <div key={`${s.value}-${i}`} className="text-right">
-                    <div className="text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-none">
+                    <div className="text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-none  text-cyan-300">
                       {s.value}
                     </div>
                     <div className="mt-2 text-sm text-gray-500 leading-relaxed max-w-[22rem]">
@@ -155,7 +155,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
             <button
               onClick={() => setOpen(false)}
               aria-label="Close video"
-              className="absolute top-4 right-4 z-20 rounded-full bg-white p-2 shadow"
+              className="absolute top-4 right-4 z-20 rounded-full bg-cyan-100 p-2 shadow"
             >
               <svg
                 className="w-4 h-4"
