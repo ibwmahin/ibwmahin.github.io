@@ -38,12 +38,11 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
   stats = [
     {
       value: "+32",
-      label: "More Then just Coding, it's about the Dream You have.",
+      label: "More Than just Coding — it’s about the dream you have.",
     },
     {
       value: "+28",
-      label:
-        "My step-by-step to simplify your Excellent Project. Our step-by-step to simplify",
+      label: "My step-by-step to simplify your excellent project.",
     },
   ],
   videoUrl = "https://youtu.be/C1wHOQU5a3o?si=9guwywLQlcVrbAb9",
@@ -73,19 +72,23 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
   }, []);
 
   return (
-    <section id="about" ref={ref} className="section-padding animate-fade-up">
-      <div className="container mx-auto">
+    <section
+      id="about"
+      ref={ref}
+      className="section-padding animate-fade-up text-white"
+    >
+      <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* LEFT: badge, heading, large video image */}
           <div className="space-y-6">
             <div className="flex justify-start items-start">
-              <span className="flex items-center  space-x-6 px-4 py-2 rounded-sm border-2 border-cyan-300 hover:bg-cyan-700/20  transition-all ">
+              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-cyan-500 bg-black/40 text-cyan-400 font-medium transition">
                 About Me
               </span>
             </div>
 
-            <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] leading-tight font-semibold max-w-lg">
-              Code builds it, design defines it—and for me, both are pure
+            <h2 className="text-[clamp(1.6rem,3.6vw,2.4rem)] leading-tight font-semibold max-w-lg text-white">
+              Code builds it, design defines it — and for me, both are pure
               passion.
             </h2>
 
@@ -93,21 +96,21 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
               <button
                 onClick={() => setOpen(true)}
                 aria-label="Play video"
-                className="group w-full overflow-hidden aspect-[5/3] focus:outline-none    border-2 border-cyan-400 text-sm font-bold uppercase  hover:[filter:drop-shadow(2px_2px_0_hsl(var(--dark)))] hover:animate-glitch transition-all duration-300"
+                className="group w-full overflow-hidden aspect-[5/3] focus:outline-none border-2 border-white/6 text-sm font-bold uppercase transition-transform duration-200 rounded-lg"
                 type="button"
               >
                 <img
                   src={imgSrc}
                   alt="Design preview — click to play"
-                  className="w-full h-full object-cover block"
+                  className="w-full h-full object-cover block rounded-lg"
                   loading="lazy"
                 />
 
                 {/* Play overlay circle */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="pointer-events-none w-10 h-10 md:w-14 md:h-14 bg-cyan-400/95 rounded-sm flex items-center justify-center shadow-lg transform transition-all group-hover:scale-105 border-2 border-[hsl(var(--dark))] ">
+                  <div className="pointer-events-none w-12 h-12 md:w-16 md:h-16 bg-cyan-500 rounded-full flex items-center justify-center shadow-lg transform transition-all group-hover:scale-105 border-2 border-white/10">
                     <svg
-                      className="w-8 h-8 md:w-10 md:h-10"
+                      className="w-6 h-6 md:w-8 md:h-8"
                       viewBox="0 0 24 24"
                       fill="none"
                       aria-hidden
@@ -122,7 +125,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
 
           {/* RIGHT: small micro-copy and stacked stats */}
           <div className="flex flex-col items-end justify-start space-y-8 pt-6 lg:pt-20">
-            <div className="text-right text-sm text-gray-500 max-w-xs">
+            <div className="text-right text-base text-gray-300 max-w-xs">
               {aboutText}
             </div>
 
@@ -130,10 +133,10 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
               <div className="flex flex-col items-end gap-10">
                 {stats.map((s, i) => (
                   <div key={`${s.value}-${i}`} className="text-right">
-                    <div className="text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-none  text-cyan-300">
+                    <div className="text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-none text-cyan-400">
                       {s.value}
                     </div>
-                    <div className="mt-2 text-sm text-gray-500 leading-relaxed max-w-[22rem]">
+                    <div className="mt-2 text-sm text-gray-300 leading-relaxed max-w-[22rem]">
                       {s.label}
                     </div>
                   </div>
@@ -150,12 +153,14 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
           <div
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setOpen(false)}
+            aria-hidden
           />
+
           <div className="relative z-10 w-full max-w-5xl aspect-video rounded-lg overflow-hidden shadow-2xl bg-black">
             <button
               onClick={() => setOpen(false)}
               aria-label="Close video"
-              className="absolute top-4 right-4 z-20 rounded-full bg-cyan-100 p-2 shadow"
+              className="absolute top-4 right-4 z-20 rounded-full bg-white p-2 shadow focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               <svg
                 className="w-4 h-4"

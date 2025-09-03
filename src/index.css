@@ -33,7 +33,9 @@ html {
   scrollbar-width: thin;
   scrollbar-color: #111 #fff; /* Inverted: thumb #111, track #fff */
 }
-
+body {
+  background-color: black;
+}
 /* Portfolio Design System */
 @layer base {
   :root {

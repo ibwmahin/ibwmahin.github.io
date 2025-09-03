@@ -19,10 +19,22 @@ const Footer = ({
   address = "Dhaka, BanglaDesh",
 
   socialLinks = [
-    { name: "LinkedIn", url: "#", icon: "linkedin" },
-    { name: "Github", url: "#", icon: "github" },
-    { name: "Instagram", url: "#", icon: "instagram" },
-    { name: "Facebook", url: "#", icon: "facebook" },
+    {
+      name: "LinkedIn",
+      url: "https://www.linkedin.com/in/ibwmahin/",
+      icon: "linkedin",
+    },
+    { name: "Github", url: "https://github.com/ibwmahin/", icon: "github" },
+    {
+      name: "Instagram",
+      url: "https://instagram.com/ibwmahin/",
+      icon: "instagram",
+    },
+    {
+      name: "Facebook",
+      url: "https://facebook.com/ibwmahin/",
+      icon: "facebook",
+    },
   ],
 }: FooterProps) => {
   const currentYear = new Date().getFullYear();

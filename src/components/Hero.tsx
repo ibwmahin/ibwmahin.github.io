@@ -113,7 +113,7 @@ const Hero: React.FC = () => {
   return (
     <div
       ref={heroRef}
-      className="relative overflow-hidden h-[90svh] flex justify-center items-center bg-black"
+      className="relative overflow-hidden h-[90svh] flex justify-center items-center "
     >
       {/* Desktop socials: absolute center-bottom */}
       <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30 gap-3">

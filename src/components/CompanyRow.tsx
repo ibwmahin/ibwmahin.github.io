@@ -1,7 +1,9 @@
+import React from "react";
+
 interface Company {
   name: string;
   logoUrl?: string;
-  faIcon?: string; // optional font awesome icon class
+  faIcon?: string; // boxicons class like "bxl bx-react"
 }
 
 interface CompanyRowProps {
@@ -20,30 +22,44 @@ const CompanyRow = ({
   ],
 }: CompanyRowProps) => {
   return (
-    <section className="w-full mt-4">
-      <div className="container w-full mx-auto">
+    <section className="w-full bg-black">
+      <div className="container mx-auto max-w-6xl px-4">
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {companies.map((company, index) => (
             <div
               key={company.name}
-              className="flex items-center space-x-6 px-4 py-2 hover:scale-110 cursor-default duration-150 hover:text-cyan-300 hover:shadow-cyan-300/60 hover:shadow-lg rounded-sm "
-              style={{ animationDelay: `${index * 100}ms` }}
+              title={company.name}
+              aria-label={company.name}
+              style={{ animationDelay: `${index * 60}ms` }}
+              className="flex items-center gap-3 px-3 py-1 rounded-sm border border-white/6 bg-transparent transition-transform duration-200 transform will-change-transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20 focus-within:ring-2 focus-within:ring-cyan-300 hover:border-cyan-300 cursor-default"
             >
               {company.logoUrl ? (
                 <img
                   src={company.logoUrl}
                   alt={`${company.name} logo`}
-                  className="h-5"
+                  className="h-6 w-auto object-contain"
                   loading="lazy"
                 />
               ) : company.faIcon ? (
+                // Using Boxicons (e.g. "bxl bx-react"). Do NOT prefix with other icon libraries.
                 <i
-                  className={`fab ${company.faIcon} text-lg`}
-                  aria-hidden="true"
-                ></i>
-              ) : null}
+                  className={`${company.faIcon} text-2xl text-white`}
+                  aria-hidden
+                />
+              ) : (
+                // fallback: initials
+                <div className="flex items-center justify-center h-8 w-8 rounded bg-white/6 text-sm font-semibold text-white">
+                  {company.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .slice(0, 2)}
+                </div>
+              )}
 
-              <span className="text-sm font-medium">{company.name}</span>
+              <span className="text-sm font-medium text-white">
+                {company.name}
+              </span>
             </div>
           ))}
         </div>

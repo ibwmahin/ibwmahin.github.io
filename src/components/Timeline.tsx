@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 interface TimelineItem {
   title: string;
-  company: string;
+  company?: string;
   description: string;
   years: string;
   variant?: "default" | "highlight";
@@ -34,45 +34,41 @@ const Timeline = ({
       description:
         "Developed dynamic and visually captivating websites by merging expertise in UI/UX, graphic design, and creative video editing. Integrated innovative AI solutions to create modern, high-performing digital platforms.",
       years: "2022 - 2025",
+      variant: "highlight",
     },
   ],
 }: TimelineProps) => {
-  const timelineRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<HTMLElement | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-        }
+        if (entry.isIntersecting) entry.target.classList.add("in-view");
       },
-      { threshold: 0.2 },
+      { threshold: 0.18 },
     );
 
-    if (timelineRef.current) {
-      observer.observe(timelineRef.current);
-    }
-
+    if (timelineRef.current) observer.observe(timelineRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
     <section
       ref={timelineRef}
-      className="section-padding animate-fade-up  text-white"
+      className="section-padding animate-fade-up bg-black text-white"
     >
-      <div className="container">
+      <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-5 gap-12 items-start">
           {/* Left Column - Header */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2 mb-6">
-              <span className="flex items-center space-x-6 px-4 py-2 border-2 border-white bg-black shadow-md transition-all duration-300">
+              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-cyan-500 bg-black/40 text-cyan-400 font-medium">
                 Experience
               </span>
             </div>
 
-            <h2 className="text-h1 leading-tight">
+            <h2 className="text-[clamp(1.6rem,3.6vw,2.2rem)] leading-tight font-semibold max-w-lg text-white">
               A snapshot of my journey in building digital growth
             </h2>
 
@@ -83,87 +79,71 @@ const Timeline = ({
           </div>
 
           {/* Right Column - Timeline */}
-          <div className="lg:col-span-3 space-y-8 relative">
-            {items.map((item, index) => (
-              <div
-                key={`${item.title}-${item.years}`}
-                className={`border-2 border-white relative grid grid-cols-4 gap-8 py-6 px-4 border-b last:border-b-0 group cursor-pointer transition-all duration-300 ease-in-out
-                  hover:scale-[1.03] hover:shadow-lg
-                  ${
-                    hoveredIndex === null && item.variant === "highlight"
-                      ? "bg-white text-black"
-                      : hoveredIndex === index
-                        ? "bg-white text-black"
-                        : "bg-black text-white"
-                  }`}
-                style={{
-                  animationDelay: `${index * 150}ms`,
-                }}
-                onMouseEnter={() => setHoveredIndex(index)}
-                onMouseLeave={() => setHoveredIndex(null)}
-              >
-                {/* Timeline Dot */}
-                <div className="absolute left-[-12px] top-1/2 -translate-y-1/2 z-10">
-                  <div
-                    className={`w-4 h-4 rounded-full transition-all duration-300 group-hover:animate-pulse
-                      ${
-                        (hoveredIndex === null &&
-                          item.variant === "highlight") ||
-                        hoveredIndex === index
-                          ? "bg-white scale-125"
-                          : "bg-gray-500 scale-100"
-                      }`}
-                  ></div>
-                </div>
+          <div className="lg:col-span-3 relative">
+            {/* vertical connector line */}
+            <div className="hidden lg:block absolute left-6 top-6 bottom-6 w-[2px] bg-white/6 rounded-full" />
 
-                {/* Content - Left side */}
-                <div className="col-span-3 space-y-2 pl-6">
-                  <h3
-                    className={`font-bold text-lg tracking-tight ${
-                      (hoveredIndex === null && item.variant === "highlight") ||
-                      hoveredIndex === index
-                        ? "text-black"
-                        : "text-white"
-                    }`}
-                  >
-                    {item.title}
-                  </h3>
-                  <p
-                    className={`text-sm leading-relaxed font-medium ${
-                      (hoveredIndex === null && item.variant === "highlight") ||
-                      hoveredIndex === index
-                        ? "text-gray-800"
-                        : "text-gray-400"
-                    }`}
-                  >
-                    {item.description}
-                  </p>
-                </div>
+            <div className="space-y-8 relative">
+              {items.map((item, index) => {
+                const isActive =
+                  hoveredIndex === index ||
+                  (hoveredIndex === null && item.variant === "highlight");
 
-                {/* Years - Right aligned */}
-                <div className="text-right">
-                  <span
-                    className={`font-bold text-lg ${
-                      (hoveredIndex === null && item.variant === "highlight") ||
-                      hoveredIndex === index
-                        ? "text-black"
-                        : "text-white"
-                    }`}
+                return (
+                  <article
+                    key={`${item.title}-${item.years}-${index}`}
+                    tabIndex={0}
+                    role="button"
+                    aria-pressed={isActive}
+                    onFocus={() => setHoveredIndex(index)}
+                    onBlur={() => setHoveredIndex(null)}
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                    className={`relative grid grid-cols-4 gap-6 py-6 px-4 transition-transform duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-300 rounded-2xl
+                      ${isActive ? "bg-cyan-500 text-black shadow-xl scale-[1.02] border-transparent" : "bg-black text-white border border-white/6 hover:shadow-md hover:scale-105"}`}
+                    style={{ animationDelay: `${index * 80}ms` }}
                   >
-                    {item.years}
-                  </span>
-                </div>
+                    {/* dot (aligned to vertical line on lg) */}
+                    <div className="absolute left-0 lg:left-2 top-1/2 -translate-y-1/2 z-10">
+                      <span
+                        className={`inline-block w-4 h-4 rounded-full transition-all duration-300 ${isActive ? "bg-cyan-500 ring-4 ring-cyan-200/20 scale-125" : "bg-white/40 scale-100"}`}
+                        aria-hidden
+                      />
+                    </div>
 
-                {/* Connector Line (visible on hover) */}
-                <div
-                  className={`absolute left-[-8px] top-0 bottom-0 w-1 transition-all duration-300 ${
-                    hoveredIndex === index
-                      ? "bg-white scale-y-100"
-                      : "bg-transparent scale-y-0"
-                  } origin-top`}
-                ></div>
-              </div>
-            ))}
+                    {/* Content */}
+                    <div className="col-span-3 pl-6 space-y-2">
+                      <h3
+                        className={`font-bold text-lg tracking-tight ${isActive ? "text-black" : "text-white"}`}
+                      >
+                        {item.title}
+                      </h3>
+                      {item.company && (
+                        <div
+                          className={`text-sm font-medium ${isActive ? "text-black/80" : "text-gray-300"}`}
+                        >
+                          {item.company}
+                        </div>
+                      )}
+                      <p
+                        className={`text-sm leading-relaxed ${isActive ? "text-black/80" : "text-gray-400"}`}
+                      >
+                        {item.description}
+                      </p>
+                    </div>
+
+                    {/* Years */}
+                    <div className="text-right">
+                      <span
+                        className={`font-bold text-lg ${isActive ? "text-black" : "text-white"}`}
+                      >
+                        {item.years}
+                      </span>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

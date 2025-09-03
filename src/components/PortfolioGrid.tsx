@@ -28,7 +28,7 @@ const DEFAULT_PROJECTS: Project[] = [
     liveUrl: "",
     caseStudyUrl: "",
     description:
-      "A E-commerce website for clothing, the websie this website is build for the cloting store (it's demo webesite for unlocking website contract me.)",
+      "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
   },
   {
     id: "spark-docs",
@@ -50,7 +50,7 @@ const DEFAULT_PROJECTS: Project[] = [
     liveUrl: "https://forum.example.com",
     caseStudyUrl: "/case-studies/dev-forum",
     description:
-      "Community forum with threads, replies, and reputation — focused on developer collaboration.",
+      "Community forum focused on developer collaboration with threads, replies, and reputation.",
   },
   {
     id: "grid-portfolio",
@@ -60,7 +60,7 @@ const DEFAULT_PROJECTS: Project[] = [
     liveUrl: "https://grid-portfolio.example.com",
     caseStudyUrl: "/case-studies/grid-portfolio",
     description:
-      "A performant portfolio template showing masonry grids, image streaming and minimal JS transitions.",
+      "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
   },
   {
     id: "studio-cms",
@@ -121,7 +121,7 @@ const getMajorCategory = (p: Project) =>
 
 const placeholderSVG = (title = "Project") =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'><rect width='100%' height='100%' fill='hsl(0 0% 5.1%)'/><text x='50%' y='50%' font-size='28' dominant-baseline='middle' text-anchor='middle' fill='hsl(0 0% 42%)'>${title}</text></svg>`,
+    `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'><rect width='100%' height='100%' fill='#050505'/><text x='50%' y='50%' font-size='28' dominant-baseline='middle' text-anchor='middle' fill='#6b7280' font-family='system-ui, -apple-system, Segoe UI, Roboto, Arial'>${title}</text></svg>`,
   )}`;
 
 /* Project card */
@@ -149,7 +149,7 @@ const ProjectCard: React.FC<{
       setVisible(true);
       return;
     }
-    if ("IntersectionObserver" in window) {
+    if (typeof IntersectionObserver !== "undefined") {
       ioRef.current = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -171,7 +171,7 @@ const ProjectCard: React.FC<{
   return (
     <div
       ref={ref}
-      className="group relative overflow-hidden cursor-pointer border-2 border-[hsl(var(--foreground))] transition-all duration-200 ease-in-out rounded-none"
+      className="group relative overflow-hidden cursor-pointer border-2 border-white/6 transition-all duration-200 ease-in-out rounded-lg"
       onClick={() => onOpen(globalIndex)}
       style={{ animationDelay: `${index * 18}ms` }}
       role="button"
@@ -189,8 +189,7 @@ const ProjectCard: React.FC<{
           <div
             className="absolute inset-0 animate-pulse"
             style={{
-              background:
-                "linear-gradient(90deg, hsl(0 0% 5.1%), hsl(0 0% 10%), hsl(0 0% 5.1%))",
+              background: "linear-gradient(90deg, #050505, #0b0b0b, #050505)",
             }}
             aria-hidden
           />
@@ -214,36 +213,36 @@ const ProjectCard: React.FC<{
               setLoaded(true);
             }}
             draggable={false}
-            className="w-full h-full object-cover transition-transform duration-300 filter grayscale contrast-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-300 filter grayscale contrast-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 rounded-t-lg"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <div className="text-xs text-[hsl(var(--muted))] font-medium">
+            <div className="text-xs text-gray-400 font-medium">
               {project.title}
             </div>
           </div>
         )}
       </div>
 
-      <div className="absolute inset-0 pointer-events-none flex items-end rounded-none">
+      <div className="absolute inset-0 pointer-events-none flex items-end rounded-lg">
         <div
-          className="w-full p-4 transition-colors duration-200"
+          className="w-full p-4 transition-colors duration-200 rounded-b-lg"
           style={{
             background:
-              "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.55) 100%)",
+              "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.7) 100%)",
           }}
         >
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-[hsl(var(--foreground))] font-extrabold text-sm opacity-80 group-hover:opacity-100">
+              <h3 className="text-white font-extrabold text-sm opacity-90 group-hover:opacity-100">
                 {project.title}
               </h3>
-              <p className="text-[hsl(var(--foreground))]/70 text-xs opacity-70 group-hover:opacity-90">
+              <p className="text-white/70 text-xs opacity-80 group-hover:opacity-95">
                 {project.category}
               </p>
             </div>
 
-            <div className="text-xs text-[hsl(var(--foreground))]/90 font-semibold uppercase">
+            <div className="text-xs text-white/90 font-semibold uppercase">
               Preview
             </div>
           </div>
@@ -253,10 +252,7 @@ const ProjectCard: React.FC<{
   );
 };
 
-const MemoProjectCard = React.memo(
-  ProjectCard,
-  (a, b) => a.project.id === b.project.id && a.index === b.index,
-);
+const MemoProjectCard = React.memo(ProjectCard);
 
 /* Accessible modal */
 const Modal: React.FC<{
@@ -269,13 +265,16 @@ const Modal: React.FC<{
   const lastActive = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    lastActive.current = document.activeElement as HTMLElement | null;
+    lastActive.current = (document &&
+      document.activeElement) as HTMLElement | null;
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") onPrev();
       if (e.key === "ArrowRight") onNext();
     };
     window.addEventListener("keydown", handler);
+    // prevent scroll behind modal
+    const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const timer = setTimeout(() => {
@@ -289,7 +288,7 @@ const Modal: React.FC<{
 
     return () => {
       window.removeEventListener("keydown", handler);
-      document.body.style.overflow = "";
+      document.body.style.overflow = prevOverflow;
       lastActive.current?.focus();
       clearTimeout(timer);
     };
@@ -306,32 +305,35 @@ const Modal: React.FC<{
       aria-label={`${project.title} preview`}
       onClick={onClose}
     >
-      <div className="absolute inset-0 bg-[hsl(var(--dark),0.8)]" aria-hidden />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        aria-hidden
+      />
       <div
         ref={ref}
-        className="relative bg-black border-2 border-[hsl(var(--foreground))] max-w-3xl w-full max-h-[90vh] overflow-auto p-6 z-10 rounded-none"
+        className="relative bg-black border-2 border-white/6 max-w-3xl w-full max-h-[90vh] overflow-auto p-6 z-10 rounded-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-h2 font-extrabold uppercase tracking-wide text-[hsl(var(--foreground))]">
+            <h3 className="text-2xl font-extrabold uppercase tracking-wide text-white">
               {project.title}
             </h3>
-            <p className="text-[hsl(var(--muted))]">{project.category}</p>
+            <p className="text-gray-300">{project.category}</p>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={onPrev}
               aria-label="Previous project"
-              className="px-3 py-1 border-2 border-[hsl(var(--foreground))] rounded-none text-[hsl(var(--foreground))]"
+              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               ←
             </button>
             <button
               onClick={onNext}
               aria-label="Next project"
-              className="px-3 py-1 border-2 border-[hsl(var(--foreground))] rounded-none text-[hsl(var(--foreground))]"
+              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               →
             </button>
@@ -339,7 +341,7 @@ const Modal: React.FC<{
             <button
               onClick={onClose}
               aria-label="Close modal"
-              className="text-2xl font-bold text-[hsl(var(--muted))] hover:text-[hsl(var(--foreground))] transition-colors ml-2"
+              className="text-2xl font-bold text-gray-300 hover:text-white transition-colors ml-2 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             >
               ×
             </button>
@@ -352,7 +354,7 @@ const Modal: React.FC<{
               <img
                 src={med}
                 alt={project.title}
-                className="w-full h-64 object-cover border-2 border-[hsl(var(--foreground))] rounded-none"
+                className="w-full h-64 object-cover border-2 border-white/6 rounded-lg"
                 onError={(e) => {
                   setImgErrored(true);
                   (e.currentTarget as HTMLImageElement).src = placeholderSVG(
@@ -366,13 +368,13 @@ const Modal: React.FC<{
               <img
                 src={placeholderSVG(project.title)}
                 alt={project.title}
-                className="w-full h-64 object-cover border-2 border-[hsl(var(--foreground))] rounded-none"
+                className="w-full h-64 object-cover border-2 border-white/6 rounded-lg"
               />
             )}
           </div>
 
           <div>
-            <p className="text-[hsl(var(--muted))] leading-relaxed font-medium">
+            <p className="text-gray-300 leading-relaxed font-medium">
               {project.description ??
                 `Detailed preview of ${project.title}. Add technologies used, your role, measurable outcomes.`}
             </p>
@@ -382,10 +384,10 @@ const Modal: React.FC<{
                 href={project.liveUrl ?? ""}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-4 py-2 border-2 border-[hsl(var(--foreground))] rounded-none font-bold text-sm ${
+                className={`px-4 py-2 border-2 rounded-md font-bold text-sm ${
                   project.liveUrl
-                    ? "bg-[hsl(var(--foreground))] text-[hsl(var(--background))]"
-                    : "bg-black text-[hsl(var(--muted))] opacity-60 pointer-events-none"
+                    ? "bg-cyan-500 text-black border-transparent"
+                    : "bg-black text-gray-500 opacity-60 pointer-events-none border-white/6"
                 }`}
               >
                 View Live Project
@@ -395,10 +397,10 @@ const Modal: React.FC<{
                 href={project.caseStudyUrl ?? ""}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-4 py-2 border-2 border-[hsl(var(--foreground))] rounded-none text-sm ${
+                className={`px-4 py-2 border-2 rounded-md text-sm ${
                   project.caseStudyUrl
-                    ? "bg-transparent text-[hsl(var(--foreground))]"
-                    : "bg-black text-[hsl(var(--muted))] opacity-60 pointer-events-none"
+                    ? "bg-transparent text-white border-white/6"
+                    : "bg-black text-gray-500 opacity-60 pointer-events-none border-white/6"
                 }`}
               >
                 Case Study
@@ -463,14 +465,14 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
 
   return (
     <>
-      <section id="portfolio" className="section-padding">
-        <div className="container">
+      <section id="portfolio" className="section-padding bg-black text-white">
+        <div className="container mx-auto max-w-6xl">
           <div className="flex items-center justify-between flex-wrap mb-6 gap-4">
             <div className="flex items-start flex-col space-y-3">
-              <span className="text-xs font-bold uppercase bg-black border-2 border-[hsl(var(--foreground))] px-4 py-2 rounded-none text-[hsl(var(--foreground))]">
+              <span className="text-xs font-bold uppercase bg-black border-2 border-white/6 px-4 py-2 rounded-md text-white">
                 Portfolio
               </span>
-              <h2 className="text-h1 font-extrabold tracking-tighter leading-tight text-[hsl(var(--foreground))]">
+              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter leading-tight text-white">
                 Explore growth-driven front-end work
               </h2>
             </div>
@@ -480,10 +482,10 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search projects..."
-                className="px-3 py-2 border rounded-none text-sm w-56 bg-black border-[hsl(var(--foreground))] text-[hsl(var(--foreground))]"
+                className="px-3 py-2 border rounded-md text-sm w-56 bg-black border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300"
                 aria-label="Search projects"
               />
-              <div className="text-sm text-[hsl(var(--muted))]">
+              <div className="text-sm text-gray-300">
                 {filtered.length} results
               </div>
             </div>
@@ -497,10 +499,10 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                   setActiveCategory(cat);
                   setExpanded(false);
                 }}
-                className={`text-xs font-medium px-3 py-1 rounded-none border-2 transition ${
+                className={`text-xs font-medium px-3 py-1 rounded-md border-2 transition ${
                   activeCategory === cat
-                    ? "bg-[hsl(var(--foreground))] text-[hsl(var(--background))] border-[hsl(var(--foreground))]"
-                    : "bg-black text-[hsl(var(--foreground))] border-[hsl(var(--foreground))]"
+                    ? "bg-cyan-500 text-black border-cyan-500"
+                    : "bg-black text-white border-white/6"
                 }`}
                 aria-pressed={activeCategory === cat}
               >
@@ -530,14 +532,14 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                 {!expanded ? (
                   <button
                     onClick={() => setExpanded(true)}
-                    className="px-4 py-2 border-2 border-[hsl(var(--foreground))] rounded-none font-medium text-[hsl(var(--foreground))]"
+                    className="px-4 py-2 border-2 border-white/6 rounded-md font-medium text-white"
                   >
                     Show more projects ({filtered.length - INITIAL_VISIBLE})
                   </button>
                 ) : (
                   <button
                     onClick={() => setExpanded(false)}
-                    className="px-4 py-2 border-2 border-[hsl(var(--foreground))] rounded-none font-medium text-[hsl(var(--foreground))]"
+                    className="px-4 py-2 border-2 border-white/6 rounded-md font-medium text-white"
                   >
                     Show less
                   </button>

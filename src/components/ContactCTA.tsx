@@ -1,11 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import emailjs from "@emailjs/browser";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -17,24 +14,44 @@ export default function ContactSection() {
     to_email: "ibwmahin@gmail.com",
     time: new Date().toLocaleString(),
   });
-
-  const [formStatus, setFormStatus] = useState("");
+  const [formStatus, setFormStatus] = useState<string>("");
+  const [isSending, setIsSending] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((s) => ({ ...s, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus("⏳ Sending...");
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
 
-    emailjs
-      .send(
-        "service_li5izpc", // ✅ Your Service ID
-        "template_2ag350j", // ✅ Your Template ID
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // client validation
+    if (!formData.from_name.trim()) {
+      setFormStatus("Please enter your name.");
+      return;
+    }
+    if (!formData.reply_to.trim() || !isValidEmail(formData.reply_to)) {
+      setFormStatus("Please enter a valid email address.");
+      return;
+    }
+    if (!formData.message.trim()) {
+      setFormStatus("Please write a short message.");
+      return;
+    }
+
+    setFormStatus("⏳ Sending...");
+    setIsSending(true);
+
+    try {
+      await emailjs.send(
+        "service_li5izpc", // your service id
+        "template_2ag350j", // your template id
         {
           from_name: formData.from_name,
           reply_to: formData.reply_to,
@@ -42,31 +59,47 @@ export default function ContactSection() {
           phone: formData.phone,
           subject: formData.subject,
           to_email: formData.to_email,
-          time: formData.time,
-        },
-        "GWvjXulV3i2NZJ5jo", // ✅ Your Public Key
-      )
-      .then(() => {
-        setFormStatus("✅ Message sent successfully!");
-        setFormData({
-          from_name: "",
-          reply_to: "",
-          phone: "",
-          message: "",
-          subject: "Portfolio Contact",
-          to_email: "ibwmahin@gmail.com",
           time: new Date().toLocaleString(),
-        });
-      })
-      .catch((error) => {
-        setFormStatus(`❌ Failed to send: ${error.text || error.message}`);
+        },
+        "GWvjXulV3i2NZJ5jo", // your public key
+      );
+
+      setFormStatus("✅ Message sent successfully — I’ll reply soon!");
+      setFormData({
+        from_name: "",
+        reply_to: "",
+        phone: "",
+        message: "",
+        subject: "Portfolio Contact",
+        to_email: "ibwmahin@gmail.com",
+        time: new Date().toLocaleString(),
       });
+
+      // focus name after success
+      setTimeout(() => {
+        formRef.current
+          ?.querySelector<HTMLInputElement>('input[name="from_name"]')
+          ?.focus();
+      }, 50);
+    } catch (err: any) {
+      const msg = err?.text || err?.message || "Unknown error";
+      setFormStatus(`❌ Failed to send: ${msg}`);
+    } finally {
+      setIsSending(false);
+    }
   };
+
+  const canSubmit =
+    !isSending &&
+    !!formData.from_name.trim() &&
+    !!formData.reply_to.trim() &&
+    isValidEmail(formData.reply_to) &&
+    !!formData.message.trim();
 
   return (
     <motion.section
       id="contact"
-      className="py-16 px-4 sm:py-20 bg-black"
+      className="py-16 px-4 sm:py-20 bg-black text-white"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
@@ -74,11 +107,12 @@ export default function ContactSection() {
     >
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-semibold mb-4">
+          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 text-white">
             Get in Touch
           </h2>
-          <p className="text-sm sm:text-base text-[#6b6b6b]">
-            I’d love to hear from you! Fill out the form below.
+          <p className="text-sm sm:text-base text-gray-400">
+            I’d love to hear from you! Fill out the form below and I’ll get back
+            to you shortly.
           </p>
         </div>
 
@@ -90,61 +124,84 @@ export default function ContactSection() {
             transition={{ duration: 0.4 }}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <Input
+            <input
               name="from_name"
-              placeholder="Your Name"
+              placeholder="Your name"
               value={formData.from_name}
               onChange={handleInputChange}
               required
-              className="flex-1 h-10 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base"
+              className="flex-1 h-10 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             />
-            <Input
+            <input
               type="email"
               name="reply_to"
-              placeholder="Your Email"
+              placeholder="Your email"
               value={formData.reply_to}
               onChange={handleInputChange}
               required
-              className="flex-1 h-10 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base"
+              className="flex-1 h-10 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             />
           </motion.div>
 
           {/* Phone */}
-          <Input
+          <input
             name="phone"
-            placeholder="Your Phone (optional)"
+            placeholder="Your phone (optional)"
             value={formData.phone}
             onChange={handleInputChange}
-            className="h-10 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base"
+            className="h-10 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 w-full"
           />
 
           {/* Message */}
-          <Textarea
+          <textarea
             name="message"
-            placeholder="Your Message"
+            placeholder="Your message"
             value={formData.message}
             onChange={handleInputChange}
             required
-            className="h-32 bg-black border border-[#e5e5e5] rounded text-sm sm:text-base resize-none"
+            rows={6}
+            className="w-full h-32 bg-slate-900 border border-white/6 rounded-md px-3 py-2 text-sm sm:text-base text-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-cyan-300"
           />
 
-          {/* Submit Button */}
+          {/* Submit */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: canSubmit ? 1.03 : 1 }}
+            whileTap={{ scale: canSubmit ? 0.97 : 1 }}
             className="flex justify-center"
           >
-            <Button
+            <button
               type="submit"
-              className="h-10 px-6 bg-[#1a1a1a] text-white rounded-full text-sm sm:text-base hover:bg-[#2a2a2a]"
+              disabled={!canSubmit}
+              aria-disabled={!canSubmit}
+              aria-busy={isSending}
+              className={`h-10 px-6 text-sm sm:text-base rounded-full font-semibold transition focus:outline-none ${
+                canSubmit
+                  ? "bg-cyan-500 text-black hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-300"
+                  : "bg-white/6 text-white opacity-60 cursor-not-allowed"
+              }`}
             >
-              Submit <i className="fa-solid fa-paper-plane ml-2"></i>
-            </Button>
+              {isSending ? "Sending…" : "Submit"}
+              <span className="ml-3" aria-hidden>
+                ✉️
+              </span>
+            </button>
           </motion.div>
 
-          {/* Status Message */}
+          {/* Status */}
           {formStatus && (
-            <p className="text-center text-sm text-[#6b6b6b]">{formStatus}</p>
+            <p
+              role="status"
+              aria-live="polite"
+              className={`text-center text-sm ${
+                formStatus.startsWith("✅")
+                  ? "text-cyan-300"
+                  : formStatus.startsWith("❌")
+                    ? "text-rose-400"
+                    : "text-gray-400"
+              }`}
+            >
+              {formStatus}
+            </p>
           )}
         </form>
       </div>

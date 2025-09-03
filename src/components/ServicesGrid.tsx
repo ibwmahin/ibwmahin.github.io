@@ -35,23 +35,18 @@ const ServicesGrid = ({
     },
   ],
 }: ServicesGridProps) => {
-  const servicesRef = useRef<HTMLElement>(null);
+  const servicesRef = useRef<HTMLElement | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-        }
+        if (entry.isIntersecting) entry.target.classList.add("in-view");
       },
-      { threshold: 0.2 },
+      { threshold: 0.15 },
     );
 
-    if (servicesRef.current) {
-      observer.observe(servicesRef.current);
-    }
-
+    if (servicesRef.current) observer.observe(servicesRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -61,27 +56,27 @@ const ServicesGrid = ({
       ref={servicesRef}
       className="section-padding animate-fade-up bg-black text-white"
     >
-      <div className="container">
+      <div className="container mx-auto max-w-6xl">
         <div className="grid lg:grid-cols-5 gap-12 items-start">
           {/* Left Column - Header */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2 mb-6">
-              <span className="flex items-center space-x-6 px-4 py-2 border-2 border-cyan-300 rounded-sm bg-black shadow-md transition-all duration-300">
+              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-cyan-500 bg-black/40 text-cyan-400 font-medium transition">
                 Services
               </span>
             </div>
 
-            <h2 className="text-h1 leading-tight">
+            <h2 className="text-[clamp(1.6rem,3.6vw,2.2rem)] leading-tight font-semibold max-w-lg text-white">
               How I help businesses thrive online with tailored solutions.
             </h2>
 
-            <p className="text-gray-400 leading-relaxed">
-              A comprehensive look at my services and how we deliver them
+            <p className="text-gray-300 leading-relaxed max-w-md">
+              A comprehensive look at my services and how we deliver them —
+              focused on speed, clarity, and delightful UX.
             </p>
 
-            <button className="flex items-center space-x-6 px-4 py-2 border-2 border-cyan-300 rounded-sm bg-black shadow-md transition-all duration-300 hover:bg-white hover:text-black">
-              <span>Hire Me</span>
-              <span className="ml-1 font-bold">!</span>
+            <button className="inline-flex items-center gap-2 px-5 py-3 border-2 border-cyan-500 rounded-md bg-transparent text-cyan-400 font-semibold hover:bg-cyan-500 hover:text-black transition focus:outline-none focus:ring-2 focus:ring-cyan-300">
+              Hire Me <span className="font-bold">!</span>
             </button>
           </div>
 
@@ -95,16 +90,25 @@ const ServicesGrid = ({
               return (
                 <div
                   key={service.title}
-                  className={`p-6 border-2 transition-all duration-300 group cursor-pointer transform-gpu
-                    hover:scale-105 hover:shadow-sm hover:shadow-cyan-300/40
-                    ${isActive ? "bg-cyan-50/10 bg-blur-sm rounded-sm text-black border-cyan-500" : "bg-black text-white border-white  rounded-sm"}`}
-                  style={{ animationDelay: `${index * 150}ms` }}
+                  tabIndex={0}
+                  role="button"
+                  onFocus={() => setHoveredIndex(index)}
+                  onBlur={() => setHoveredIndex(null)}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      // optional: handle activation
+                    }
+                  }}
+                  style={{ animationDelay: `${index * 100}ms` }}
+                  className={`p-6 border transition-all duration-300 group cursor-pointer transform-gpu rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-300
+                    ${isActive ? "bg-cyan-500 text-black border-transparent shadow-lg scale-[1.02]" : "bg-black text-white border-white/6 hover:shadow-md hover:scale-105"}`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <h3
-                      className={`font-semibold text-lg ${isActive ? "text-white" : "text-white"}`}
+                      className={`font-semibold text-lg ${isActive ? "text-black" : "text-white"}`}
                     >
                       {service.title}
                     </h3>
@@ -115,7 +119,7 @@ const ServicesGrid = ({
                         height="16"
                         viewBox="0 0 16 16"
                         fill="none"
-                        className={isActive ? "text-white" : "text-white"}
+                        className={isActive ? "text-black" : "text-white"}
                       >
                         <path
                           d="M3 8H13M13 8L9 4M13 8L9 12"
@@ -129,7 +133,7 @@ const ServicesGrid = ({
                   </div>
 
                   <p
-                    className={`${isActive ? "text-white" : "text-gray-400"} text-sm leading-relaxed`}
+                    className={`${isActive ? "text-black/80" : "text-gray-300"} text-sm leading-relaxed`}
                   >
                     {service.description}
                   </p>
