@@ -139,7 +139,7 @@ export default function ContactSection() {
               value={formData.reply_to}
               onChange={handleInputChange}
               required
-              className="flex-1 h-10 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              className="flex-1 h-15 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300"
             />
           </motion.div>
 
@@ -177,7 +177,7 @@ export default function ContactSection() {
               className={`h-10 px-6 text-sm sm:text-base rounded-full font-semibold transition focus:outline-none ${
                 canSubmit
                   ? "bg-cyan-500 text-black hover:bg-cyan-600 focus:ring-2 focus:ring-cyan-300"
-                  : "bg-white/6 text-white opacity-60 cursor-not-allowed"
+                  : "bg-white/6 text-white border-cyan-400 opacity-60 cursor-not-allowed"
               }`}
             >
               {isSending ? "Sending…" : "Submit"}

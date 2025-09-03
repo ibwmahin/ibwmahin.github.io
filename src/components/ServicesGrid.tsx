@@ -75,8 +75,8 @@ const ServicesGrid = ({
               focused on speed, clarity, and delightful UX.
             </p>
 
-            <button className="inline-flex items-center gap-2 px-5 py-3 border-2 border-cyan-500 rounded-md bg-transparent text-cyan-400 font-semibold hover:bg-cyan-500 hover:text-black transition focus:outline-none focus:ring-2 focus:ring-cyan-300">
-              Hire Me <span className="font-bold">!</span>
+            <button className="inline-flex items-center gap-2 px-3 py-1 border-2 border-cyan-500 rounded-md bg-transparent text-cyan-400 font-semibold hover:bg-cyan-500 hover:text-black transition focus:outline-none focus:ring-2 focus:ring-cyan-300">
+              <a href="#contact">Hire Me</a>
             </button>
           </div>
 

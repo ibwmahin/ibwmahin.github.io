@@ -9,7 +9,6 @@ type Project = {
   variant?: "default" | "highlight";
   liveUrl?: string;
   caseStudyUrl?: string;
-  majorCategory?: string;
 };
 
 interface PortfolioGridProps {
@@ -18,11 +17,19 @@ interface PortfolioGridProps {
 
 const INITIAL_VISIBLE = 6;
 
+// The current main categories in the portfolio are:
+//
+// Commercial Websites
+// Content and Media
+// Community and Social Platforms
+// Portfolio and Showcase
+// Educational and Non-profit
+
 const DEFAULT_PROJECTS: Project[] = [
   {
     id: "Dlux-store",
     title: "Dlux-store",
-    category: "E-commerce",
+    category: "Commercial Websites",
     imageUrl:
       "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
     liveUrl: "",
@@ -33,78 +40,58 @@ const DEFAULT_PROJECTS: Project[] = [
   {
     id: "spark-docs",
     title: "Spark Docs",
-    category: "Docs",
+    category: "Content and Media",
     imageUrl:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3",
     liveUrl: "https://spark-docs.example.com",
-    caseStudyUrl: "/case-studies/spark-docs",
+    caseStudyUrl: "",
     description:
       "MDX documentation site with live examples, copyable snippets and performance tuned builds.",
   },
   {
     id: "dev-forum",
     title: "Dev Forum",
-    category: "Forum/Community",
+    category: "Community and Social Platforms",
     imageUrl:
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
     liveUrl: "https://forum.example.com",
-    caseStudyUrl: "/case-studies/dev-forum",
+    caseStudyUrl: "",
     description:
       "Community forum focused on developer collaboration with threads, replies, and reputation.",
   },
   {
-    id: "grid-portfolio",
-    title: "Grid Portfolio",
-    category: "Portfolio",
+    id: "grid",
+    title: "Grid",
+    category: "Portfolio and Showcase",
     imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
     liveUrl: "https://grid-portfolio.example.com",
-    caseStudyUrl: "/case-studies/grid-portfolio",
+    caseStudyUrl: "",
     description:
       "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
   },
   {
+    id: "grid-portfolio",
+    title: "Grid Portfolio",
+    category: "Portfolio and Showcase",
+    imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
+    liveUrl: "https://grid-portfolio.example.com",
+    caseStudyUrl: "",
+    description:
+      "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
+  },
+
+  {
     id: "studio-cms",
     title: "Studio CMS",
-    category: "Web Portal",
+    category: "Educational and Non-profit",
     imageUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsx4i9rJZPTLQQ0Vy0yWQjpVjj-SVi5Ya-DA&s",
     liveUrl: "https://studio-cms.example.com",
-    caseStudyUrl: "/case-studies/studio-cms",
+    caseStudyUrl: "",
     description:
       "Headless CMS frontend with preview and design-token driven editor styles.",
   },
-  {
-    id: "ai-lab",
-    title: "AI Playground",
-    category: "AI Project",
-    imageUrl:
-      "https://images.unsplash.com/photo-1531497865142-1ec9f3a5b1a8?auto=format&fit=crop&w=1400&q=80",
-    liveUrl: "https://ai-playground.example.com",
-    caseStudyUrl: "/case-studies/ai-lab",
-    description:
-      "Playground for AI/ML experiments, visualizations, and prototypes.",
-  },
 ];
-
-const SUB_TO_MAJOR: Record<string, string> = {
-  "Business/Corporate": "Commercial Websites",
-  "E-commerce": "Commercial Websites",
-  "Landing Page": "Commercial Websites",
-  "Starter Kit": "Commercial Websites",
-  Tooling: "Commercial Websites",
-  Dashboard: "Commercial Websites",
-  "Blog/Personal": "Content and Media",
-  "News and Media": "Content and Media",
-  Docs: "Content and Media",
-  Animations: "Content and Media",
-  "Social Media": "Community and Social Platforms",
-  "Forum/Community": "Community and Social Platforms",
-  Portfolio: "Portfolio and Showcase",
-  "Design System": "Portfolio and Showcase",
-  Educational: "Educational and Non-profit",
-  "Non-profit": "Educational and Non-profit",
-  "Web Portal": "Educational and Non-profit",
-};
 
 const MAJOR_ORDER = [
   "All",
@@ -113,11 +100,7 @@ const MAJOR_ORDER = [
   "Community and Social Platforms",
   "Portfolio and Showcase",
   "Educational and Non-profit",
-  "Other",
 ];
-
-const getMajorCategory = (p: Project) =>
-  p.majorCategory || SUB_TO_MAJOR[p.category] || "Other";
 
 const placeholderSVG = (title = "Project") =>
   `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -423,15 +406,15 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
   const [expanded, setExpanded] = useState(false);
 
   const detectedMajors = useMemo(() => {
-    const setMajors = new Set<string>(projects.map((p) => getMajorCategory(p)));
+    const setMajors = new Set<string>(projects.map((p) => p.category));
     return MAJOR_ORDER.filter((m) => m === "All" || setMajors.has(m));
   }, [projects]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return projects.filter((p) => {
-      const major = getMajorCategory(p);
-      const catMatch = activeCategory === "All" || major === activeCategory;
+      const catMatch =
+        activeCategory === "All" || p.category === activeCategory;
       const queryMatch =
         !q ||
         p.title.toLowerCase().includes(q) ||
