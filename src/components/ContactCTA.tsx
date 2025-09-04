@@ -96,77 +96,158 @@ export default function ContactSection() {
     isValidEmail(formData.reply_to) &&
     !!formData.message.trim();
 
+  // Stagger animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  // Glowing shadow animation
+  const glowVariants = {
+    glow: {
+      boxShadow: [
+        "0 0 15px rgba(129, 140, 248, 0.3)",
+        "0 0 25px rgba(129, 140, 248, 0.6)",
+        "0 0 15px rgba(129, 140, 248, 0.3)",
+      ],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
     <motion.section
       id="contact"
-      className="py-16 px-4 sm:py-20 bg-black text-white"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      className="py-16 px-4 sm:py-20 text-white"
+      initial="hidden"
+      whileInView="visible"
+      variants={containerVariants}
       viewport={{ once: true }}
     >
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 text-white">
+      <motion.div
+        className="max-w-3xl mx-auto bg-slate-900/50 backdrop-blur-md rounded-xl border border-sky-400/50 p-8"
+        variants={glowVariants}
+        animate="glow"
+      >
+        <motion.div variants={childVariants} className="text-center mb-10">
+          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 bg-gradient-to-r from-sky-400 to-purple-500 text-transparent bg-clip-text">
             Get in Touch
           </h2>
-          <p className="text-sm sm:text-base text-gray-400">
+          <p className="text-sm sm:text-base text-gray-300">
             I’d love to hear from you! Fill out the form below and I’ll get back
             to you shortly.
           </p>
-        </div>
+        </motion.div>
 
-        <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+        <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
           {/* Name & Email */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
+            variants={childVariants}
             className="flex flex-col sm:flex-row gap-4"
           >
-            <input
-              name="from_name"
-              placeholder="Your name"
-              value={formData.from_name}
-              onChange={handleInputChange}
-              required
-              className="flex-1 h-10 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-            />
-            <input
-              type="email"
-              name="reply_to"
-              placeholder="Your email"
-              value={formData.reply_to}
-              onChange={handleInputChange}
-              required
-              className="flex-1 h-15 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-            />
+            {/* Name with floating label */}
+            <div className="relative flex-1">
+              <input
+                id="from_name"
+                name="from_name"
+                type="text"
+                value={formData.from_name}
+                onChange={handleInputChange}
+                required
+                className="peer w-full h-12 bg-transparent border-b-2 border-gray-500 text-white text-sm sm:text-base focus:border-sky-400 focus:outline-none transition-colors px-0"
+                placeholder=" "
+              />
+              <label
+                htmlFor="from_name"
+                className="absolute left-0 top-3 text-gray-400 text-sm transform transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-0 peer-focus:text-sky-400 peer-focus:text-xs"
+              >
+                Your name
+              </label>
+            </div>
+
+            {/* Email with floating label */}
+            <div className="relative flex-1">
+              <input
+                id="reply_to"
+                name="reply_to"
+                type="email"
+                value={formData.reply_to}
+                onChange={handleInputChange}
+                required
+                className="peer w-full h-12 bg-transparent border-b-2 border-gray-500 text-white text-sm sm:text-base focus:border-sky-400 focus:outline-none transition-colors px-0"
+                placeholder=" "
+              />
+              <label
+                htmlFor="reply_to"
+                className="absolute left-0 top-3 text-gray-400 text-sm transform transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-0 peer-focus:text-sky-400 peer-focus:text-xs"
+              >
+                Your email
+              </label>
+            </div>
           </motion.div>
 
-          {/* Phone */}
-          <input
-            name="phone"
-            placeholder="Your phone (optional)"
-            value={formData.phone}
-            onChange={handleInputChange}
-            className="h-10 bg-slate-900 border border-white/6 rounded-md px-3 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 w-full"
-          />
+          {/* Phone with floating label */}
+          <motion.div variants={childVariants} className="relative">
+            <input
+              id="phone"
+              name="phone"
+              type="tel"
+              value={formData.phone}
+              onChange={handleInputChange}
+              className="peer w-full h-12 bg-transparent border-b-2 border-gray-500 text-white text-sm sm:text-base focus:border-sky-400 focus:outline-none transition-colors px-0"
+              placeholder=" "
+            />
+            <label
+              htmlFor="phone"
+              className="absolute left-0 top-3 text-gray-400 text-sm transform transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-0 peer-focus:text-sky-400 peer-focus:text-xs"
+            >
+              Your phone (optional)
+            </label>
+          </motion.div>
 
-          {/* Message */}
-          <textarea
-            name="message"
-            placeholder="Your message"
-            value={formData.message}
-            onChange={handleInputChange}
-            required
-            rows={6}
-            className="w-full h-32 bg-slate-900 border border-white/6 rounded-md px-3 py-2 text-sm sm:text-base text-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-300"
-          />
+          {/* Message with floating label */}
+          <motion.div variants={childVariants} className="relative">
+            <textarea
+              id="message"
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
+              required
+              rows={4}
+              className="peer w-full h-32 bg-transparent border-b-2 border-gray-500 text-white text-sm sm:text-base focus:border-sky-400 focus:outline-none transition-colors px-0 py-2 resize-none"
+              placeholder=" "
+            />
+            <label
+              htmlFor="message"
+              className="absolute left-0 top-3 text-gray-400 text-sm transform transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:-top-0 peer-focus:text-sky-400 peer-focus:text-xs"
+            >
+              Your message
+            </label>
+          </motion.div>
 
           {/* Submit */}
           <motion.div
-            whileHover={{ scale: canSubmit ? 1.03 : 1 }}
-            whileTap={{ scale: canSubmit ? 0.97 : 1 }}
+            variants={childVariants}
+            whileHover={{ scale: canSubmit ? 1.05 : 1 }}
+            whileTap={{ scale: canSubmit ? 0.95 : 1 }}
             className="flex justify-center"
           >
             <button
@@ -174,14 +255,14 @@ export default function ContactSection() {
               disabled={!canSubmit}
               aria-disabled={!canSubmit}
               aria-busy={isSending}
-              className={`h-10 px-6 text-sm sm:text-base rounded-full font-semibold transition focus:outline-none ${
+              className={`h-12 px-8 text-sm sm:text-base rounded-full font-semibold transition focus:outline-none shadow-md ${
                 canSubmit
-                  ? "bg-indigo-500 text-black hover:bg-indigo-600 focus:ring-2 focus:ring-indigo-300"
-                  : "bg-white/6 text-white border-indigo-400 opacity-60 cursor-not-allowed"
+                  ? "bg-gradient-to-r from-sky-500 to-purple-600 text-white hover:from-sky-600 hover:to-purple-700 focus:ring-2 focus:ring-sky-300"
+                  : "bg-gray-700 text-gray-400 opacity-60 cursor-not-allowed"
               }`}
             >
               {isSending ? "Sending…" : "Submit"}
-              <span className="ml-3" aria-hidden>
+              <span className="ml-2" aria-hidden>
                 ✉️
               </span>
             </button>
@@ -189,22 +270,24 @@ export default function ContactSection() {
 
           {/* Status */}
           {formStatus && (
-            <p
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               role="status"
               aria-live="polite"
-              className={`text-center text-sm ${
+              className={`text-center text-sm mt-4 ${
                 formStatus.startsWith("✅")
-                  ? "text-indigo-300"
+                  ? "text-green-400"
                   : formStatus.startsWith("❌")
-                    ? "text-rose-400"
+                    ? "text-red-400"
                     : "text-gray-400"
               }`}
             >
               {formStatus}
-            </p>
+            </motion.p>
           )}
         </form>
-      </div>
+      </motion.div>
     </motion.section>
   );
 }

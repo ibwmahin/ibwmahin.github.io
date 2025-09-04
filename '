@@ -1,0 +1,180 @@
+import React, { useEffect, useRef, RefObject } from "react";
+
+type Props = {
+  // pass the ref of the hero container so the background can size and listen to pointer events
+  containerRef: RefObject<HTMLDivElement>;
+  // optional: control intensity
+  particleCount?: number;
+  maxParticleSize?: number;
+};
+
+type Particle = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  baseSize: number;
+};
+
+export default function AnimatedBackground({
+  containerRef,
+  particleCount = 70,
+  maxParticleSize = 26,
+}: Props) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const particlesRef = useRef<Particle[]>([]);
+  const rafRef = useRef<number | null>(null);
+  const pointer = useRef<{ x: number; y: number; active: boolean }>({
+    x: 0,
+    y: 0,
+    active: false,
+  });
+
+  useEffect(() => {
+    const container = containerRef.current;
+    const canvas = canvasRef.current;
+    if (!container || !canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      const rect = container.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+
+    resize();
+    const onResize = () => resize();
+    window.addEventListener("resize", onResize);
+
+    // init particles
+    const rect = container.getBoundingClientRect();
+    particlesRef.current = Array.from({ length: particleCount }).map(() => {
+      const base = Math.random() * (maxParticleSize - 6) + 6;
+      return {
+        x: Math.random() * rect.width,
+        y: Math.random() * rect.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        size: base,
+        baseSize: base,
+      };
+    });
+
+    // pointer handlers on the container so we don't block pointer-events on foreground
+    const handlePointer = (e: PointerEvent) => {
+      const r = container.getBoundingClientRect();
+      pointer.current.x = e.clientX - r.left;
+      pointer.current.y = e.clientY - r.top;
+      pointer.current.active = true;
+    };
+    const handleLeave = () => (pointer.current.active = false);
+
+    container.addEventListener("pointermove", handlePointer);
+    container.addEventListener("pointerleave", handleLeave);
+    container.addEventListener("pointercancel", handleLeave);
+
+    // animation loop
+    const attractRadius = Math.min(rect.width, rect.height) * 0.28;
+
+    const step = () => {
+      const particles = particlesRef.current;
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+
+      // subtle background clear with alpha to create trailing effect
+      ctx.clearRect(0, 0, w, h);
+
+      // draw gradient background (soft radial)
+      const grad = ctx.createLinearGradient(0, 0, w, h);
+      grad.addColorStop(0, "rgba(8,10,25,0.85)");
+      grad.addColorStop(0.5, "rgba(21,24,40,0.9)");
+      grad.addColorStop(1, "rgba(10,12,30,0.95)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, h);
+
+      // composite for glow
+      ctx.globalCompositeOperation = "lighter";
+
+      for (let p of particles) {
+        // simple motion
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // wrap-around
+        if (p.x < -50) p.x = w + 50;
+        if (p.x > w + 50) p.x = -50;
+        if (p.y < -50) p.y = h + 50;
+        if (p.y > h + 50) p.y = -50;
+
+        // pointer interaction (repel)
+        if (pointer.current.active) {
+          const dx = p.x - pointer.current.x;
+          const dy = p.y - pointer.current.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < attractRadius) {
+            const force = (1 - dist / attractRadius) * 0.75; // strength
+            p.vx += (dx / dist) * force * 0.15;
+            p.vy += (dy / dist) * force * 0.15;
+            // grow slightly when near pointer
+            p.size = Math.min(
+              p.baseSize * (1 + force * 0.9),
+              maxParticleSize * 1.4,
+            );
+          } else {
+            // slowly return size
+            p.size += (p.baseSize - p.size) * 0.02;
+          }
+        } else {
+          p.size += (p.baseSize - p.size) * 0.02;
+        }
+
+        // friction
+        p.vx *= 0.985;
+        p.vy *= 0.985;
+
+        // draw particle with radial gradient for soft glow
+        const r = Math.max(1, p.size);
+        const gradParticle = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+        gradParticle.addColorStop(0, "rgba(130,90,255,0.95)");
+        gradParticle.addColorStop(0.2, "rgba(130,90,255,0.55)");
+        gradParticle.addColorStop(0.6, "rgba(130,90,255,0.12)");
+        gradParticle.addColorStop(1, "rgba(130,90,255,0)");
+
+        ctx.beginPath();
+        ctx.fillStyle = gradParticle;
+        ctx.arc(p.x, p.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalCompositeOperation = "source-over";
+
+      rafRef.current = requestAnimationFrame(step);
+    };
+
+    rafRef.current = requestAnimationFrame(step);
+
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", onResize);
+      container.removeEventListener("pointermove", handlePointer);
+      container.removeEventListener("pointerleave", handleLeave);
+      container.removeEventListener("pointercancel", handleLeave);
+    };
+  }, [containerRef, particleCount, maxParticleSize]);
+
+  // Do not block pointer events on the canvas so the hero's interactive elements remain clickable
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      aria-hidden
+    />
+  );
+}

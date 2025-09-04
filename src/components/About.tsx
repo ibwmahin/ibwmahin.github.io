@@ -82,7 +82,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
           {/* LEFT: badge, heading, large video image */}
           <div className="space-y-6">
             <div className="flex justify-start items-start">
-              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-indigo-500 bg-black/40 text-indigo-400 font-medium transition">
+              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-sky-500 bg-black/40 text-sky-400 font-medium transition">
                 About Me
               </span>
             </div>
@@ -108,7 +108,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
 
                 {/* Play overlay circle */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="pointer-events-none w-12 h-12 md:w-16 md:h-16 bg-indigo-500 rounded-full flex items-center justify-center shadow-lg transform transition-all group-hover:scale-105 border-2 border-white/10">
+                  <div className="pointer-events-none w-12 h-12 md:w-16 md:h-16 bg-sky-500 rounded-full flex items-center justify-center shadow-lg transform transition-all group-hover:scale-105 border-2 border-white/10">
                     <svg
                       className="w-6 h-6 md:w-8 md:h-8"
                       viewBox="0 0 24 24"
@@ -133,7 +133,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
               <div className="flex flex-col items-end gap-10">
                 {stats.map((s, i) => (
                   <div key={`${s.value}-${i}`} className="text-right">
-                    <div className="text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-none text-indigo-400">
+                    <div className="text-[clamp(2.5rem,7vw,3.75rem)] font-extrabold leading-none text-sky-400">
                       {s.value}
                     </div>
                     <div className="mt-2 text-sm text-gray-300 leading-relaxed max-w-[22rem]">
@@ -160,7 +160,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
             <button
               onClick={() => setOpen(false)}
               aria-label="Close video"
-              className="absolute top-4 right-4 z-20 rounded-full bg-white p-2 shadow focus:outline-none focus:ring-2 focus:ring-indigo-300"
+              className="absolute top-4 right-4 z-20 rounded-full bg-white p-2 shadow focus:outline-none focus:ring-2 focus:ring-sky-300"
             >
               <svg
                 className="w-4 h-4"

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 interface FooterProps {
   logoText?: string;
   aboutText?: string;
@@ -12,12 +14,11 @@ interface FooterProps {
 }
 
 const Footer = ({
-  logoText = " Abdulla Al Mahin",
+  logoText = "Abdulla Al Mahin",
   aboutText = "A passionate developer turning ideas into beautiful, growth-focused digital experiences.",
   contactEmail = "ibwmahin@gmail.com",
   contactPhone = "+880 1854333256",
   address = "Dhaka, BanglaDesh",
-
   socialLinks = [
     {
       name: "LinkedIn",
@@ -54,96 +55,150 @@ const Footer = ({
   const renderSocialIcon = (iconName: string) => {
     switch (iconName) {
       case "linkedin":
-        return <i className="bxl bx-linkedin-square text-2xl"></i>;
+        return <i className="fa-brands fa-linkedin text-2xl"></i>;
       case "github":
-        return <i className="bxl bx-github text-2xl"></i>;
+        return <i className="fa-brands fa-github text-2xl"></i>;
       case "instagram":
-        return <i className="bxl bx-instagram text-2xl"></i>;
+        return <i className="fa-brands fa-instagram text-2xl"></i>;
       case "facebook":
-        return <i className="bxl bx-facebook-square text-2xl"></i>;
+        return <i className="fa-brands fa-facebook text-2xl"></i>;
       default:
         return null;
     }
   };
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2, duration: 0.5 },
+    },
+  };
+
+  const childVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
+  const glowVariants = {
+    glow: {
+      boxShadow: [
+        "0 0 5px rgba(129, 140, 248, 0.2)",
+        "0 0 15px rgba(129, 140, 248, 0.4)",
+        "0 0 5px rgba(129, 140, 248, 0.2)",
+      ],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        repeatType: "reverse",
+        ease: "easeInOut",
+      },
+    },
+  };
+
   return (
-    <footer className="bg-black text-white">
+    <motion.footer
+      className="bg-gradient-to-b from-black to-slate-900 text-white"
+      initial="hidden"
+      whileInView="visible"
+      variants={containerVariants}
+      viewport={{ once: true }}
+    >
       <div className="container py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={containerVariants}
+        >
           {/* Company Info */}
-          <div className="lg:col-span-2">
-            <h3 className="text-xl font-semibold mb-4">{logoText}</h3>
-            <p className="text-gray-400 leading-relaxed mb-6 max-w-md">
+          <motion.div className="lg:col-span-2" variants={childVariants}>
+            <h3 className="text-xl font-semibold mb-4 bg-gradient-to-r from-sky-400 to-purple-500 text-transparent bg-clip-text">
+              {logoText}
+            </h3>
+            <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
               {aboutText}
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((social) => (
-                <a
+                <motion.a
                   key={social.name}
                   href={social.url}
-                  className="inline-flex items-center justify-center w-10 h-10 bg-white/10 rounded-full text-white/70 hover:bg-white/20 hover:text-white transition-all"
+                  className="inline-flex items-center justify-center w-10 h-10 bg-white/10 rounded-full text-sky-400 hover:bg-sky-400/20 transition-all"
                   aria-label={social.name}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  variants={glowVariants}
+                  animate="glow"
                 >
                   {renderSocialIcon(social.icon)}
-                </a>
+                </motion.a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Info */}
-          <div>
-            <h4 className="font-semibold mb-4">Contact</h4>
-            <div className="space-y-3 text-white/70">
+          <motion.div variants={childVariants}>
+            <h4 className="font-semibold mb-4 text-sky-400">Contact</h4>
+            <div className="space-y-3 text-gray-300">
               <div>
-                <div className="text-sm text-white/50">Email</div>
+                <div className="text-sm text-gray-400">Email</div>
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-sky-400 transition-colors"
                 >
                   {contactEmail}
                 </a>
               </div>
               <div>
-                <div className="text-sm text-white/50">Phone</div>
+                <div className="text-sm text-gray-400">Phone</div>
                 <a
                   href={`tel:${contactPhone}`}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-sky-400 transition-colors"
                 >
                   {contactPhone}
                 </a>
               </div>
               <div>
-                <div className="text-sm text-white/50">Location</div>
+                <div className="text-sm text-gray-400">Location</div>
                 <span>{address}</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+          <motion.div variants={childVariants}>
+            <h4 className="font-semibold mb-4 text-sky-400">Quick Links</h4>
             <div className="space-y-3">
               {quickLinks.map((link) => (
-                <button
+                <motion.button
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
-                  className="block text-white/70 hover:text-white transition-colors text-left"
+                  className="block text-gray-300 hover:text-sky-400 transition-colors text-left relative group"
+                  whileHover={{ x: 5 }}
                 >
                   {link.label}
-                </button>
+                  <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-sky-400 transition-all group-hover:w-full"></span>
+                </motion.button>
               ))}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Copyright */}
-        <div className="border-t border-white/10 mt-12 pt-8 text-center text-white/50">
+        <motion.div
+          className="border-t border-sky-400/20 mt-12 pt-8 text-center text-gray-400"
+          variants={childVariants}
+        >
           <p>
             &copy; {currentYear} {logoText}. All rights reserved.
           </p>
-        </div>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

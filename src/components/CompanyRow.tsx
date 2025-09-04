@@ -22,7 +22,7 @@ const CompanyRow = ({
   ],
 }: CompanyRowProps) => {
   return (
-    <section className="w-full bg-black">
+    <section className="w-full bg-black my-10">
       <div className="container mx-auto max-w-6xl px-4">
         <div className="flex flex-wrap justify-center gap-4 md:gap-6">
           {companies.map((company, index) => (
@@ -31,7 +31,7 @@ const CompanyRow = ({
               title={company.name}
               aria-label={company.name}
               style={{ animationDelay: `${index * 60}ms` }}
-              className="flex items-center gap-3 px-3 py-1 rounded-sm border border-white/6 bg-transparent transition-transform duration-200 transform will-change-transform hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/20 focus-within:ring-2 focus-within:ring-indigo-300 hover:border-indigo-300 cursor-default"
+              className="flex items-center gap-3 px-3 py-1 rounded-sm border border-white/6 bg-transparent transition-transform duration-200 transform will-change-transform hover:scale-105 hover:shadow-lg hover:shadow-sky-500/20 focus-within:ring-2 focus-within:ring-sky-300 hover:border-sky-300 cursor-default"
             >
               {company.logoUrl ? (
                 <img
