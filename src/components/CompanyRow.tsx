@@ -31,7 +31,7 @@ const CompanyRow = ({
               title={company.name}
               aria-label={company.name}
               style={{ animationDelay: `${index * 60}ms` }}
-              className="flex items-center gap-3 px-3 py-1 rounded-sm border border-white/6 bg-transparent transition-transform duration-200 transform will-change-transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20 focus-within:ring-2 focus-within:ring-cyan-300 hover:border-cyan-300 cursor-default"
+              className="flex items-center gap-3 px-3 py-1 rounded-sm border border-white/6 bg-transparent transition-transform duration-200 transform will-change-transform hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/20 focus-within:ring-2 focus-within:ring-indigo-300 hover:border-indigo-300 cursor-default"
             >
               {company.logoUrl ? (
                 <img

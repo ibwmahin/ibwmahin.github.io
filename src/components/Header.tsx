@@ -17,6 +17,7 @@ const Header = ({
   links = [
     { label: "Home", href: "#hero" },
     { label: "About", href: "#about" },
+    { label: "Edu", href: "#experiences" },
     { label: "Services", href: "#services" },
     { label: "Portfolio", href: "#portfolio" },
     { label: "Contact", href: "#contact" },
@@ -72,10 +73,10 @@ const Header = ({
   const toggleMenu = () => setIsMenuOpen((s) => !s);
 
   // Only the nav links box blurs on scroll
-  const desktopNavBoxClass = `flex items-center space-x-6 px-4 py-2 border-2 shadow-sm rounded-lg transition-all duration-300 ${
+  const desktopNavBoxClass = `flex items-center space-x-6 px-4 py-2 border-2 shadow-sm rounded-sm transition-all duration-300 ${
     isScrolled
-      ? "backdrop-blur-sm bg-slate-900/75 border-white/10"
-      : "bg-black/20 border-white/6"
+      ? "backdrop-blur-lg bg-slate-900/75 border-indigo-400 shadow-lg shadow-indigo-400"
+      : "bg-black/20 border-white/6 border-indigo-800  shadow-lg"
   }`;
 
   // motion variants (super minimal)
@@ -126,7 +127,7 @@ const Header = ({
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           onClick={toggleMenu}
-          className="md:hidden absolute right-4 top-3 z-50 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+          className="md:hidden absolute right-4 top-3 z-50 p-2 rounded-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
         >
           {isMenuOpen ? (
             <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" aria-hidden>
@@ -156,11 +157,11 @@ const Header = ({
           >
             <button
               onClick={() => scrollToSection("#hero")}
-              className="text-xl font-extrabold uppercase tracking-tighter flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              className="text-xl font-extrabold uppercase tracking-tighter flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
               <span className="text-white">{logoText}</span>
               <span
-                className="w-2 h-2 rounded-full bg-cyan-500 inline-block"
+                className="w-2 h-2 rounded-full bg-indigo-500 inline-block"
                 aria-hidden
               />
             </button>
@@ -179,20 +180,20 @@ const Header = ({
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
                   variants={navItemVariants}
-                  className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                  className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                 >
                   {link.label}
-                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </motion.button>
               ) : (
                 <motion.div key={link.href} variants={navItemVariants}>
                   <Link
                     to={link.href}
-                    className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                    className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.label}
-                    <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   </Link>
                 </motion.div>
               ),
@@ -212,9 +213,9 @@ const Header = ({
                 scrollToSection("#contact");
               }}
               whileHover={reduceMotion ? {} : { scale: 1.03 }}
-              className="inline-flex items-center gap-2 bg-cyan-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-md shadow-sm hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-300 transition"
+              className="inline-flex items-center gap-2 bg-indigo-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-1 rounded-md shadow-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
             >
-              Connect{" "}
+              Connect
               <span className="text-xl" aria-hidden>
                 ☎
               </span>
@@ -232,7 +233,7 @@ const Header = ({
         >
           <button
             onClick={() => scrollToSection("#hero")}
-            className="text-xl font-extrabold uppercase tracking-tighter text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+            className="text-xl font-extrabold uppercase tracking-tighter text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-indigo-300"
           >
             {logoText}
           </button>
@@ -243,17 +244,17 @@ const Header = ({
                 <button
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
-                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                 >
                   {link.label}
-                  <span className="absolute left-6 bottom-3 w-6 h-[2px] bg-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  <span className="absolute left-6 bottom-3 w-6 h-[2px] bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </button>
               ) : (
                 <Link
                   key={link.href}
                   to={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
                 >
                   {link.label}
                 </Link>
@@ -267,7 +268,7 @@ const Header = ({
               setIsMenuOpen(false);
               scrollToSection("#contact");
             }}
-            className="bg-cyan-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-md hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-300 transition"
+            className="bg-indigo-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-sm hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition"
           >
             Connect{" "}
             <span className="text-xl" aria-hidden>

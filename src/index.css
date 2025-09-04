@@ -35,6 +35,7 @@ html {
 }
 body {
   background-color: black;
+  font-family: "Tomorrow", sans-serif;
 }
 /* Portfolio Design System */
 @layer base {

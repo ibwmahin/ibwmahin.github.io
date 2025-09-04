@@ -61,7 +61,7 @@ const ServicesGrid = ({
           {/* Left Column - Header */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2 mb-6">
-              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-cyan-500 bg-black/40 text-cyan-400 font-medium transition">
+              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-indigo-500 bg-black/40 text-indigo-400 font-medium transition">
                 Services
               </span>
             </div>
@@ -75,7 +75,7 @@ const ServicesGrid = ({
               focused on speed, clarity, and delightful UX.
             </p>
 
-            <button className="inline-flex items-center gap-2 px-3 py-1 border-2 border-cyan-500 rounded-md bg-transparent text-cyan-400 font-semibold hover:bg-cyan-500 hover:text-black transition focus:outline-none focus:ring-2 focus:ring-cyan-300">
+            <button className="inline-flex items-center gap-2 px-3 py-1 border-2 border-indigo-500 rounded-md bg-transparent text-indigo-400 font-semibold hover:bg-indigo-500 hover:text-black transition focus:outline-none focus:ring-2 focus:ring-indigo-300">
               <a href="#contact">Hire Me</a>
             </button>
           </div>
@@ -103,8 +103,8 @@ const ServicesGrid = ({
                     }
                   }}
                   style={{ animationDelay: `${index * 100}ms` }}
-                  className={`p-6 border transition-all duration-300 group cursor-pointer transform-gpu rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-300
-                    ${isActive ? "bg-cyan-500 text-black border-transparent shadow-lg scale-[1.02]" : "bg-black text-white border-white/6 hover:shadow-md hover:scale-105"}`}
+                  className={`p-6 border transition-all duration-300 group cursor-pointer transform-gpu rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-300
+                    ${isActive ? "bg-indigo-500 text-black border-transparent shadow-lg scale-[1.02]" : "bg-black text-white border-white/6 hover:shadow-md hover:scale-105"}`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <h3

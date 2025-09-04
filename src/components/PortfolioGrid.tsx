@@ -309,14 +309,14 @@ const Modal: React.FC<{
             <button
               onClick={onPrev}
               aria-label="Previous project"
-              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
               ←
             </button>
             <button
               onClick={onNext}
               aria-label="Next project"
-              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
               →
             </button>
@@ -324,7 +324,7 @@ const Modal: React.FC<{
             <button
               onClick={onClose}
               aria-label="Close modal"
-              className="text-2xl font-bold text-gray-300 hover:text-white transition-colors ml-2 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              className="text-2xl font-bold text-gray-300 hover:text-white transition-colors ml-2 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
               ×
             </button>
@@ -369,7 +369,7 @@ const Modal: React.FC<{
                 rel="noopener noreferrer"
                 className={`px-4 py-2 border-2 rounded-md font-bold text-sm ${
                   project.liveUrl
-                    ? "bg-cyan-500 text-black border-transparent"
+                    ? "bg-indigo-500 text-black border-transparent"
                     : "bg-black text-gray-500 opacity-60 pointer-events-none border-white/6"
                 }`}
               >
@@ -465,7 +465,7 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search projects..."
-                className="px-3 py-2 border rounded-md text-sm w-56 bg-black border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+                className="px-3 py-2 border rounded-md text-sm w-56 bg-black border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"
                 aria-label="Search projects"
               />
               <div className="text-sm text-gray-300">
@@ -484,7 +484,7 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                 }}
                 className={`text-xs font-medium px-3 py-1 rounded-md border-2 transition ${
                   activeCategory === cat
-                    ? "bg-cyan-500 text-black border-cyan-500"
+                    ? "bg-indigo-500 text-black border-indigo-500"
                     : "bg-black text-white border-white/6"
                 }`}
                 aria-pressed={activeCategory === cat}

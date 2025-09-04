@@ -55,6 +55,7 @@ const Timeline = ({
 
   return (
     <section
+      id="experiences"
       ref={timelineRef}
       className="section-padding animate-fade-up bg-black text-white"
     >
@@ -63,7 +64,7 @@ const Timeline = ({
           {/* Left Column - Header */}
           <div className="lg:col-span-2 space-y-6">
             <div className="flex items-center space-x-2 mb-6">
-              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-cyan-500 bg-black/40 text-cyan-400 font-medium">
+              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-indigo-500 bg-black/40 text-indigo-400 font-medium">
                 Experience
               </span>
             </div>
@@ -99,14 +100,14 @@ const Timeline = ({
                     onBlur={() => setHoveredIndex(null)}
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
-                    className={`relative grid grid-cols-4 gap-6 py-6 px-4 transition-transform duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-cyan-300 rounded-2xl
-                      ${isActive ? "bg-cyan-500 text-black shadow-xl scale-[1.02] border-transparent" : "bg-black text-white border border-white/6 hover:shadow-md hover:scale-105"}`}
+                    className={`relative grid grid-cols-4 gap-6 py-6 px-4 transition-transform duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-300 rounded-2xl
+                      ${isActive ? "bg-indigo-500 text-black shadow-xl scale-[1.02] border-transparent" : "bg-black text-white border border-white/6 hover:shadow-md hover:scale-105"}`}
                     style={{ animationDelay: `${index * 80}ms` }}
                   >
                     {/* dot (aligned to vertical line on lg) */}
                     <div className="absolute left-0 lg:left-2 top-1/2 -translate-y-1/2 z-10">
                       <span
-                        className={`inline-block w-4 h-4 rounded-full transition-all duration-300 ${isActive ? "bg-cyan-500 ring-4 ring-cyan-200/20 scale-125" : "bg-white/40 scale-100"}`}
+                        className={`inline-block w-4 h-4 rounded-full transition-all duration-300 ${isActive ? "bg-indigo-500 ring-4 ring-indigo-200/20 scale-125" : "bg-white/40 scale-100"}`}
                         aria-hidden
                       />
                     </div>

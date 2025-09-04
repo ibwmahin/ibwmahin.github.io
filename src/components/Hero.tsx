@@ -124,7 +124,7 @@ const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
-            className="w-10 h-10 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+            className="w-10 h-10 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-300"
           >
             <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
           </a>
@@ -150,8 +150,7 @@ const Hero: React.FC = () => {
           whileInView={{ scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          Creative Web Developer &
-          <br />
+          Creative <div className="text-indigo-400">Web Developer</div> &
           Designer
         </motion.h1>
 
@@ -164,7 +163,7 @@ const Hero: React.FC = () => {
         >
           I help small businesses, creators, and startups grow their online
           presence with modern, fast, and beautifully designed websites,
-          intuitive UI/UX, and engaging video content.
+          intuitive UI, and engaging video content.
         </motion.p>
 
         <div className="flex flex-col sm:flex-row justify-center gap-5">
@@ -173,7 +172,7 @@ const Hero: React.FC = () => {
             href="#contact"
             whileHover={{ scale: 1.06 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-3 bg-cyan-500 text-black border-2 border-transparent text-sm font-bold uppercase px-5 py-3 hover:bg-cyan-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+            className="inline-flex items-center gap-3 bg-indigo-500 text-black border-2 border-transparent text-sm font-bold uppercase px-5 py-3 hover:bg-indigo-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300"
           >
             CONNECT WITH ME{" "}
             <FontAwesomeIcon icon={faArrowRight} className="ml-1" />
@@ -186,7 +185,7 @@ const Hero: React.FC = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-3 bg-transparent text-white border-2 border-white/10 text-sm font-bold uppercase px-5 py-3 hover:bg-white hover:text-black transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-300"
+            className="inline-flex items-center gap-3 bg-transparent text-white border-2 border-white/10 text-sm font-bold uppercase px-5 py-3 hover:bg-white hover:text-black transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-300"
           >
             MY RESUME <FontAwesomeIcon icon={faFile} className="ml-1" />
           </motion.a>
@@ -201,7 +200,7 @@ const Hero: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-9 h-9 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-300"
+              className="w-9 h-9 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-indigo-300"
             >
               <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
             </a>
