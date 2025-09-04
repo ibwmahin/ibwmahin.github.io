@@ -143,12 +143,12 @@ export default function ContactSection() {
       viewport={{ once: true }}
     >
       <motion.div
-        className="max-w-3xl mx-auto bg-slate-900/50 backdrop-blur-md rounded-xl border border-sky-400/50 p-8"
+        className="max-w-6xl mx-auto p-10 rounded-lg"
         variants={glowVariants}
         animate="glow"
       >
         <motion.div variants={childVariants} className="text-center mb-10">
-          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 bg-gradient-to-r from-sky-400 to-purple-500 text-transparent bg-clip-text">
+          <h2 className="text-3xl sm:text-4xl font-semibold mb-4 bg-gradient-to-r from-sky-400 to-sky-500 text-transparent bg-clip-text">
             Get in Touch
           </h2>
           <p className="text-sm sm:text-base text-gray-300">
