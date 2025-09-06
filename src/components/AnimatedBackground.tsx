@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, RefObject } from "react";
+import { useEffect, useRef, RefObject } from "react";
 
 // Electrical-style animated background for a hero section (darker variant).
 // Features:
@@ -110,7 +110,7 @@ export default function AnimatedBackground({
       // choose nearest particle within a radius, fallback to random
       let target = particles[Math.floor(Math.random() * particles.length)];
       let minD = Infinity;
-      for (let p of particles) {
+      for (const p of particles) {
         const dx = p.x - sx;
         const dy = p.y - sy;
         const d = dx * dx + dy * dy;
@@ -163,7 +163,7 @@ export default function AnimatedBackground({
       ctx.clearRect(0, 0, w, h);
       const bg = ctx.createLinearGradient(0, 0, 0, h);
       // darker stops
-      bg.addColorStop(0, "#000203");
+      bg.addColorStop(0, "#000202");
       bg.addColorStop(1, "#03040a");
       ctx.fillStyle = bg;
       ctx.fillRect(0, 0, w, h);
@@ -243,7 +243,7 @@ export default function AnimatedBackground({
       }
 
       // update particles and draw glows
-      for (let p of particles) {
+      for (const p of particles) {
         // slight flicker and breathing
         p.flicker += 0.06 + Math.random() * 0.02;
         const flick = 0.85 + Math.sin(p.flicker) * 0.12;

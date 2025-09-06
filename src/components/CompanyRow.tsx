@@ -1,5 +1,3 @@
-import React from "react";
-
 interface Company {
   name: string;
   logoUrl?: string;

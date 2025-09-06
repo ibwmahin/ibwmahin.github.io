@@ -64,6 +64,8 @@ const Hero: React.FC = () => {
       const ctas = ctaRefs.current.filter(Boolean) as HTMLAnchorElement[];
       let pm: (e: PointerEvent) => void;
 
+      // TODO: fixing the main isseu
+
       pm = (e: PointerEvent) => {
         const rect = heroRef.current!.getBoundingClientRect();
         const rx = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
@@ -146,7 +148,7 @@ const Hero: React.FC = () => {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.25 }}
-        variants={sectionVariants}
+        variants={{ sectionVariants }}
       >
         <p className="text-lg sm:text-xl mb-3 text-white">
           Hi! I'm Abdulla Al Mahin 👋

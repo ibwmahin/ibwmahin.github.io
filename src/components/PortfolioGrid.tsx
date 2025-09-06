@@ -15,21 +15,22 @@ interface PortfolioGridProps {
   projects?: Project[];
 }
 
-const INITIAL_VISIBLE = 6;
+// Project value
+const INITIAL_VISIBLE = "3";
 
 // The current main categories in the portfolio are:
 //
-// Commercial Websites
-// Content and Media
-// Community and Social Platforms
-// Portfolio and Showcase
-// Educational and Non-profit
+// Ecommece
+// Business
+// opensource
+// landing page
 
 const DEFAULT_PROJECTS: Project[] = [
+  // TODO: Details needed to be update
   {
     id: "Dlux-store",
     title: "Dlux-store",
-    category: "Commercial Websites",
+    category: "Ecommece",
     imageUrl:
       "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
     liveUrl: "",
@@ -38,23 +39,23 @@ const DEFAULT_PROJECTS: Project[] = [
       "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
   },
   {
-    id: "spark-docs",
-    title: "Spark Docs",
-    category: "Content and Media",
+    id: "DigitalPathways.ai",
+    title: "DigitalPathways.ai",
+    category: "Business",
     imageUrl:
       "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3",
-    liveUrl: "https://spark-docs.example.com",
+    liveUrl: "https://digitalpathways.ai/",
     caseStudyUrl: "",
     description:
-      "MDX documentation site with live examples, copyable snippets and performance tuned builds.",
+      "A Digital platform for the digital transfomation with the help of ai & consulting.",
   },
   {
     id: "dev-forum",
     title: "Dev Forum",
-    category: "Community and Social Platforms",
+    category: "opensource",
     imageUrl:
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
-    liveUrl: "https://forum.example.com",
+    liveUrl: "",
     caseStudyUrl: "",
     description:
       "Community forum focused on developer collaboration with threads, replies, and reputation.",
@@ -62,44 +63,24 @@ const DEFAULT_PROJECTS: Project[] = [
   {
     id: "grid",
     title: "Grid",
-    category: "Portfolio and Showcase",
+    category: "landing page",
     imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
-    liveUrl: "https://grid-portfolio.example.com",
-    caseStudyUrl: "",
-    description:
-      "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
-  },
-  {
-    id: "grid-portfolio",
-    title: "Grid Portfolio",
-    category: "Portfolio and Showcase",
-    imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
-    liveUrl: "https://grid-portfolio.example.com",
+    liveUrl: "",
     caseStudyUrl: "",
     description:
       "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
   },
 
-  {
-    id: "studio-cms",
-    title: "Studio CMS",
-    category: "Educational and Non-profit",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsx4i9rJZPTLQQ0Vy0yWQjpVjj-SVi5Ya-DA&s",
-    liveUrl: "https://studio-cms.example.com",
-    caseStudyUrl: "",
-    description:
-      "Headless CMS frontend with preview and design-token driven editor styles.",
-  },
+  // NOTE: projects that belonged to the removed category ("Educational and Non-profit")
+  // have been removed from DEFAULT_PROJECTS as requested.
 ];
 
 const MAJOR_ORDER = [
   "All",
-  "Commercial Websites",
-  "Content and Media",
-  "Community and Social Platforms",
-  "Portfolio and Showcase",
-  "Educational and Non-profit",
+  "Ecommece",
+  "Business",
+  "opensource",
+  "landing page",
 ];
 
 const placeholderSVG = (title = "Project") =>
