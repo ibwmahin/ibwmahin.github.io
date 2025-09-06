@@ -45,7 +45,7 @@ Whether you need a landing page, a complete redesign, or marketing videos to boo
       label: "My step-by-step to simplify your excellent project.",
     },
   ],
-  videoUrl = "https://youtu.be/C1wHOQU5a3o?si=9guwywLQlcVrbAb9",
+  videoUrl = "https://www.facebook.com/share/v/1JwsDL3Eog/",
   imgSrc = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=675&fit=crop",
 }: AboutProps) => {
   const ref = useRef<HTMLElement | null>(null);

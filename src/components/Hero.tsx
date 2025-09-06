@@ -4,21 +4,14 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faGithub,
   faLinkedinIn,
   faXTwitter,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
-import { faArrowRight, faFile } from "@fortawesome/free-solid-svg-icons";
+import * as freeSolidSvgIcons from "@fortawesome/free-solid-svg-icons";
 import AnimatedBackground from "./AnimatedBackground"; // ← make sure this path matches
 
 const SOCIALS = [
-  {
-    id: "github",
-    label: "GitHub",
-    href: "https://github.com/ibwmahin",
-    icon: faGithub,
-  },
   {
     id: "linkedin",
     label: "LinkedIn",
@@ -144,7 +137,7 @@ const Hero: React.FC = () => {
 
       <motion.section
         id="hero"
-        className="text-center px-4 h-[60vh] flex flex-col justify-center relative z-20 max-w-4xl"
+        className="text-center px-10 h-[60vh] flex flex-col justify-center relative z-20 max-w-4xl hover:backdrop-blur-sm hover:transition-all hover:duration-500 hover:bg-black/40 transition-all duration-500 w-full"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.25 }}
@@ -156,7 +149,7 @@ const Hero: React.FC = () => {
 
         <motion.h1
           ref={headlineRef}
-          className="text-4xl sm:text-6xl font-bold mb-6 text-white leading-tight"
+          className="text-4xl sm:text-6xl font-bold mb-6 text-white leading-tight "
           initial={{ scale: 0.995 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -167,7 +160,7 @@ const Hero: React.FC = () => {
 
         <motion.p
           ref={paraRef}
-          className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto mb-8"
+          className="text-base sm:text-lg text-gray-100 max-w-3xl mx-auto mb-8  p-4 "
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.08, duration: 0.6 }}
@@ -186,19 +179,22 @@ const Hero: React.FC = () => {
             className="inline-flex items-center gap-3 bg-sky-500 text-black border-2 border-transparent text-sm font-bold uppercase px-5 py-3 hover:bg-sky-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300"
           >
             CONNECT WITH ME{" "}
-            <FontAwesomeIcon icon={faArrowRight} className="ml-1" />
+            <FontAwesomeIcon
+              icon={freeSolidSvgIcons.faArrowRight}
+              className="ml-1"
+            />
           </motion.a>
 
           <motion.a
             ref={addCtaRef}
-            href="/resume.pdf"
+            href="https://github.com/ibwmahin/"
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             className="inline-flex items-center gap-3 bg-transparent text-white border-2 border-white/10 text-sm font-bold uppercase px-5 py-3 hover:bg-white hover:text-black transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300"
           >
-            MY RESUME <FontAwesomeIcon icon={faFile} className="ml-1" />
+            My Github <i className="fa-brands fa-github"></i>
           </motion.a>
         </div>
 
