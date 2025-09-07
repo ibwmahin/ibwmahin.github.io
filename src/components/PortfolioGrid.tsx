@@ -10,6 +10,7 @@ import React, {
 import digitalp from "../assets/works/digitalp.png";
 import pearNi from "../assets/works/pearNi.png";
 import nvim from "../assets/works/nvim.png";
+import mana from "../assets/works/mana.png";
 /* ------------------------------------------------ */
 
 type Project = {
@@ -420,22 +421,6 @@ const Modal: React.FC<{
 const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
   projects = [
     {
-      id: "Dlux-store",
-      title: "Dlux-store",
-      category: "Ecommece",
-      imageUrl:
-        "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
-      liveUrl: "",
-      caseStudyUrl: "",
-      description:
-        "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
-      quickFacts: [
-        "Role: UI + Front-end",
-        "Tech: React, Tailwind",
-        "Metric: +18% conversion in demo flows",
-      ],
-    },
-    {
       id: "DgtlPathways",
       title: "DgtlPathways",
       category: "Business",
@@ -445,9 +430,9 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
       description:
         "A Digital platform for digital transformation with the help of AI & consulting.",
       quickFacts: [
-        "Role: Lead front-end engineer",
-        "Tech: Next.js, TypeScript, Tailwind",
-        "Focus: Accessibility & SEO",
+        "Role: Head Developer",
+        "Tech: Wordpress, php, Node, SQL",
+        "Work: Brand Building form Scratch",
       ],
     },
     {
@@ -458,11 +443,11 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
       liveUrl: "https://pearni.netlify.app/",
       caseStudyUrl: "",
       description:
-        "Community project for developers to share resources and discuss tools.",
+        "An Open-source Product to compit in Nasa Space Hackathon in 2024 (solo dev)",
       quickFacts: [
-        "Role: Contributor & maintainer",
-        "Tech: Vite, React, Netlify",
-        "Open-source: MIT License",
+        "Role: Main Developer",
+        "Tech: Typescirpt, ReactJs, API, Tailwind JavaScript, ThreeJS",
+        "Status: Current IN Demo for 2025 Event",
       ],
     },
     {
@@ -475,24 +460,54 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
       description:
         "Curated Neovim configuration with useful plugins and configs.",
       quickFacts: [
-        "Role: Author & maintainer",
-        "Tech: Lua, Neovim",
-        "Users: community-driven plugin list",
+        "Purp: Building Ready To go IDE for new dev, In Full nvim Work Flow.",
+        "Tech: Lua, Neovim, LazyNvim",
+        "Users: Any One can Use it.",
       ],
     },
     {
-      id: "grid",
-      title: "Grid",
-      category: "landing page",
-      imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
-      liveUrl: "",
+      id: "VulnScan",
+      title: "VulnScan",
+      category: "opensource",
+      imageUrl:
+        "https://cdn.freebiesupply.com/images/large/1x/cyber-security-one-pane-control-dashboard-e97.jpg",
+      liveUrl: "https://ibwmahin.github.io/cyber-scan-guardian-shield/",
       caseStudyUrl: "",
       description:
-        "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
+        "An Open-source project to quick Scan a website Vulnerability",
       quickFacts: [
-        "Role: Template author",
-        "Tech: CSS Grid, lazy images",
-        "Goal: Minimal JS, fast paint",
+        "Type: Identify security vulnerabilities and misconfigurations in web applications",
+        "Tech: Tailwind , CSS3, JavaScript gsap, framer-motion",
+      ],
+    },
+    {
+      id: "Illuvium",
+      title: "Illuvium",
+      category: "landing page",
+      imageUrl:
+        "https://raw.githubusercontent.com/ibwmahin/Gaming_Website/main/public/images/gaming-website.png",
+      liveUrl: "https://ibwmahin.github.io/Gaming_Website/",
+      caseStudyUrl: "",
+      description: "A fun made Gaming_Website clone of illuvium  ",
+      quickFacts: [
+        "Type: Landing Page Clone",
+        "Tech: React, Spline, Tailwind , CSS3, JavaScript",
+        "Purp: Solo Project for Fun ",
+      ],
+    },
+    {
+      id: "manaeshop",
+      title: "manaeshop",
+      category: "Ecommece",
+      imageUrl: mana,
+      liveUrl: "https://manaeshoppingmartllc.com/",
+      caseStudyUrl: "",
+      description:
+        "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
+      quickFacts: [
+        "Role: UI + Front-end",
+        "Tech: React, Tailwind",
+        "Metric: +18% conversion in demo flows",
       ],
     },
   ],
