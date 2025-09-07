@@ -113,7 +113,7 @@ const ProjectCard: React.FC<{
         }
       }}
       aria-label={`Open ${project.title} preview`}
-      className="group relative overflow-hidden rounded-xl cursor-pointer border border-white/6 transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+      className="group relative overflow-hidden rounded-xl cursor-pointer border border-white/6 transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-teal-300/20"
       style={{ animationDelay: `${index * 20}ms` }}
     >
       <div className="relative w-full aspect-[16/11] bg-black rounded-t-xl overflow-hidden">
@@ -307,14 +307,14 @@ const Modal: React.FC<{
             <button
               onClick={onPrev}
               aria-label="Previous project"
-              className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+              className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-teal-300/20"
             >
               ◀
             </button>
             <button
               onClick={onNext}
               aria-label="Next project"
-              className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+              className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-teal-300/20"
             >
               ▶
             </button>
@@ -322,7 +322,7 @@ const Modal: React.FC<{
             <button
               onClick={onClose}
               aria-label="Close preview"
-              className="ml-2 px-3 py-2 rounded-md text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+              className="ml-2 px-3 py-2 rounded-md text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-teal-300/20"
             >
               ✕
             </button>
@@ -367,7 +367,7 @@ const Modal: React.FC<{
                 rel="noopener noreferrer"
                 className={`px-4 py-2 rounded-md font-semibold text-sm ${
                   project.liveUrl
-                    ? "bg-blue-500 text-black"
+                    ? "bg-teal-500 text-black"
                     : "bg-black text-gray-500 opacity-60 pointer-events-none border border-white/6"
                 }`}
               >
@@ -580,7 +580,7 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                   setExpanded(false);
                 }}
                 placeholder="Search projects..."
-                className="px-3 py-2 rounded-md text-sm w-56 bg-black border border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+                className="px-3 py-2 rounded-md text-sm w-56 bg-black border border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-teal-300/20"
                 aria-label="Search projects"
               />
               <div className="text-sm text-gray-300">
@@ -597,9 +597,9 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                   setActiveCategory(cat);
                   setExpanded(false);
                 }}
-                className={`text-xs font-medium px-3 py-1 rounded-md transition focus:outline-none focus:ring-4 focus:ring-blue-300/20 ${
+                className={`text-xs font-medium px-3 py-1 rounded-md transition focus:outline-none focus:ring-4 focus:ring-teal-300/20 ${
                   activeCategory === cat
-                    ? "bg-blue-500 text-black border-blue-500"
+                    ? "bg-teal-500 text-black border-teal-500"
                     : "bg-black text-white border border-white/6"
                 }`}
                 aria-pressed={activeCategory === cat}
@@ -633,14 +633,14 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                 {!expanded ? (
                   <button
                     onClick={() => setExpanded(true)}
-                    className="px-5 py-2 rounded-md border border-white/6 font-semibold text-white bg-transparent focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+                    className="px-5 py-2 rounded-md border border-white/6 font-semibold text-white bg-transparent focus:outline-none focus:ring-4 focus:ring-teal-300/20"
                   >
                     Show more projects ({filteblue.length - INITIAL_VISIBLE})
                   </button>
                 ) : (
                   <button
                     onClick={() => setExpanded(false)}
-                    className="px-5 py-2 rounded-md border border-white/6 font-semibold text-white bg-transparent focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+                    className="px-5 py-2 rounded-md border border-white/6 font-semibold text-white bg-transparent focus:outline-none focus:ring-4 focus:ring-teal-300/20"
                   >
                     Show less
                   </button>

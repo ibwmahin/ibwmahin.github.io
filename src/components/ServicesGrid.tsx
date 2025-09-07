@@ -66,7 +66,7 @@ const ServicesGrid = ({
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
           {/* Left Header */}
           <div className="lg:col-span-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-md border border-blue-500 bg-black/20 text-blue-400 text-sm font-medium">
+            <span className="inline-flex items-center px-3 py-1 rounded-md border border-teal-500 bg-black/20 text-teal-400 text-sm font-medium">
               Services
             </span>
 
@@ -85,7 +85,7 @@ const ServicesGrid = ({
             <div className="mt-6">
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-b from-blue-500 to-blue-600 text-black font-semibold shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300/30"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-b from-teal-500 to-teal-600 text-black font-semibold shadow-md focus:outline-none focus:ring-4 focus:ring-teal-300/30"
               >
                 Hire me
               </a>
@@ -99,7 +99,7 @@ const ServicesGrid = ({
                 active === i || (active === null && s.variant === "highlight");
 
               const bgClass = isActive
-                ? "bg-gradient-to-b from-blue-400/95 to-blue-500/95 text-black border-transparent shadow-2xl"
+                ? "bg-gradient-to-b from-teal-400/95 to-teal-500/95 text-black border-transparent shadow-2xl"
                 : "bg-black/50 border border-white/6 text-white hover:scale-[1.03] hover:shadow-lg";
 
               return (
@@ -116,7 +116,7 @@ const ServicesGrid = ({
                   }}
                   type="button"
                   aria-pressed={isActive}
-                  className={`group relative flex flex-col items-start gap-4 p-6 rounded-2xl transform-gpu transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300/20 ${bgClass}`}
+                  className={`group relative flex flex-col items-start gap-4 p-6 rounded-2xl transform-gpu transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-teal-300/20 ${bgClass}`}
                   style={{ animationDelay: `${i * 60}ms` }}
                 >
                   {/* decorative sparkle (fancy thing) for active/highlight cards */}
