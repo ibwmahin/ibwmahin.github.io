@@ -8,7 +8,7 @@ interface AboutProps {
   stats?: Stat[];
   imgSrc?: string;
 }
-
+import deskDev from "../assets/deskdev.png";
 const About = ({
   aboutText = `I build clear, usable web experiences that help small businesses and teams move faster.
 I combine front-end craftsmanship (HTML, CSS, JS) with design thinking to deliver focused, measurable results: faster interfaces, better conversions, and maintainable code.`,
@@ -16,7 +16,7 @@ I combine front-end craftsmanship (HTML, CSS, JS) with design thinking to delive
     { value: "8+", label: "Years building interfaces" },
     { value: "120+", label: "Projects shipped" },
   ],
-  imgSrc = "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=675&fit=crop&q=80",
+  imgSrc = deskDev,
 }: AboutProps) => (
   <section
     id="about"
