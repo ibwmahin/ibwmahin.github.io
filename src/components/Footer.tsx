@@ -103,7 +103,7 @@ const Footer = ({
 
   return (
     <motion.footer
-      className="bg-gradient-to-b from-black to-slate-900 text-white"
+      className="bg-gradient-to-b from-black to-blue-900 text-white"
       initial="hidden"
       whileInView="visible"
       variants={containerVariants}
@@ -116,7 +116,7 @@ const Footer = ({
         >
           {/* Company Info */}
           <motion.div className="lg:col-span-2" variants={childVariants}>
-            <h3 className="text-xl font-semibold mb-4 bg-gradient-to-r from-sky-400 to-purple-500 text-transparent bg-clip-text">
+            <h3 className="text-xl font-semibold mb-4 bg-gradient-to-r from-blue-400 to-blue-500 text-transparent bg-clip-text">
               {logoText}
             </h3>
             <p className="text-gray-300 leading-relaxed mb-6 max-w-md">
@@ -127,7 +127,7 @@ const Footer = ({
                 <motion.a
                   key={social.name}
                   href={social.url}
-                  className="inline-flex items-center justify-center w-10 h-10 bg-white/10 rounded-full text-sky-400 hover:bg-sky-400/20 transition-all"
+                  className="inline-flex items-center justify-center w-10 h-10 bg-white/10 rounded-full text-blue-400 hover:bg-blue-400/20 transition-all"
                   aria-label={social.name}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -142,13 +142,13 @@ const Footer = ({
 
           {/* Contact Info */}
           <motion.div variants={childVariants}>
-            <h4 className="font-semibold mb-4 text-sky-400">Contact</h4>
+            <h4 className="font-semibold mb-4 text-blue-400">Contact</h4>
             <div className="space-y-3 text-gray-300">
               <div>
                 <div className="text-sm text-gray-400">Email</div>
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="hover:text-sky-400 transition-colors"
+                  className="hover:text-blue-400 transition-colors"
                 >
                   {contactEmail}
                 </a>
@@ -157,7 +157,7 @@ const Footer = ({
                 <div className="text-sm text-gray-400">Phone</div>
                 <a
                   href={`tel:${contactPhone}`}
-                  className="hover:text-sky-400 transition-colors"
+                  className="hover:text-blue-400 transition-colors"
                 >
                   {contactPhone}
                 </a>
@@ -171,17 +171,17 @@ const Footer = ({
 
           {/* Quick Links */}
           <motion.div variants={childVariants}>
-            <h4 className="font-semibold mb-4 text-sky-400">Quick Links</h4>
+            <h4 className="font-semibold mb-4 text-blue-400">Quick Links</h4>
             <div className="space-y-3">
               {quickLinks.map((link) => (
                 <motion.button
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
-                  className="block text-gray-300 hover:text-sky-400 transition-colors text-left relative group"
+                  className="block text-gray-300 hover:text-blue-400 transition-colors text-left relative group"
                   whileHover={{ x: 5 }}
                 >
                   {link.label}
-                  <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-sky-400 transition-all group-hover:w-full"></span>
+                  <span className="absolute left-0 bottom-0 w-0 h-[1px] bg-blue-400 transition-all group-hover:w-full"></span>
                 </motion.button>
               ))}
             </div>
@@ -190,7 +190,7 @@ const Footer = ({
 
         {/* Copyright */}
         <motion.div
-          className="border-t border-sky-400/20 mt-12 pt-8 text-center text-gray-400"
+          className="border-t border-blue-400/20 mt-12 pt-8 text-center text-gray-400"
           variants={childVariants}
         >
           <p>

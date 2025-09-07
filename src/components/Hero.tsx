@@ -1,5 +1,5 @@
 // Hero.tsx
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,7 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import * as freeSolidSvgIcons from "@fortawesome/free-solid-svg-icons";
-import AnimatedBackground from "./AnimatedBackground"; // ← make sure this path matches
+import AnimatedBackground from "./AnimatedBackground";
 
 const SOCIALS = [
   {
@@ -33,7 +33,7 @@ const SOCIALS = [
 ];
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 18 },
+  hidden: { opacity: 0, y: 14 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
 
@@ -43,84 +43,83 @@ const Hero: React.FC = () => {
   const paraRef = useRef<HTMLParagraphElement | null>(null);
   const ctaRefs = useRef<Array<HTMLAnchorElement | null>>([]);
 
-  // reset and push refs helpers
+  // keep CTA refs
   ctaRefs.current = [];
-  const addCtaRef = (el: HTMLAnchorElement | null) => {
+  const addCtaRef = useCallback((el: HTMLAnchorElement | null) => {
     if (el && !ctaRefs.current.includes(el)) ctaRefs.current.push(el);
-  };
+  }, []);
 
   useEffect(() => {
-    if (!heroRef.current) return;
-    const ctx = gsap.context(() => {
-      const headline = headlineRef.current;
-      const para = paraRef.current;
-      const ctas = ctaRefs.current.filter(Boolean) as HTMLAnchorElement[];
-      let pm: (e: PointerEvent) => void;
+    const node = heroRef.current;
+    if (!node) return;
 
-      // TODO: fixing the main isseu
+    // pointer motion handler using gsap (respects prefers-blueuced-motion below)
+    const pm = (e: PointerEvent) => {
+      if (window.matchMedia("(prefers-blueuced-motion: blueuce)").matches) return;
 
-      pm = (e: PointerEvent) => {
-        const rect = heroRef.current!.getBoundingClientRect();
-        const rx = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
-        const ry = (e.clientY - rect.top) / rect.height - 0.5;
+      const rect = node.getBoundingClientRect();
+      const rx = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+      const ry = (e.clientY - rect.top) / rect.height - 0.5;
 
-        gsap.to(headline, {
-          x: rx * 14,
-          y: ry * 8,
-          duration: 0.6,
-          ease: "power2.out",
-        });
-        gsap.to(para, {
-          x: rx * 8,
-          y: ry * 5,
-          duration: 0.7,
-          ease: "power2.out",
-        });
-        gsap.to(ctas, {
-          x: rx * 6,
-          y: ry * 4,
-          duration: 0.7,
-          ease: "power2.out",
-        });
-      };
+      gsap.to(headlineRef.current, {
+        x: rx * 14,
+        y: ry * 8,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+      gsap.to(paraRef.current, {
+        x: rx * 8,
+        y: ry * 5,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+      gsap.to(ctaRefs.current, {
+        x: rx * 6,
+        y: ry * 4,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+    };
 
-      const resetMotion = () => {
-        gsap.to([headline, para, ctas], {
-          x: 0,
-          y: 0,
-          duration: 0.6,
-          ease: "power2.out",
-        });
-      };
+    const resetMotion = () => {
+      gsap.to([headlineRef.current, paraRef.current, ctaRefs.current], {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    };
 
-      heroRef.current!.addEventListener("pointermove", pm);
-      heroRef.current!.addEventListener("pointerleave", resetMotion);
-      heroRef.current!.addEventListener("pointercancel", resetMotion);
+    node.addEventListener("pointermove", pm);
+    node.addEventListener("pointerleave", resetMotion);
+    node.addEventListener("pointercancel", resetMotion);
 
-      return () => {
-        heroRef.current?.removeEventListener("pointermove", pm);
-        heroRef.current?.removeEventListener("pointerleave", resetMotion);
-        heroRef.current?.removeEventListener("pointercancel", resetMotion);
-      };
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
+    return () => {
+      node.removeEventListener("pointermove", pm);
+      node.removeEventListener("pointerleave", resetMotion);
+      node.removeEventListener("pointercancel", resetMotion);
+    };
+  }, [addCtaRef]);
 
   return (
     <div
       ref={heroRef}
-      className="relative overflow-hidden h-[90svh] flex justify-center items-center flex-col"
+      className="relative overflow-hidden h-[92svh] flex justify-center items-center"
+      role="region"
+      aria-label="Hero — introduction"
     >
-      {/* Animated background (canvas). pointer-events-none so it doesn't block buttons */}
+      {/* animated canvas/background */}
       <AnimatedBackground
         containerRef={heroRef}
         particleCount={70}
-        maxParticleSize={26}
+        maxParticleSize={24}
       />
 
-      {/* Desktop socials: absolute center-bottom */}
-      <div className="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 z-30 gap-3">
+      {/* vertical social (desktop) */}
+      <nav
+        aria-label="Social links"
+        className="hidden lg:flex z-30 absolute left-8 top-1/2 -tranblue-y-1/2 flex-col gap-3"
+      >
         {SOCIALS.map((s) => (
           <a
             key={s.id}
@@ -128,61 +127,62 @@ const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
-            className="w-10 h-10 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-300"
+            className="w-10 h-10 flex items-center justify-center border border-white/8 bg-black/40 text-white rounded-lg hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
           </a>
         ))}
-      </div>
+      </nav>
 
       <motion.section
         id="hero"
-        className="text-center px-10 h-[60vh] flex flex-col justify-center relative z-20 max-w-4xl hover:backdrop-blur-sm hover:transition-all hover:duration-500 hover:bg-black/40 transition-all duration-500 w-full"
+        className="relative z-20 w-full max-w-4xl px-6 text-center"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.25 }}
-        variants={{ sectionVariants }}
+        variants={sectionVariants}
       >
-        <p className="text-lg sm:text-xl mb-3 text-white">
-          Hi! I'm Abdulla Al Mahin 👋
+        <p className="text-sm sm:text-base text-gray-200 mb-3">
+          Hi — I’m <strong className="text-white">Abdulla Al Mahin</strong>,
+          building bold, fast websites.
         </p>
 
         <motion.h1
           ref={headlineRef}
-          className="text-4xl sm:text-6xl font-bold mb-6 text-white leading-tight "
+          className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight max-w-3xl mx-auto"
           initial={{ scale: 0.995 }}
           whileInView={{ scale: 1 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.45 }}
         >
-          Creative <span className="text-sky-400">Web Developer</span> &amp;
-          Designer
+          I craft{" "}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-400">
+            fast, accessible
+          </span>{" "}
+          and elegant web experiences.
         </motion.h1>
 
         <motion.p
           ref={paraRef}
-          className="text-base sm:text-lg text-gray-100 max-w-3xl mx-auto mb-8  p-4 "
+          className="mt-5 text-base sm:text-lg text-gray-200 max-w-2xl mx-auto leading-relaxed"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.08, duration: 0.6 }}
+          transition={{ delay: 0.06, duration: 0.6 }}
         >
-          I help small businesses, creators, and startups grow their online
-          presence with modern, fast, and beautifully designed websites,
-          intuitive UI, and engaging video content.
+          I help startups, creators, and small teams ship measurable products —
+          delightful UI, performant front-ends, and crisp brand motion.
         </motion.p>
 
-        <div className="flex flex-col sm:flex-row justify-center gap-5">
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <motion.a
             ref={addCtaRef}
             href="#contact"
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-3 bg-sky-500 text-black border-2 border-transparent text-sm font-bold uppercase px-5 py-3 hover:bg-sky-600 transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.985 }}
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-black bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-300/30"
+            aria-label="Contact — start a project"
           >
-            CONNECT WITH ME{" "}
-            <FontAwesomeIcon
-              icon={freeSolidSvgIcons.faArrowRight}
-              className="ml-1"
-            />
+            Start a project
+            <FontAwesomeIcon icon={freeSolidSvgIcons.faArrowRight} />
           </motion.a>
 
           <motion.a
@@ -190,16 +190,19 @@ const Hero: React.FC = () => {
             href="https://github.com/ibwmahin/"
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-3 bg-transparent text-white border-2 border-white/10 text-sm font-bold uppercase px-5 py-3 hover:bg-white hover:text-black transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-300"
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-white border border-white/10 bg-black/30 hover:bg-white hover:text-black transition focus:outline-none focus:ring-2 focus:ring-blue-300"
+            aria-label="View my GitHub"
           >
-            My Github <i className="fa-brands fa-github"></i>
+            <span className="sr-only">GitHub — </span>
+            <i className="fa-brands fa-github" aria-hidden />
+            <span className="ml-2 hidden sm:inline">View code</span>
           </motion.a>
         </div>
 
-        {/* mobile socials: below CTAs */}
-        <div className="flex sm:hidden justify-center gap-3 mt-5">
+        {/* mobile socials below CTAs */}
+        <div className="flex lg:hidden justify-center gap-3 mt-6">
           {SOCIALS.map((s) => (
             <a
               key={s.id}
@@ -207,13 +210,26 @@ const Hero: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-9 h-9 flex items-center justify-center border-2 border-white/10 bg-black text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-300"
+              className="w-9 h-9 flex items-center justify-center border border-white/8 bg-black/40 text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
             </a>
           ))}
         </div>
       </motion.section>
+
+      {/* subtle top-right decorative spark (purely visual) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-10 right-8 w-16 h-16 rounded-full blur-xl opacity-70 bg-gradient-to-tr from-blue-400/40 to-blue-400/30"
+      />
+
+      {/* Respect prefers-blueuced-motion */}
+      <style>{`
+        @media (prefers-blueuced-motion: blueuce) {
+          * { transition: none !important; animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 };

@@ -8,7 +8,7 @@ interface TestimonialProps {
 }
 
 const Testimonial = ({
-  quote = "Alex delivered exceptional design work that perfectly captured our vision. The attention to detail and user experience was outstanding. Highly recommended!",
+  quote = "Alex deliveblue exceptional design work that perfectly captublue our vision. The attention to detail and user experience was outstanding. Highly recommended!",
   author = "Sarah Johnson",
   role = "Product Manager at TechCorp",
   avatarUrl = "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=100&h=100&fit=crop&crop=face"

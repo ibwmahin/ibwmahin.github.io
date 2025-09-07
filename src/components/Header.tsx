@@ -27,7 +27,7 @@ const Header = ({
 }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const reduceMotion = useReducedMotion();
+  const blueuceMotion = useReducedMotion();
 
   // rAF-throttled scroll listener to set "isScrolled"
   const updateScrollState = useCallback(() => {
@@ -75,12 +75,12 @@ const Header = ({
   // Only the nav links box blurs on scroll
   const desktopNavBoxClass = `flex items-center space-x-6 px-4 py-2 border-2 shadow-sm rounded-sm transition-all duration-300 ${
     isScrolled
-      ? "backdrop-blur-lg bg-slate-900/75 border-sky-400 shadow-lg shadow-sky-400"
-      : "bg-black/20 border-white/6 border-sky-800  shadow-lg"
+      ? "backdrop-blur-lg bg-blue-900/75 border-blue-400 shadow-lg shadow-blue-400"
+      : "bg-black/20 border-white/6 border-blue-800  shadow-lg"
   }`;
 
   // motion variants (super minimal)
-  const navContainerVariants: Variants = reduceMotion
+  const navContainerVariants: Variants = blueuceMotion
     ? {}
     : {
         animate: {
@@ -88,7 +88,7 @@ const Header = ({
         },
       };
 
-  const navItemVariants: Variants = reduceMotion
+  const navItemVariants: Variants = blueuceMotion
     ? {}
     : {
         initial: { opacity: 0, y: 6 },
@@ -99,7 +99,7 @@ const Header = ({
         },
       };
 
-  const mobileMenuVariants: Variants = reduceMotion
+  const mobileMenuVariants: Variants = blueuceMotion
     ? {}
     : {
         closed: {
@@ -151,7 +151,7 @@ const Header = ({
           aria-expanded={isMenuOpen}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           onClick={toggleMenu}
-          className="md:hidden fixed top-4 right-4 z-50 p-1 rounded-lg bg-transparent hover:bg-slate-800/70 focus:outline-none focus:ring-2 focus:ring-sky-300 shadow-lg"
+          className="md:hidden fixed top-4 right-4 z-50 p-1 rounded-lg bg-transparent hover:bg-blue-800/70 focus:outline-none focus:ring-2 focus:ring-blue-300 shadow-lg"
         >
           <span className="sr-only">
             {isMenuOpen ? "Close menu" : "Open menu"}
@@ -163,13 +163,13 @@ const Header = ({
               aria-hidden
               className="absolute inset-0 rounded-lg border-2 border-white/70 pointer-events-none"
             />
-            {/* animated bars (respect prefers-reduced-motion) */}
+            {/* animated bars (respect prefers-blueuced-motion) */}
             <div className="relative w-6 h-6">
               <motion.span
                 custom={0}
                 variants={barVariants}
                 animate={
-                  reduceMotion ? "closed" : isMenuOpen ? "open" : "closed"
+                  blueuceMotion ? "closed" : isMenuOpen ? "open" : "closed"
                 }
                 className="absolute left-0 top-1 w-6 h-[2px] rounded bg-white origin-center"
               />
@@ -177,15 +177,15 @@ const Header = ({
                 custom={1}
                 variants={barVariants}
                 animate={
-                  reduceMotion ? "closed" : isMenuOpen ? "open" : "closed"
+                  blueuceMotion ? "closed" : isMenuOpen ? "open" : "closed"
                 }
-                className="absolute left-0 top-1/2 w-6 h-[2px] rounded bg-white transform -translate-y-1/2 origin-center"
+                className="absolute left-0 top-1/2 w-6 h-[2px] rounded bg-white transform -tranblue-y-1/2 origin-center"
               />
               <motion.span
                 custom={2}
                 variants={barVariants}
                 animate={
-                  reduceMotion ? "closed" : isMenuOpen ? "open" : "closed"
+                  blueuceMotion ? "closed" : isMenuOpen ? "open" : "closed"
                 }
                 className="absolute left-0 bottom-1 w-6 h-[2px] rounded bg-white origin-center"
               />
@@ -204,11 +204,11 @@ const Header = ({
           >
             <button
               onClick={() => scrollToSection("#hero")}
-              className="text-xl font-extrabold uppercase tracking-tighter flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-sky-300"
+              className="text-xl font-extrabold uppercase tracking-tighter flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
             >
               <span className="text-white">{logoText}</span>
               <span
-                className="w-2 h-2 rounded-full bg-sky-500 inline-block"
+                className="w-2 h-2 rounded-full bg-blue-500 inline-block"
                 aria-hidden
               />
             </button>
@@ -217,7 +217,7 @@ const Header = ({
           {/* NAV LINKS BOX (only this area blurs on scroll) */}
           <motion.div
             className={desktopNavBoxClass}
-            initial={reduceMotion ? undefined : "initial"}
+            initial={blueuceMotion ? undefined : "initial"}
             animate="animate"
             variants={navContainerVariants}
           >
@@ -227,20 +227,20 @@ const Header = ({
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
                   variants={navItemVariants}
-                  className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
+                  className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   {link.label}
-                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-sky-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </motion.button>
               ) : (
                 <motion.div key={link.href} variants={navItemVariants}>
                   <Link
                     to={link.href}
-                    className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
+                    className="text-sm font-bold uppercase text-white relative group px-1 py-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.label}
-                    <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-sky-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                    <span className="absolute left-0 bottom-[-4px] w-full h-[2px] bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                   </Link>
                 </motion.div>
               ),
@@ -259,8 +259,8 @@ const Header = ({
                 onSignIn();
                 scrollToSection("#contact");
               }}
-              whileHover={reduceMotion ? {} : { scale: 1.03 }}
-              className="inline-flex items-center gap-2 bg-sky-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-1 rounded-md shadow-sm hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-300 transition"
+              whileHover={blueuceMotion ? {} : { scale: 1.03 }}
+              className="inline-flex items-center gap-2 bg-blue-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-1 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
             >
               Connect
               <span className="text-xl" aria-hidden>
@@ -279,11 +279,11 @@ const Header = ({
           initial="closed"
           animate={isMenuOpen ? "open" : "closed"}
           variants={mobileMenuVariants}
-          className="md:hidden fixed top-0 left-0 right-0 h-full z-40 bg-slate-900/95 backdrop-blur-sm text-white transform flex flex-col items-center justify-center space-y-6 px-6 pt-10"
+          className="md:hidden fixed top-0 left-0 right-0 h-full z-40 bg-blue-900/95 backdrop-blur-sm text-white transform flex flex-col items-center justify-center space-y-6 px-6 pt-10"
         >
           <button
             onClick={() => scrollToSection("#hero")}
-            className="text-xl font-extrabold uppercase tracking-tighter text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-sky-300"
+            className="text-xl font-extrabold uppercase tracking-tighter text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             {logoText}
           </button>
@@ -294,17 +294,17 @@ const Header = ({
                 <button
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
-                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
+                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   {link.label}
-                  <span className="absolute left-6 bottom-3 w-6 h-[2px] bg-sky-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                  <span className="absolute left-6 bottom-3 w-6 h-[2px] bg-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                 </button>
               ) : (
                 <Link
                   key={link.href}
                   to={link.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-sky-300"
+                  className="w-full text-center text-sm font-bold uppercase text-white relative group py-3 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
                 >
                   {link.label}
                 </Link>
@@ -318,7 +318,7 @@ const Header = ({
               setIsMenuOpen(false);
               scrollToSection("#contact");
             }}
-            className="bg-sky-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-sm hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-300 transition"
+            className="bg-blue-500 text-black border-2 border-transparent text-sm font-semibold uppercase px-4 py-2 rounded-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition"
           >
             Connect{" "}
             <span className="text-xl" aria-hidden>

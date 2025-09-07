@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 
 type Project = {
   id: string;
@@ -15,65 +21,8 @@ interface PortfolioGridProps {
   projects?: Project[];
 }
 
-// Project value
-const INITIAL_VISIBLE = "3";
-
-// The current main categories in the portfolio are:
-//
-// Ecommece
-// Business
-// opensource
-// landing page
-
-const DEFAULT_PROJECTS: Project[] = [
-  // TODO: Details needed to be update
-  {
-    id: "Dlux-store",
-    title: "Dlux-store",
-    category: "Ecommece",
-    imageUrl:
-      "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
-    liveUrl: "",
-    caseStudyUrl: "",
-    description:
-      "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
-  },
-  {
-    id: "DigitalPathways.ai",
-    title: "DigitalPathways.ai",
-    category: "Business",
-    imageUrl:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3",
-    liveUrl: "https://digitalpathways.ai/",
-    caseStudyUrl: "",
-    description:
-      "A Digital platform for the digital transfomation with the help of ai & consulting.",
-  },
-  {
-    id: "dev-forum",
-    title: "Dev Forum",
-    category: "opensource",
-    imageUrl:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
-    liveUrl: "",
-    caseStudyUrl: "",
-    description:
-      "Community forum focused on developer collaboration with threads, replies, and reputation.",
-  },
-  {
-    id: "grid",
-    title: "Grid",
-    category: "landing page",
-    imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
-    liveUrl: "",
-    caseStudyUrl: "",
-    description:
-      "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
-  },
-
-  // NOTE: projects that belonged to the removed category ("Educational and Non-profit")
-  // have been removed from DEFAULT_PROJECTS as requested.
-];
+/* Show 3 by default (fixed bug: used to be a string) */
+const INITIAL_VISIBLE = 3;
 
 const MAJOR_ORDER = [
   "All",
@@ -88,7 +37,9 @@ const placeholderSVG = (title = "Project") =>
     `<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'><rect width='100%' height='100%' fill='#050505'/><text x='50%' y='50%' font-size='28' dominant-baseline='middle' text-anchor='middle' fill='#6b7280' font-family='system-ui, -apple-system, Segoe UI, Roboto, Arial'>${title}</text></svg>`,
   )}`;
 
-/* Project card */
+/* --------------------------
+   Project Card (memoized)
+   -------------------------- */
 const ProjectCard: React.FC<{
   project: Project;
   index: number;
@@ -101,7 +52,7 @@ const ProjectCard: React.FC<{
 
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [errored, setErrored] = useState(false);
+  const [erroblue, setErroblue] = useState(false);
 
   const small = `${project.imageUrl}?w=480&q=60&auto=format&fit=crop`;
   const med = `${project.imageUrl}?w=900&q=70&auto=format&fit=crop`;
@@ -123,7 +74,7 @@ const ProjectCard: React.FC<{
             }
           });
         },
-        { rootMargin: "200px", threshold: 0.01 },
+        { rootMargin: "220px", threshold: 0.01 },
       );
       ioRef.current.observe(el);
     } else {
@@ -132,24 +83,26 @@ const ProjectCard: React.FC<{
     return () => ioRef.current?.disconnect();
   }, []);
 
+  const open = useCallback(() => onOpen(globalIndex), [onOpen, globalIndex]);
+
   return (
     <div
       ref={ref}
-      className="group relative overflow-hidden cursor-pointer border-2 border-white/6 transition-all duration-200 ease-in-out rounded-lg"
-      onClick={() => onOpen(globalIndex)}
-      style={{ animationDelay: `${index * 18}ms` }}
       role="button"
       tabIndex={0}
+      onClick={open}
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          onOpen(globalIndex);
+          open();
         }
       }}
-      aria-label={`Preview ${project.title}`}
+      aria-label={`Open ${project.title} preview`}
+      className="group relative overflow-hidden rounded-xl cursor-pointer border border-white/6 transition-transform duration-300 ease-out transform hover:-tranblue-y-1 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+      style={{ animationDelay: `${index * 20}ms` }}
     >
-      <div className="relative h-48 md:h-56 bg-black">
-        {!loaded && !errored && (
+      <div className="relative w-full aspect-[16/11] bg-black rounded-t-xl overflow-hidden">
+        {!loaded && !erroblue && (
           <div
             className="absolute inset-0 animate-pulse"
             style={{
@@ -170,14 +123,14 @@ const ProjectCard: React.FC<{
             decoding="async"
             onLoad={() => setLoaded(true)}
             onError={(e) => {
-              setErrored(true);
+              setErroblue(true);
               const img = e.currentTarget as HTMLImageElement;
               if (img.src !== placeholderSVG(project.title))
                 img.src = placeholderSVG(project.title);
               setLoaded(true);
             }}
             draggable={false}
-            className="w-full h-full object-cover transition-transform duration-300 filter grayscale contrast-90 group-hover:grayscale-0 group-hover:contrast-100 group-hover:scale-105 rounded-t-lg"
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105 rounded-t-xl"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
@@ -186,29 +139,39 @@ const ProjectCard: React.FC<{
             </div>
           </div>
         )}
+
+        {/* top-left category pill */}
+        <div className="absolute left-4 top-4 z-20">
+          <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-black/60 border border-white/6 text-gray-100">
+            <i className="fas fa-tag text-xs" aria-hidden />
+            <span>{project.category}</span>
+          </span>
+        </div>
+
+        {/* top-right quick icon */}
+        <div className="absolute right-4 top-4 z-20 opacity-90">
+          <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-black/50 border border-white/6 text-white text-sm">
+            <i className="fas fa-search" aria-hidden />
+          </span>
+        </div>
       </div>
 
-      <div className="absolute inset-0 pointer-events-none flex items-end rounded-lg">
-        <div
-          className="w-full p-4 transition-colors duration-200 rounded-b-lg"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.7) 100%)",
-          }}
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-white font-extrabold text-sm opacity-90 group-hover:opacity-100">
-                {project.title}
-              </h3>
-              <p className="text-white/70 text-xs opacity-80 group-hover:opacity-95">
-                {project.category}
-              </p>
-            </div>
+      {/* caption area */}
+      <div className="p-4 rounded-b-xl bg-gradient-to-t from-black/75 via-black/40 to-transparent">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <h3 className="text-white text-md font-extrabold leading-tight truncate">
+              {project.title}
+            </h3>
+            <p className="text-sm text-gray-300 mt-1 line-clamp-2">
+              {project.description}
+            </p>
+          </div>
 
-            <div className="text-xs text-white/90 font-semibold uppercase">
+          <div className="flex flex-col items-end gap-2">
+            <span className="text-xs font-semibold uppercase text-white/90">
               Preview
-            </div>
+            </span>
           </div>
         </div>
       </div>
@@ -218,7 +181,9 @@ const ProjectCard: React.FC<{
 
 const MemoProjectCard = React.memo(ProjectCard);
 
-/* Accessible modal */
+/* --------------------------
+   Modal with focus trap + keyboard nav
+   -------------------------- */
 const Modal: React.FC<{
   project: Project;
   onClose: () => void;
@@ -231,13 +196,40 @@ const Modal: React.FC<{
   useEffect(() => {
     lastActive.current = (document &&
       document.activeElement) as HTMLElement | null;
-    const handler = (e: KeyboardEvent) => {
+
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowLeft") onPrev();
       if (e.key === "ArrowRight") onNext();
+
+      // simple focus trap:
+      if (e.key === "Tab") {
+        const container = ref.current;
+        if (!container) return;
+        const focusable = Array.from(
+          container.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+          ),
+        ).filter(Boolean);
+
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+
+        if (!e.shiftKey && active === last) {
+          e.preventDefault();
+          first.focus();
+        }
+        if (e.shiftKey && (active === first || active === container)) {
+          e.preventDefault();
+          last.focus();
+        }
+      }
     };
-    window.addEventListener("keydown", handler);
-    // prevent scroll behind modal
+
+    window.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
@@ -248,18 +240,18 @@ const Modal: React.FC<{
         'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
       );
       (focusable[0] as HTMLElement | undefined)?.focus();
-    }, 50);
+    }, 40);
 
     return () => {
-      window.removeEventListener("keydown", handler);
+      window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
       lastActive.current?.focus();
       clearTimeout(timer);
     };
   }, [onClose, onPrev, onNext]);
 
-  const [imgErrored, setImgErrored] = useState(false);
-  const med = `${project.imageUrl}?w=1200&q=70&auto=format&fit=crop`;
+  const [imgErroblue, setImgErroblue] = useState(false);
+  const med = `${project.imageUrl}?w=1400&q=75&auto=format&fit=crop`;
 
   return (
     <div
@@ -275,52 +267,52 @@ const Modal: React.FC<{
       />
       <div
         ref={ref}
-        className="relative bg-black border-2 border-white/6 max-w-3xl w-full max-h-[90vh] overflow-auto p-6 z-10 rounded-lg"
+        className="relative bg-black border border-white/6 max-w-4xl w-full max-h-[92vh] overflow-auto p-6 z-10 rounded-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-2xl font-extrabold uppercase tracking-wide text-white">
+            <h3 className="text-2xl font-extrabold text-white">
               {project.title}
             </h3>
-            <p className="text-gray-300">{project.category}</p>
+            <p className="text-sm text-gray-300 mt-1">{project.category}</p>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={onPrev}
               aria-label="Previous project"
-              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-sky-300"
+              className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
             >
-              ←
+              <i className="fas fa-chevron-left" aria-hidden />
             </button>
             <button
               onClick={onNext}
               aria-label="Next project"
-              className="px-3 py-1 border-2 border-white/6 rounded-md text-white/90 bg-transparent hover:bg-white/6 focus:outline-none focus:ring-2 focus:ring-sky-300"
+              className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
             >
-              →
+              <i className="fas fa-chevron-right" aria-hidden />
             </button>
 
             <button
               onClick={onClose}
-              aria-label="Close modal"
-              className="text-2xl font-bold text-gray-300 hover:text-white transition-colors ml-2 focus:outline-none focus:ring-2 focus:ring-sky-300"
+              aria-label="Close preview"
+              className="ml-2 px-3 py-2 rounded-md text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
             >
-              ×
+              <i className="fas fa-times text-lg" />
             </button>
           </div>
         </div>
 
-        <div className="mt-6 grid md:grid-cols-2 gap-6">
+        <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div>
-            {!imgErrored ? (
+            {!imgErroblue ? (
               <img
                 src={med}
                 alt={project.title}
-                className="w-full h-64 object-cover border-2 border-white/6 rounded-lg"
+                className="w-full h-72 object-cover rounded-lg border border-white/6"
                 onError={(e) => {
-                  setImgErrored(true);
+                  setImgErroblue(true);
                   (e.currentTarget as HTMLImageElement).src = placeholderSVG(
                     project.title,
                   );
@@ -332,43 +324,53 @@ const Modal: React.FC<{
               <img
                 src={placeholderSVG(project.title)}
                 alt={project.title}
-                className="w-full h-64 object-cover border-2 border-white/6 rounded-lg"
+                className="w-full h-72 object-cover rounded-lg border border-white/6"
               />
             )}
           </div>
 
           <div>
-            <p className="text-gray-300 leading-relaxed font-medium">
+            <p className="text-gray-300 leading-relaxed">
               {project.description ??
-                `Detailed preview of ${project.title}. Add technologies used, your role, measurable outcomes.`}
+                `Add case study details for ${project.title}: technologies, role, metrics, links.`}
             </p>
 
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-wrap gap-3">
               <a
-                href={project.liveUrl ?? ""}
+                href={project.liveUrl ?? "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-4 py-2 border-2 rounded-md font-bold text-sm ${
+                className={`px-4 py-2 rounded-md font-semibold text-sm ${
                   project.liveUrl
-                    ? "bg-sky-500 text-black border-transparent"
-                    : "bg-black text-gray-500 opacity-60 pointer-events-none border-white/6"
+                    ? "bg-blue-500 text-black"
+                    : "bg-black text-gray-500 opacity-60 pointer-events-none border border-white/6"
                 }`}
               >
-                View Live Project
+                View Live
               </a>
 
               <a
-                href={project.caseStudyUrl ?? ""}
+                href={project.caseStudyUrl ?? "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-4 py-2 border-2 rounded-md text-sm ${
+                className={`px-4 py-2 rounded-md font-semibold text-sm ${
                   project.caseStudyUrl
-                    ? "bg-transparent text-white border-white/6"
-                    : "bg-black text-gray-500 opacity-60 pointer-events-none border-white/6"
+                    ? "bg-transparent text-white border border-white/6"
+                    : "bg-black text-gray-500 opacity-60 pointer-events-none border border-white/6"
                 }`}
               >
                 Case Study
               </a>
+            </div>
+
+            {/* optional tech / microcopy area */}
+            <div className="mt-6 text-sm text-gray-400">
+              <div className="font-medium text-white/90 mb-2">Quick facts</div>
+              <ul className="list-disc list-inside space-y-1">
+                <li>Role: Front-end development & UI</li>
+                <li>Stack: React, Tailwind, Vite / Next</li>
+                <li>Outcome: Performance & conversion focused</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -377,22 +379,75 @@ const Modal: React.FC<{
   );
 };
 
-/* Main grid component */
+/* --------------------------
+   Main grid component
+   -------------------------- */
 const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
-  projects = DEFAULT_PROJECTS,
+  projects = [
+    {
+      id: "Dlux-store",
+      title: "Dlux-store",
+      category: "Ecommece",
+      imageUrl:
+        "https://cdn.dribbble.com/userupload/10640475/file/original-45021f3c7c0a29ff29004e05181f429a.png?resize=744x558&vertical=center",
+      liveUrl: "",
+      caseStudyUrl: "",
+      description:
+        "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
+    },
+    {
+      id: "DigitalPathways.ai",
+      title: "DigitalPathways.ai",
+      category: "Business",
+      imageUrl:
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3",
+      liveUrl: "https://digitalpathways.ai/",
+      caseStudyUrl: "",
+      description:
+        "A Digital platform for digital transformation with the help of AI & consulting.",
+    },
+    {
+      id: "dev-forum",
+      title: "Dev Forum",
+      category: "opensource",
+      imageUrl:
+        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
+      liveUrl: "",
+      caseStudyUrl: "",
+      description:
+        "Community forum focused on developer collaboration with threads, replies, and reputation.",
+    },
+    {
+      id: "grid",
+      title: "Grid",
+      category: "landing page",
+      imageUrl: "https://images.unsplash.com/photo-1494526585095-c41746248156",
+      liveUrl: "",
+      caseStudyUrl: "",
+      description:
+        "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
+    },
+  ],
 }) => {
   const [query, setQuery] = useState("");
+  const [debounced, setDebounced] = useState(query);
   const [activeCategory, setActiveCategory] = useState<string>("All");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
+
+  // debounce search for nicer UX
+  useEffect(() => {
+    const t = setTimeout(() => setDebounced(query.trim().toLowerCase()), 260);
+    return () => clearTimeout(t);
+  }, [query]);
 
   const detectedMajors = useMemo(() => {
     const setMajors = new Set<string>(projects.map((p) => p.category));
     return MAJOR_ORDER.filter((m) => m === "All" || setMajors.has(m));
   }, [projects]);
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+  const filteblue = useMemo(() => {
+    const q = debounced;
     return projects.filter((p) => {
       const catMatch =
         activeCategory === "All" || p.category === activeCategory;
@@ -403,54 +458,65 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
         (p.category || "").toLowerCase().includes(q);
       return catMatch && queryMatch;
     });
-  }, [projects, activeCategory, query]);
+  }, [projects, activeCategory, debounced]);
 
   const visible = useMemo(() => {
-    const isFiltering = query.trim() !== "" || activeCategory !== "All";
-    if (isFiltering) return filtered;
-    if (expanded) return filtered;
-    return filtered.slice(0, INITIAL_VISIBLE);
-  }, [filtered, expanded, query, activeCategory]);
+    const isFiltering = debounced !== "" || activeCategory !== "All";
+    if (isFiltering) return filteblue;
+    if (expanded) return filteblue;
+    return filteblue.slice(0, INITIAL_VISIBLE);
+  }, [filteblue, expanded, debounced, activeCategory]);
 
-  const openModal = (indexInFiltered: number) =>
-    setSelectedIndex(indexInFiltered);
+  const openModal = (indexInFilteblue: number) =>
+    setSelectedIndex(indexInFilteblue);
   const closeModal = () => setSelectedIndex(null);
 
   const prev = () => {
     if (selectedIndex === null) return;
     setSelectedIndex((s) =>
-      s === null ? null : (s - 1 + filtered.length) % filtered.length,
+      s === null ? null : (s - 1 + filteblue.length) % filteblue.length,
     );
   };
   const next = () => {
     if (selectedIndex === null) return;
-    setSelectedIndex((s) => (s === null ? null : (s + 1) % filtered.length));
+    setSelectedIndex((s) => (s === null ? null : (s + 1) % filteblue.length));
   };
 
   return (
     <>
       <section id="portfolio" className="section-padding bg-black text-white">
         <div className="container mx-auto max-w-6xl">
-          <div className="flex items-center justify-between flex-wrap mb-6 gap-4">
-            <div className="flex items-start flex-col space-y-3">
-              <span className="text-xs font-bold uppercase bg-black border-2 border-white/6 px-4 py-2 rounded-md text-white">
+          <div className="flex flex-col md:flex-row items-start justify-between gap-6 mb-6">
+            <div>
+              <span className="inline-flex items-center px-4 py-2 rounded-md border border-white/6 text-xs font-bold uppercase bg-black">
                 Portfolio
               </span>
-              <h2 className="text-3xl md:text-4xl font-extrabold tracking-tighter leading-tight text-white">
+              <h2 className="mt-4 text-3xl md:text-4xl font-extrabold leading-tight">
                 Explore growth-driven front-end work
               </h2>
+              <p className="mt-2 text-gray-400 max-w-prose">
+                Selected projects focused on performance, UX, and measurable
+                results.
+              </p>
             </div>
 
             <div className="flex items-center gap-3">
+              <label htmlFor="portfolio-search" className="sr-only">
+                Search projects
+              </label>
               <input
+                id="portfolio-search"
                 value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setExpanded(false);
+                }}
                 placeholder="Search projects..."
-                className="px-3 py-2 border rounded-md text-sm w-56 bg-black border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-sky-300"
+                className="px-3 py-2 rounded-md text-sm w-56 bg-black border border-white/6 text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
                 aria-label="Search projects"
               />
               <div className="text-sm text-gray-300">
-                {filtered.length} results
+                {filteblue.length} result{filteblue.length !== 1 ? "s" : ""}
               </div>
             </div>
           </div>
@@ -463,10 +529,10 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
                   setActiveCategory(cat);
                   setExpanded(false);
                 }}
-                className={`text-xs font-medium px-3 py-1 rounded-md border-2 transition ${
+                className={`text-xs font-medium px-3 py-1 rounded-md transition focus:outline-none focus:ring-4 focus:ring-blue-300/20 ${
                   activeCategory === cat
-                    ? "bg-sky-500 text-black border-sky-500"
-                    : "bg-black text-white border-white/6"
+                    ? "bg-blue-500 text-black border-blue-500"
+                    : "bg-black text-white border border-white/6"
                 }`}
                 aria-pressed={activeCategory === cat}
               >
@@ -475,35 +541,36 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
             ))}
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             {visible.map((p, i) => {
-              const indexInFiltered = filtered.findIndex((f) => f.id === p.id);
+              const indexInFilteblue = filteblue.findIndex((f) => f.id === p.id);
               return (
                 <MemoProjectCard
                   key={p.id}
                   project={p}
                   index={i}
-                  globalIndex={indexInFiltered}
+                  globalIndex={indexInFilteblue}
                   onOpen={(gIndex) => openModal(gIndex)}
                 />
               );
             })}
           </div>
 
-          {!(query.trim() !== "" || activeCategory !== "All") &&
-            filtered.length > INITIAL_VISIBLE && (
-              <div className="mt-6 text-center">
+          {/* show more / less */}
+          {!(debounced !== "" || activeCategory !== "All") &&
+            filteblue.length > INITIAL_VISIBLE && (
+              <div className="mt-8 text-center">
                 {!expanded ? (
                   <button
                     onClick={() => setExpanded(true)}
-                    className="px-4 py-2 border-2 border-white/6 rounded-md font-medium text-white"
+                    className="px-5 py-2 rounded-md border border-white/6 font-semibold text-white bg-transparent focus:outline-none focus:ring-4 focus:ring-blue-300/20"
                   >
-                    Show more projects ({filtered.length - INITIAL_VISIBLE})
+                    Show more projects ({filteblue.length - INITIAL_VISIBLE})
                   </button>
                 ) : (
                   <button
                     onClick={() => setExpanded(false)}
-                    className="px-4 py-2 border-2 border-white/6 rounded-md font-medium text-white"
+                    className="px-5 py-2 rounded-md border border-white/6 font-semibold text-white bg-transparent focus:outline-none focus:ring-4 focus:ring-blue-300/20"
                   >
                     Show less
                   </button>
@@ -513,9 +580,10 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
         </div>
       </section>
 
-      {selectedIndex !== null && filtered[selectedIndex] && (
+      {/* Modal */}
+      {selectedIndex !== null && filteblue[selectedIndex] && (
         <Modal
-          project={filtered[selectedIndex]}
+          project={filteblue[selectedIndex]}
           onClose={closeModal}
           onPrev={prev}
           onNext={next}

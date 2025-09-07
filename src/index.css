@@ -5,37 +5,14 @@
 html {
   scroll-behavior: smooth;
 }
-
-/* Scrollbar Styles */
-/* For Chrome, Edge, Safari */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+body::-webkit-scrollbar {
+  display: none;
 }
-
-::-webkit-scrollbar-track {
-  background: #fff; /* Inverted from #111 to white */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #111; /* Inverted from #fff to dark */
-  border: 2px solid #fff; /* Inverted border to match track */
-  border-radius: 1px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #333; /* Adjusted hover for contrast (darker than #ccc) */
-  border-radius: 1px;
-}
-
 /* For Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #111 #fff; /* Inverted: thumb #111, track #fff */
-}
+
 body {
   background-color: black;
-  font-family: "Tomorrow", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 /* Portfolio Design System */
 @layer base {

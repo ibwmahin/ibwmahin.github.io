@@ -4,6 +4,8 @@ interface Service {
   title: string;
   description: string;
   variant?: "default" | "highlight";
+  // fontawesome class, e.g. "fas fa-code" or "fa-solid fa-code" depending on your setup
+  faClass?: string;
 }
 
 interface ServicesGridProps {
@@ -15,134 +17,156 @@ const ServicesGrid = ({
     {
       title: "Responsive Web Development",
       description:
-        "Designing lightning-fast, mobile-first websites with HTML, CSS, Tailwind, GSAP, Framer Motion, JavaScript, and React—crafted for performance and elegance.",
+        "Lightning-fast, mobile-first websites using modern front-end stacks — performance, accessibility, and maintainability built in.",
       variant: "highlight",
+      faClass: "fas fa-code",
     },
     {
-      title: "Startup Solutions For WordPress Development",
+      title: "Startup WordPress Solutions",
       description:
-        "Delivering scalable, secure, and growth-focused WordPress platforms tailored to empower startups and ignite their digital presence.",
+        "Scalable WordPress platforms tailoblue for growth: secure, extendable, and conversion-optimised.",
+      faClass: "fas fa-rocket",
     },
     {
-      title: "Social Media & Ad Video Production",
+      title: "Social & Ad Video Production",
       description:
-        "Producing scroll-stopping, high-converting video content that captivates audiences and elevates brand storytelling across social platforms.",
+        "Short, high-impact videos engineeblue for social platforms to increase engagement and ad performance.",
+      faClass: "fas fa-video",
     },
     {
-      title: "Brand Identity & UI/UX Design",
+      title: "Brand Identity & UI/UX",
       description:
-        "Shaping distinctive brand identities and designing intuitive, user-centered interfaces that seamlessly blend aesthetics with functionality.",
+        "Holistic brand systems and intuitive UI that strengthen trust and drive user action.",
+      faClass: "fas fa-palette",
     },
   ],
 }: ServicesGridProps) => {
-  const servicesRef = useRef<HTMLElement | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const ref = useRef<HTMLElement | null>(null);
+  const [active, setActive] = useState<number | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) entry.target.classList.add("in-view");
       },
       { threshold: 0.15 },
     );
-
-    if (servicesRef.current) observer.observe(servicesRef.current);
-    return () => observer.disconnect();
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
   return (
     <section
       id="services"
-      ref={servicesRef}
-      className="section-padding animate-fade-up bg-black text-white"
+      ref={ref}
+      className="section-padding text-white relative"
+      aria-labelledby="services-heading"
     >
-      <div className="container mx-auto max-w-6xl">
-        <div className="grid lg:grid-cols-5 gap-12 items-start">
-          {/* Left Column - Header */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center space-x-2 mb-6">
-              <span className="inline-flex items-center px-4 py-2 rounded-md border-2 border-sky-500 bg-black/40 text-sky-400 font-medium transition">
-                Services
-              </span>
-            </div>
+      <div className="container mx-auto max-w-6xl relative">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+          {/* Left Header */}
+          <div className="lg:col-span-2">
+            <span className="inline-flex items-center px-3 py-1 rounded-md border border-blue-500 bg-black/20 text-blue-400 text-sm font-medium">
+              Services
+            </span>
 
-            <h2 className="text-[clamp(1.6rem,3.6vw,2.2rem)] leading-tight font-semibold max-w-lg text-white">
-              How I help businesses thrive online with tailored solutions.
+            <h2
+              id="services-heading"
+              className="mt-6 text-[clamp(1.6rem,3.6vw,2.2rem)] font-extrabold leading-tight max-w-lg"
+            >
+              Powerful, focused solutions to grow your digital product.
             </h2>
 
-            <p className="text-gray-300 leading-relaxed max-w-md">
-              A comprehensive look at my services and how we deliver them —
-              focused on speed, clarity, and delightful UX.
+            <p className="mt-4 text-gray-300 max-w-md leading-relaxed">
+              I build high-performance, accessible experiences — from brand and
+              strategy to fast front-end builds that convert.
             </p>
 
-            <button className="inline-flex items-center gap-2 px-3 py-1 border-2 border-sky-500 rounded-md bg-transparent text-sky-400 font-semibold hover:bg-sky-500 hover:text-black transition focus:outline-none focus:ring-2 focus:ring-sky-300">
-              <a href="#contact">Hire Me</a>
-            </button>
+            <div className="mt-6">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-b from-blue-500 to-blue-600 text-black font-semibold shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300/30"
+              >
+                Hire me
+              </a>
+            </div>
           </div>
 
-          {/* Right Column - Services Grid */}
-          <div className="lg:col-span-3 grid md:grid-cols-2 gap-6">
-            {services.map((service, index) => {
+          {/* Services Grid */}
+          <div className="lg:col-span-3 grid sm:grid-cols-2 gap-6">
+            {services.map((s, i) => {
               const isActive =
-                (hoveredIndex === null && service.variant === "highlight") ||
-                hoveredIndex === index;
+                active === i || (active === null && s.variant === "highlight");
+
+              const bgClass = isActive
+                ? "bg-gradient-to-b from-blue-400/95 to-blue-500/95 text-black border-transparent shadow-2xl"
+                : "bg-black/50 border border-white/6 text-white hover:scale-[1.03] hover:shadow-lg";
 
               return (
-                <div
-                  key={service.title}
-                  tabIndex={0}
-                  role="button"
-                  onFocus={() => setHoveredIndex(index)}
-                  onBlur={() => setHoveredIndex(null)}
-                  onMouseEnter={() => setHoveredIndex(index)}
-                  onMouseLeave={() => setHoveredIndex(null)}
+                <button
+                  key={`${s.title}-${i}`}
+                  onFocus={() => setActive(i)}
+                  onBlur={() => setActive(null)}
+                  onMouseEnter={() => setActive(i)}
+                  onMouseLeave={() => setActive(null)}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      // optional: handle activation
+                      e.currentTarget.click();
                     }
                   }}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                  className={`p-6 border transition-all duration-300 group cursor-pointer transform-gpu rounded-2xl focus:outline-none focus:ring-2 focus:ring-sky-300
-                    ${isActive ? "bg-sky-500 text-black border-transparent shadow-lg scale-[1.02]" : "bg-black text-white border-white/6 hover:shadow-md hover:scale-105"}`}
+                  type="button"
+                  aria-pressed={isActive}
+                  className={`group relative flex flex-col items-start gap-4 p-6 rounded-2xl transform-gpu transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300/20 ${bgClass}`}
+                  style={{ animationDelay: `${i * 60}ms` }}
                 >
-                  <div className="flex items-start justify-between mb-4">
-                    <h3
-                      className={`font-semibold text-lg ${isActive ? "text-black" : "text-white"}`}
-                    >
-                      {service.title}
-                    </h3>
+                  {/* decorative sparkle (fancy thing) for active/highlight cards */}
+                  {isActive && (
+                    <span
+                      aria-hidden
+                      className="absolute top-4 right-4 opacity-90 text-white/90 textpcenter"
+                      title=""
+                    ></span>
+                  )}
 
-                    <div className="ml-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        className={isActive ? "text-black" : "text-white"}
+                  {/* top row: icon + title */}
+                  <div className="flex items-center justify-between w-full ">
+                    <div className="flex items-center flex-col gap-4">
+                      <div
+                        className={`flex items-center justify-center w-12 h-12 rounded-lg flex-none text-xl
+                          ${isActive ? "bg-black/0 text-black" : "bg-white/6 text-white"}`}
+                        aria-hidden
                       >
-                        <path
-                          d="M3 8H13M13 8L9 4M13 8L9 12"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+                        {/* fontawesome icon — using the class provided */}
+                        <i className={`${s.faClass ?? "fas fa-cog"} block`} />
+                      </div>
+
+                      <h3
+                        className={`text-lg font-semibold ${isActive ? "text-black" : "text-white"}`}
+                      >
+                        {s.title}
+                      </h3>
                     </div>
                   </div>
 
+                  {/* description — larger, higher-contrast for readability */}
                   <p
-                    className={`${isActive ? "text-black/80" : "text-gray-300"} text-sm leading-relaxed`}
+                    className={`${isActive ? "text-black/85" : "text-gray-300"} text-sm leading-relaxed`}
                   >
-                    {service.description}
+                    {s.description}
                   </p>
-                </div>
+                </button>
               );
             })}
           </div>
         </div>
       </div>
+
+      {/* Respect prefers-blueuced-motion */}
+      <style>{`
+        @media (prefers-blueuced-motion: blueuce) {
+          .group, .group * { animation: none !important; transition: none !important; transform: none !important; }
+        }
+      `}</style>
     </section>
   );
 };
