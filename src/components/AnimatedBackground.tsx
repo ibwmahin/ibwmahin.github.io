@@ -1,4 +1,4 @@
-import { useEffect, useRef, RefObject, memo } from "react";
+import { useEffect, useRef, RefObject, memo, useState } from "react";
 
 type Props = {
   containerRef: RefObject<HTMLDivElement>;
@@ -43,6 +43,20 @@ export default memo(function MinimalCalmBackground({
   const rafRef = useRef<number | null>(null);
   const dimsRef = useRef({ w: 0, h: 0, px: 1 });
   const bgGradRef = useRef<CanvasGradient | null>(null);
+
+  const [isDesktop, setIsDesktop] = useState(
+    typeof window !== "undefined" ? window.innerWidth >= 768 : true,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   // Clamp DPR for smoother perf on low-end devices
   const getDPR = () => Math.max(1, Math.min(1.5, window.devicePixelRatio || 1));
@@ -100,11 +114,25 @@ export default memo(function MinimalCalmBackground({
     particlesRef.current = arr;
   };
 
+  const drawStaticBackground = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    const { w, h, px } = dimsRef.current;
+    if (bgGradRef.current) {
+      ctx.setTransform(px, 0, 0, px, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = bgGradRef.current;
+      ctx.fillRect(0, 0, w, h);
+    }
+  };
+
   // gentle pointer parallax — optional and subtle
   const pointer = useRef({ x: 0, y: 0, active: false });
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !isDesktop) return;
     const onMove = (e: PointerEvent) => {
       const r = container.getBoundingClientRect();
       pointer.current.x = (e.clientX - r.left) / r.width; // 0..1
@@ -121,7 +149,7 @@ export default memo(function MinimalCalmBackground({
       container.removeEventListener("pointerleave", onLeave);
       container.removeEventListener("pointercancel", onLeave);
     };
-  }, [containerRef]);
+  }, [containerRef, isDesktop]);
 
   // Main loop
   useEffect(() => {
@@ -136,13 +164,22 @@ export default memo(function MinimalCalmBackground({
       const now = performance.now();
       if (now - lastResize < 80) return;
       lastResize = now;
-      setup();
-      initParticles();
+      if (setup()) {
+        if (isDesktop) {
+          initParticles();
+        } else {
+          drawStaticBackground();
+        }
+      }
     };
     window.addEventListener("resize", onResize);
 
     setup();
-    initParticles();
+    if (isDesktop) {
+      initParticles();
+    } else {
+      drawStaticBackground();
+    }
 
     const step = (t: number) => {
       const dt = Math.max(0.001, (t - last) / 1000);
@@ -218,15 +255,15 @@ export default memo(function MinimalCalmBackground({
       rafRef.current = requestAnimationFrame(step);
     };
 
-    rafRef.current = requestAnimationFrame(step);
+    if (isDesktop) {
+      rafRef.current = requestAnimationFrame(step);
+    }
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       window.removeEventListener("resize", onResize);
     };
-    // run once on mount; internal refs manage updates
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerRef, particleCount, maxRadius, verticalDrift, tint]);
+  }, [containerRef, particleCount, maxRadius, verticalDrift, tint, isDesktop]);
 
   return (
     <canvas
