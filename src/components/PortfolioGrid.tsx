@@ -6,15 +6,22 @@ import React, {
   useCallback,
 } from "react";
 
+/* ------------------------------------------------ */
+import digitalp from "../assets/works/digitalp.png";
+import pearNi from "../assets/works/pearNi.png";
+import nvim from "../assets/works/nvim.png";
+/* ------------------------------------------------ */
+
 type Project = {
   id: string;
   title: string;
   category: string;
-  imageUrl: string;
+  imageUrl: string | any;
   description?: string;
   variant?: "default" | "highlight";
   liveUrl?: string;
   caseStudyUrl?: string;
+  quickFacts?: string[]; // <-- added optional quick facts
 };
 
 interface PortfolioGridProps {
@@ -52,11 +59,19 @@ const ProjectCard: React.FC<{
 
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [erroblue, setErroblue] = useState(false);
+  const [errored, setErrored] = useState(false);
 
-  const small = `${project.imageUrl}?w=480&q=60&auto=format&fit=crop`;
-  const med = `${project.imageUrl}?w=900&q=70&auto=format&fit=crop`;
-  const large = `${project.imageUrl}?w=1400&q=75&auto=format&fit=crop`;
+  // Support imported image modules (some bundlers return an object) or strings.
+  const src =
+    typeof project.imageUrl === "object"
+      ? (project.imageUrl.src ??
+        project.imageUrl.default ??
+        String(project.imageUrl))
+      : String(project.imageUrl);
+
+  const small = `${src}?w=480&q=60&auto=format&fit=crop`;
+  const med = `${src}?w=900&q=70&auto=format&fit=crop`;
+  const large = `${src}?w=1400&q=75&auto=format&fit=crop`;
 
   useEffect(() => {
     const el = ref.current;
@@ -98,11 +113,11 @@ const ProjectCard: React.FC<{
         }
       }}
       aria-label={`Open ${project.title} preview`}
-      className="group relative overflow-hidden rounded-xl cursor-pointer border border-white/6 transition-transform duration-300 ease-out transform hover:-tranblue-y-1 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-300/20"
+      className="group relative overflow-hidden rounded-xl cursor-pointer border border-white/6 transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.01] focus:outline-none focus:ring-4 focus:ring-blue-300/20"
       style={{ animationDelay: `${index * 20}ms` }}
     >
       <div className="relative w-full aspect-[16/11] bg-black rounded-t-xl overflow-hidden">
-        {!loaded && !erroblue && (
+        {!loaded && !errored && (
           <div
             className="absolute inset-0 animate-pulse"
             style={{
@@ -123,7 +138,7 @@ const ProjectCard: React.FC<{
             decoding="async"
             onLoad={() => setLoaded(true)}
             onError={(e) => {
-              setErroblue(true);
+              setErrored(true);
               const img = e.currentTarget as HTMLImageElement;
               if (img.src !== placeholderSVG(project.title))
                 img.src = placeholderSVG(project.title);
@@ -143,7 +158,9 @@ const ProjectCard: React.FC<{
         {/* top-left category pill */}
         <div className="absolute left-4 top-4 z-20">
           <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-black/60 border border-white/6 text-gray-100">
-            <i className="fas fa-tag text-xs" aria-hidden />
+            <span aria-hidden className="text-xs">
+              🏷️
+            </span>
             <span>{project.category}</span>
           </span>
         </div>
@@ -151,7 +168,7 @@ const ProjectCard: React.FC<{
         {/* top-right quick icon */}
         <div className="absolute right-4 top-4 z-20 opacity-90">
           <span className="inline-flex items-center justify-center w-9 h-9 rounded-md bg-black/50 border border-white/6 text-white text-sm">
-            <i className="fas fa-search" aria-hidden />
+            <span aria-hidden>🔍</span>
           </span>
         </div>
       </div>
@@ -250,8 +267,16 @@ const Modal: React.FC<{
     };
   }, [onClose, onPrev, onNext]);
 
-  const [imgErroblue, setImgErroblue] = useState(false);
-  const med = `${project.imageUrl}?w=1400&q=75&auto=format&fit=crop`;
+  const [imgErrored, setImgErrored] = useState(false);
+
+  const src =
+    typeof project.imageUrl === "object"
+      ? (project.imageUrl.src ??
+        project.imageUrl.default ??
+        String(project.imageUrl))
+      : String(project.imageUrl);
+
+  const med = `${src}?w=1400&q=75&auto=format&fit=crop`;
 
   return (
     <div
@@ -284,14 +309,14 @@ const Modal: React.FC<{
               aria-label="Previous project"
               className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
             >
-              <i className="fas fa-chevron-left" aria-hidden />
+              ◀
             </button>
             <button
               onClick={onNext}
               aria-label="Next project"
               className="px-3 py-2 rounded-md border border-white/6 text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
             >
-              <i className="fas fa-chevron-right" aria-hidden />
+              ▶
             </button>
 
             <button
@@ -299,20 +324,20 @@ const Modal: React.FC<{
               aria-label="Close preview"
               className="ml-2 px-3 py-2 rounded-md text-white bg-transparent hover:bg-white/6 focus:outline-none focus:ring-4 focus:ring-blue-300/20"
             >
-              <i className="fas fa-times text-lg" />
+              ✕
             </button>
           </div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           <div>
-            {!imgErroblue ? (
+            {!imgErrored ? (
               <img
                 src={med}
                 alt={project.title}
                 className="w-full h-72 object-cover rounded-lg border border-white/6"
                 onError={(e) => {
-                  setImgErroblue(true);
+                  setImgErrored(true);
                   (e.currentTarget as HTMLImageElement).src = placeholderSVG(
                     project.title,
                   );
@@ -363,14 +388,24 @@ const Modal: React.FC<{
               </a>
             </div>
 
-            {/* optional tech / microcopy area */}
+            {/* dynamic quick facts area */}
             <div className="mt-6 text-sm text-gray-400">
               <div className="font-medium text-white/90 mb-2">Quick facts</div>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Role: Front-end development & UI</li>
-                <li>Stack: React, Tailwind, Vite / Next</li>
-                <li>Outcome: Performance & conversion focused</li>
-              </ul>
+
+              {Array.isArray(project.quickFacts) &&
+              project.quickFacts.length > 0 ? (
+                <ul className="list-disc list-inside space-y-1">
+                  {project.quickFacts.map((fact, idx) => (
+                    <li key={idx}>{fact}</li>
+                  ))}
+                </ul>
+              ) : (
+                <ul className="list-disc list-inside space-y-1">
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                </ul>
+              )}
             </div>
           </div>
         </div>
@@ -394,28 +429,56 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
       caseStudyUrl: "",
       description:
         "An e-commerce demo for a clothing store — fast product listings and conversion-focused UI.",
+      quickFacts: [
+        "Role: UI + Front-end",
+        "Tech: React, Tailwind",
+        "Metric: +18% conversion in demo flows",
+      ],
     },
     {
-      id: "DigitalPathways.ai",
-      title: "DigitalPathways.ai",
+      id: "DgtlPathways",
+      title: "DgtlPathways",
       category: "Business",
-      imageUrl:
-        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3",
+      imageUrl: digitalp,
       liveUrl: "https://digitalpathways.ai/",
       caseStudyUrl: "",
       description:
         "A Digital platform for digital transformation with the help of AI & consulting.",
+      quickFacts: [
+        "Role: Lead front-end engineer",
+        "Tech: Next.js, TypeScript, Tailwind",
+        "Focus: Accessibility & SEO",
+      ],
     },
     {
-      id: "dev-forum",
-      title: "Dev Forum",
+      id: "PearNi",
+      title: "PearNi",
       category: "opensource",
-      imageUrl:
-        "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=80",
-      liveUrl: "",
+      imageUrl: pearNi,
+      liveUrl: "https://pearni.netlify.app/",
       caseStudyUrl: "",
       description:
-        "Community forum focused on developer collaboration with threads, replies, and reputation.",
+        "Community project for developers to share resources and discuss tools.",
+      quickFacts: [
+        "Role: Contributor & maintainer",
+        "Tech: Vite, React, Netlify",
+        "Open-source: MIT License",
+      ],
+    },
+    {
+      id: "LazyNvim",
+      title: "LazyNvim",
+      category: "opensource",
+      imageUrl: nvim,
+      liveUrl: "https://github.com/ibwmahin/LazyNvim",
+      caseStudyUrl: "",
+      description:
+        "Curated Neovim configuration with useful plugins and configs.",
+      quickFacts: [
+        "Role: Author & maintainer",
+        "Tech: Lua, Neovim",
+        "Users: community-driven plugin list",
+      ],
     },
     {
       id: "grid",
@@ -426,6 +489,11 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
       caseStudyUrl: "",
       description:
         "A performant portfolio template showcasing masonry grids, image streaming and minimal JS.",
+      quickFacts: [
+        "Role: Template author",
+        "Tech: CSS Grid, lazy images",
+        "Goal: Minimal JS, fast paint",
+      ],
     },
   ],
 }) => {
@@ -543,7 +611,9 @@ const PortfolioGridWithModal: React.FC<PortfolioGridProps> = ({
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
             {visible.map((p, i) => {
-              const indexInFilteblue = filteblue.findIndex((f) => f.id === p.id);
+              const indexInFilteblue = filteblue.findIndex(
+                (f) => f.id === p.id,
+              );
               return (
                 <MemoProjectCard
                   key={p.id}
