@@ -385,7 +385,7 @@ export default function ContactSection() {
                   className={`inline-flex items-center gap-3 justify-center h-12 px-6 rounded-full font-semibold transition-transform transform
                     ${
                       canSubmit
-                        ? "bg-gradient-to-r from-teal-500 to-teal-400 hover:scale-105 shadow-[0_10px_30px_rgba(67,56,202,0.16)] text-black"
+                        ? "bg-gradient-to-r from-pink-500 to-pink-400 hover:scale-105 shadow-[0_10px_30px_rgba(67,56,202,0.16)] text-black"
                         : "bg-gray-700 text-gray-300 opacity-60 cursor-not-allowed"
                     }`}
                 >
@@ -448,7 +448,7 @@ export default function ContactSection() {
                   tabIndex={-1}
                   role="status"
                   aria-live="polite"
-                  className={`text-center text-sm mt-3 ${status.startsWith("✅") ? "text-teal-400" : status.startsWith("❌") ? "text-teal-400" : "text-gray-300"}`}
+                  className={`text-center text-sm mt-3 ${status.startsWith("✅") ? "text-pink-400" : status.startsWith("❌") ? "text-pink-400" : "text-gray-300"}`}
                 >
                   {status}
                 </div>
@@ -506,7 +506,7 @@ function FloatingInput({
 }) {
   return (
     <div className="relative">
-      <span className="absolute left-3 top-1/2 -tranteal-y-1/2 text-gray-400 pointer-events-none">
+      <span className="absolute left-3 top-1/2 -tranpink-y-1/2 text-gray-400 pointer-events-none">
         {icon}
       </span>
 
@@ -520,7 +520,7 @@ function FloatingInput({
         aria-invalid={!!error}
         aria-describedby={error ? `err-${id}` : undefined}
         className={`peer w-full h-14 pl-12 pr-4 rounded-xl bg-white/5 text-white text-sm sm:text-base placeholder-transparent focus:outline-none transition-shadow shadow-inner
-          ${error ? "ring-2 ring-teal-400/30" : "focus:ring-2 focus:ring-teal-400/30"}`}
+          ${error ? "ring-2 ring-pink-400/30" : "focus:ring-2 focus:ring-pink-400/30"}`}
       />
 
       <label
@@ -532,7 +532,7 @@ function FloatingInput({
       </label>
 
       {error && (
-        <div id={`err-${id}`} className="mt-1 text-xs text-teal-400">
+        <div id={`err-${id}`} className="mt-1 text-xs text-pink-400">
           {error}
         </div>
       )}
@@ -567,7 +567,7 @@ function FloatingTextarea({
         aria-invalid={!!error}
         aria-describedby={error ? `err-${id}` : undefined}
         className={`peer w-full rounded-xl bg-white/5 text-white text-sm sm:text-base placeholder-transparent focus:outline-none transition-shadow shadow-inner px-4 py-3 resize-none
-          ${error ? "ring-2 ring-teal-400/30" : "focus:ring-2 focus:ring-teal-400/30"}`}
+          ${error ? "ring-2 ring-pink-400/30" : "focus:ring-2 focus:ring-pink-400/30"}`}
       />
       <label
         htmlFor={id}
@@ -578,7 +578,7 @@ function FloatingTextarea({
       </label>
 
       {error && (
-        <div id={`err-${id}`} className="mt-1 text-xs text-teal-400">
+        <div id={`err-${id}`} className="mt-1 text-xs text-pink-400">
           {error}
         </div>
       )}

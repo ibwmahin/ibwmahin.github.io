@@ -63,7 +63,7 @@ const Timeline = ({
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
           {/* header */}
           <div className="lg:col-span-2">
-            <span className="inline-flex items-center px-3 py-1 rounded-md border border-teal-500 bg-black/20 text-teal-400 text-sm font-medium">
+            <span className="inline-flex items-center px-3 py-1 rounded-md border border-pink-500 bg-black/20 text-pink-400 text-sm font-medium">
               Experience
             </span>
 
@@ -103,7 +103,7 @@ const Timeline = ({
                       it.variant === "highlight" ? "true" : undefined
                     }
                     className={`relative flex flex-col lg:flex-row items-start gap-4 p-5 rounded-xl transition-transform duration-200 ease-out
-                      ${isActive ? "scale-[1.01] shadow-2xl" : "hover:-tranteal-y-0.5"}
+                      ${isActive ? "scale-[1.01] shadow-2xl" : "hover:-tranpink-y-0.5"}
                     `}
                     style={{
                       isolation: "isolate",
@@ -115,7 +115,7 @@ const Timeline = ({
                       <div className="relative flex-none lg:mr-6">
                         <span
                           className={`block w-4 h-4 rounded-full ring-0 transform transition-all duration-200
-                            ${isActive ? "bg-teal-400 scale-110 ring-4 ring-teal-300" : "bg-white/40"}`}
+                            ${isActive ? "bg-pink-400 scale-110 ring-4 ring-pink-300" : "bg-white/40"}`}
                           aria-hidden
                         />
                         {/* short connector for small screens */}
@@ -124,7 +124,7 @@ const Timeline = ({
                       {/* card */}
                       <div
                         className={`w-full rounded-lg border border-white/6 p-4 bg-gradient-to-b from-black/35 to-black/25
-                          ${isActive ? "bg-teal-500 text-white border-transparent" : "text-white"}
+                          ${isActive ? "bg-pink-500 text-white border-transparent" : "text-white"}
                         `}
                       >
                         <div className="flex items-start justify-between">

@@ -27,7 +27,7 @@ I combine front-end craftsmanship (HTML, CSS, JS) with design thinking to delive
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* LEFT: Badge, heading, paragraph */}
         <div>
-          <span className="inline-flex items-center px-3 py-1 rounded-md border border-teal-500 bg-black/30 text-teal-400 text-sm font-medium">
+          <span className="inline-flex items-center px-3 py-1 rounded-md border border-pink-500 bg-black/30 text-pink-400 text-sm font-medium">
             About
           </span>
 
@@ -72,7 +72,7 @@ I combine front-end craftsmanship (HTML, CSS, JS) with design thinking to delive
                 className="p-4 rounded-lg bg-gradient-to-b from-black/40 to-black/30 border border-white/6"
               >
                 <dt className="text-xs text-gray-300"> </dt>
-                <dd className="text-2xl font-extrabold text-teal-400 leading-none">
+                <dd className="text-2xl font-extrabold text-pink-400 leading-none">
                   {s.value}
                 </dd>
                 <dt className="mt-2 text-sm text-gray-300">{s.label}</dt>
