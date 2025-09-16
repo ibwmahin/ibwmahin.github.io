@@ -24,7 +24,7 @@ const DEFAULTS = {
   particleCount: 22,
   maxRadius: 46,
   verticalDrift: 6,
-  tint: "90,160,220", // pink-ish; use "200,160,120" for warm
+  tint: "90,160,220", // green-ish; use "200,160,120" for warm
 } as const;
 
 function clamp(n: number, a: number, b: number) {

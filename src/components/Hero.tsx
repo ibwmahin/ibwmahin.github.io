@@ -119,7 +119,7 @@ const Hero: React.FC = () => {
       {/* vertical social (desktop) */}
       <nav
         aria-label="Social links"
-        className="hidden lg:flex z-30 absolute left-8 top-1/2 -tranpink-y-1/2 flex-col gap-3"
+        className="hidden lg:flex z-30 absolute left-8 top-1/2 -trangreen-y-1/2 flex-col gap-3"
       >
         {SOCIALS.map((s) => (
           <a
@@ -128,7 +128,7 @@ const Hero: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={s.label}
-            className="w-10 h-10 flex items-center justify-center border border-white/8 bg-black/40 text-white rounded-lg hover:bg-pink-300 hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-300"
+            className="w-10 h-10 flex items-center justify-center border border-white/8 bg-black/40 text-white rounded-lg hover:bg-green-300 hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-300"
           >
             <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
           </a>
@@ -156,7 +156,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.45 }}
         >
           I craft{" "}
-          <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-pink-400">
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-green-400">
             fast, accessible
           </span>{" "}
           and elegant web experiences.
@@ -179,7 +179,7 @@ const Hero: React.FC = () => {
             href="#contact"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.985 }}
-            className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-black bg-gradient-to-b from-pink-500 to-pink-600 shadow-lg focus:outline-none focus:ring-4 focus:ring-pink-300/30"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-black bg-gradient-to-b from-green-500 to-green-600 shadow-lg focus:outline-none focus:ring-4 focus:ring-green-300/30"
             aria-label="Contact — start a project"
           >
             Start a project
@@ -193,7 +193,7 @@ const Hero: React.FC = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="inline-flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-white border border-white/10 bg-black/30 hover:bg-white hover:text-black transition focus:outline-none focus:ring-2 focus:ring-pink-300"
+            className="inline-flex items-center gap-3 px-4 py-2 rounded-lg font-medium text-white border border-white/10 bg-black/30 hover:bg-white hover:text-black transition focus:outline-none focus:ring-2 focus:ring-green-300"
             aria-label="View my GitHub"
           >
             <span className="sr-only">GitHub — </span>
@@ -211,7 +211,7 @@ const Hero: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={s.label}
-              className="w-9 h-9 flex items-center justify-center border border-white/8 bg-black/40 text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-pink-300"
+              className="w-9 h-9 flex items-center justify-center border border-white/8 bg-black/40 text-white rounded-md hover:bg-white hover:text-black transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-300"
             >
               <FontAwesomeIcon icon={s.icon} className="text-sm" aria-hidden />
             </a>
@@ -222,7 +222,7 @@ const Hero: React.FC = () => {
       {/* subtle top-right decorative spark (purely visual) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-10 right-8 w-16 h-16 rounded-full blur-xl opacity-70 bg-gradient-to-tr from-pink-400/40 to-pink-400/30"
+        className="pointer-events-none absolute top-10 right-8 w-16 h-16 rounded-full blur-xl opacity-70 bg-gradient-to-tr from-green-400/40 to-green-400/30"
       />
 
       {/* Respect prefers-blueuced-motion */}
