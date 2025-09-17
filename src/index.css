@@ -2,201 +2,202 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
-}
-body::-webkit-scrollbar {
-  display: none;
-}
-/* For Firefox */
+/* Portfolio Design System - All colors MUST be HSL */
 
-body {
-  background-color: black;
-  font-family: "Space Grotesk", sans-serif;
-}
-/* Portfolio Design System */
 @layer base {
   :root {
-    /* Base Colors */
-    --background: 0 0% 5.1%; /* Inverted from 0 0% 100% to --dark */
-    --foreground: 0 0% 100%; /* Inverted from 0 0% 6.7% to white */
+    /* Light Theme Colors */
+    --background: 0 0% 98%;
+    --foreground: 222 47% 11%;
 
-    /* Neutral Palette */
-    --muted: 0 0% 42%;
-    --muted-light: 0 0% 95%;
-    --border: 0 0% 20%; /* Darkened from 0 0% 90% for contrast */
-    --border-light: 0 0% 30%; /* Darkened from 0 0% 96% for contrast */
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
 
-    /* Dark Theme */
-    --dark: 0 0% 100%; /* Inverted to white */
-    --dark-foreground: 0 0% 5.1%; /* Inverted to dark */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Accent Colors */
-    --accent: 0 0% 20%; /* Darkened from 0 0% 96.1% for contrast */
-    --accent-foreground: 0 0% 100%; /* Inverted to white */
+    --primary: 222 47% 11%;
+    --primary-foreground: 0 0% 98%;
 
-    /* Interactive States */
-    --hover: 0 0% 15%; /* Darkened from 0 0% 92% for dark theme */
-    --active: 0 0% 10%; /* Darkened from 0 0% 88% for dark theme */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
 
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(0 0% 100% / 0.05); /* Inverted shadow color */
-    --shadow:
-      0 4px 6px -1px hsl(0 0% 100% / 0.1), 0 2px 4px -2px hsl(0 0% 100% / 0.1);
-    --shadow-lg:
-      0 10px 15px -3px hsl(0 0% 100% / 0.1), 0 4px 6px -4px hsl(0 0% 100% / 0.1);
-    --shadow-xl:
-      0 20px 25px -5px hsl(0 0% 100% / 0.1),
-      0 8px 10px -6px hsl(0 0% 100% / 0.1);
+    --muted: 210 40% 95%;
+    --muted-foreground: 215 16% 47%;
 
-    /* Unchanged properties (spacing, radius, typography, etc.) */
-    --space-xs: 0.5rem;
-    --space-sm: 0.75rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-    --space-4xl: 6rem;
-    --radius-sm: 0.5rem;
+    --accent: 210 40% 94%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 222 47% 11%;
+
     --radius: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.5rem;
-    --radius-pill: 999px;
-    --font-display: clamp(2.5rem, 8vw, 5rem);
-    --font-hero: clamp(1.75rem, 4vw, 3rem);
-    --font-h1: clamp(1.5rem, 3vw, 2.25rem);
-    --font-h2: clamp(1.25rem, 2.5vw, 1.875rem);
-    --font-h3: 1.25rem;
-    --font-body: 1rem;
-    --font-small: 0.875rem;
-    --font-xs: 0.75rem;
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --container-max: 1200px;
-    --container-padding: var(--space-lg);
-    --header-height: 4rem;
+
+    /* Portfolio Specific Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+    
+    --project-morva: 258 90% 66%;
+    --project-rectangle: 258 90% 66%;
+    --project-simply: 14 91% 60%;
+    --project-glassdoor: 195 100% 50%;
+    --project-seven: 258 90% 66%;
+    
+    --nav-background: 0 0% 100%;
+    --nav-border: 220 13% 91%;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark Theme Colors */
+    --background: 222 47% 5%;
+    --foreground: 0 0% 98%;
+
+    --card: 222 47% 6%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 222 47% 6%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 217 33% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 33% 17%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 0 0% 98%;
+
+    /* Portfolio Specific Dark Colors */
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 98%;
+    
+    --project-morva: 258 90% 66%;
+    --project-rectangle: 258 90% 66%;
+    --project-simply: 14 91% 60%;
+    --project-glassdoor: 195 100% 50%;
+    --project-seven: 258 90% 66%;
+    
+    --nav-background: 222 47% 6%;
+    --nav-border: 217 33% 17%;
+    
+    /* Dark Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
+    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.4), 0 2px 4px -2px hsl(0 0% 0% / 0.4);
+    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.5), 0 4px 6px -4px hsl(0 0% 0% / 0.5);
+
+    --sidebar-background: 222 47% 5%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 258 90% 66%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 217 33% 17%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 217 33% 17%;
+    --sidebar-ring: 258 90% 66%;
   }
 }
 
 @layer base {
   * {
-    @apply border-0;
+    @apply border-border;
   }
 
   body {
-    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-sans antialiased;
-    font-family:
-      -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-    line-height: 1.6;
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-medium tracking-tight;
+  /* Smooth transitions for theme switching */
+  * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 }
 
 @layer components {
-  .container {
-    @apply max-w-[var(--container-max)] mx-auto px-[var(--container-padding)];
+  /* Status Badge Component */
+  .status-badge {
+    @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium;
+    background: hsl(var(--success) / 0.1);
+    color: hsl(var(--success));
+    border: 1px solid hsl(var(--success) / 0.2);
   }
 
-  .btn {
-    @apply inline-flex items-center justify-center rounded-[var(--radius)] px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
+  .status-badge-dot {
+    @apply w-2 h-2 rounded-full;
+    background: hsl(var(--success));
   }
 
-  .btn-primary {
-    @apply bg-[hsl(var(--foreground))] text-[hsl(var(--background))] hover:bg-[hsl(var(--foreground))]/90;
+  /* Project Card Component */
+  .project-card {
+    @apply bg-card border border-border rounded-xl p-6 hover:shadow-lg transition-all duration-300 cursor-pointer;
   }
 
-  .btn-secondary {
-    @apply bg-[hsl(var(--background))] border border-[hsl(var(--border))] text-[hsl(var(--foreground))] hover:bg-[hsl(var(--hover))];
+  .project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
   }
 
-  .btn-ghost {
-    @apply hover:bg-[hsl(var(--hover))] text-[hsl(var(--foreground))];
+  /* Product Card Component */
+  .product-card {
+    @apply bg-card border border-border rounded-xl p-4 flex items-center justify-between hover:shadow-md transition-all duration-300 cursor-pointer;
   }
 
-  .card {
-    @apply bg-[hsl(var(--background))] rounded-[var(--radius-lg)] border border-[hsl(var(--border-light))] shadow-[var(--shadow)] transition-shadow hover:shadow-[var(--shadow-lg)];
+  /* Navigation Component */
+  .nav-container {
+    @apply fixed top-4 left-1/2 transform -translate-x-1/2 z-50;
+    background: hsl(var(--nav-background) / 0.8);
+    border: 1px solid hsl(var(--nav-border));
+    backdrop-filter: blur(12px);
   }
 
-  .card-interactive {
-    @apply cursor-pointer transition-all hover:scale-[1.02] hover:shadow-[var(--shadow-xl)];
+  /* Hire Me Button */
+  .hire-button {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg font-medium transition-colors;
   }
 
-  .section-padding {
-    @apply py-[var(--space-4xl)];
+  /* Copy Email Button */
+  .copy-button {
+    @apply bg-transparent border border-border hover:bg-accent px-4 py-2 rounded-lg font-medium transition-colors;
   }
 
-  .text-display {
-    font-size: var(--font-display);
-    @apply font-bold leading-tight tracking-tight;
-  }
-
-  .text-hero {
-    font-size: var(--font-hero);
-    @apply font-semibold leading-tight tracking-tight;
-  }
-
-  .text-h1 {
-    font-size: var(--font-h1);
-    @apply font-semibold leading-tight;
-  }
-
-  .text-h2 {
-    font-size: var(--font-h2);
-    @apply font-semibold leading-tight;
-  }
-
-  .text-muted {
-    @apply text-[hsl(var(--muted))];
-  }
-
-  .animate-fade-up {
-    @apply opacity-0 translate-y-6 transition-all duration-700 ease-out;
-  }
-
-  .animate-fade-up.in-view {
-    @apply opacity-100 translate-y-0;
-  }
-
-  .logo-pill {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-full border border-[hsl(var(--border))] bg-[hsl(var(--background))] transition-all hover:scale-105 hover:shadow-[var(--shadow)];
-  }
-
-  /* Screen Reader Utilities */
-  .sr-only {
-    position: absolute !important;
-    width: 1px !important;
-    height: 1px !important;
-    padding: 0 !important;
-    margin: -1px !important;
-    overflow: hidden !important;
-    clip: rect(0, 0, 0, 0) !important;
-    white-space: nowrap !important;
-    border: 0 !important;
-  }
-
-  .focus\\:not-sr-only:focus {
-    position: static !important;
-    width: auto !important;
-    height: auto !important;
-    padding: inherit !important;
-    margin: inherit !important;
-    overflow: visible !important;
-    clip: auto !important;
-    white-space: normal !important;
-  }
-
-  /* Focus Styles */
-  *:focus-visible {
-    outline: 2px solid hsl(var(--foreground)) !important;
-    outline-offset: 2px !important;
+  /* Social Links */
+  .social-link {
+    @apply w-10 h-10 rounded-lg bg-accent hover:bg-accent/80 flex items-center justify-center transition-colors;
   }
 }
