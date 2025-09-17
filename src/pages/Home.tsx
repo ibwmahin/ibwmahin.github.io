@@ -71,7 +71,7 @@ export function Home() {
 
   return (
     <div className="min-h-screen bg-background mt-5">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16">
+      <div className="max-w-2xl mx-auto px-6 pt-24 pb-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -85,22 +85,9 @@ export function Home() {
 
           {/* Hero Section */}
           <motion.div variants={itemVariants} className="space-y-6">
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-              {/* Profile Photo - on left/top in mobile */}
-              <motion.div
-                className="flex-shrink-0 self-start lg:self-center order-1 lg:order-2"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <img
-                  src={profilePhoto}
-                  alt="Abdulla Al Mahin - Web Developer"
-                  className="w-32 h-32 sm:w-32 sm:h-32 md:w-44 md:h-44 rounded-full object-cover ring-4 ring-border"
-                />
-              </motion.div>
-
-              <div className="space-y-4 flex-1 order-2 lg:order-1 text-left">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground flex gap-2">
+            <div className="flex items-center justify-between">
+              <div className="space-y-4">
+                <h1 className="text-4xl md:text-5xl font-bold text-foreground flex gap-2">
                   I'm Mahin
                   <motion.div
                     animate={{
@@ -111,25 +98,22 @@ export function Home() {
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    style={{
-                      display: "inline-block",
-                      fontSize: "2.5rem sm:3rem",
-                    }}
+                    style={{ display: "inline-block", fontSize: "3rem" }}
                   >
                     👋
                   </motion.div>
                 </h1>
-                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-muted-foreground leading-relaxed">
                   Web Developer from Bangladesh.
                   <br />
                   Creating amazing digital experiences.
                 </p>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <div className="flex gap-3 pt-2">
                   <Link to="/contact">
                     <motion.button
-                      className="hire-button w-full sm:w-auto"
+                      className="hire-button"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
@@ -137,7 +121,7 @@ export function Home() {
                     </motion.button>
                   </Link>
                   <motion.button
-                    className="copy-button flex items-center justify-center gap-2 w-full sm:w-auto"
+                    className="copy-button flex items-center gap-2"
                     onClick={handleCopyEmail}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -149,30 +133,43 @@ export function Home() {
 
                 {/* //mail  */}
                 <div className="flex items-center gap-3">
-                  <div className="bg-red-700/30 h-4 w-4 rounded-full flex justify-center items-center flex-shrink-0">
+                  <div className="bg-red-700/30 h-4 w-4 rounded-full flex justify-center items-center">
                     <div className="bg-red-500 h-2 w-2 rounded-full"></div>
                   </div>
                   <a
                     href="mailto:ibwmahin@gmail.com"
-                    className="text-gray-500 hover:text-black dark:text-white/50 dark:hover:text-white text-sm sm:text-base truncate"
+                    className="text-gray-500 hover:text-black dark:text-white/50 dark:hover:text-white"
                   >
                     Mail Here!
                   </a>
                 </div>
               </div>
+
+              {/* Profile Photo */}
+              <motion.div
+                className="flex-shrink-0"
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <img
+                  src={profilePhoto}
+                  alt="Abdulla Al Mahin - Web Developer"
+                  className="w-24 h-24 md:w-44 md:h-44 rounded-full object-cover ring-4 ring-border"
+                />
+              </motion.div>
             </div>
           </motion.div>
 
           {/* Projects Section */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <div className="w-2 h-2 bg-success rounded-full flex-shrink-0" />
+                <div className="w-2 h-2 bg-success rounded-full" />
                 Projects
               </h2>
               <Link
                 to="/projects"
-                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm whitespace-nowrap"
+                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm"
               >
                 View All
                 <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
@@ -216,7 +213,7 @@ export function Home() {
           {/* Products Section */}
           <motion.div variants={itemVariants} className="space-y-4">
             <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-              <div className="w-2 h-2 bg-success rounded-full flex-shrink-0" />
+              <div className="w-2 h-2 bg-success rounded-full" />
               Products
             </h2>
 
@@ -248,10 +245,10 @@ export function Home() {
               Creating user experience and visual appealing design
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex gap-3 justify-center">
               <Link to="/contact">
                 <motion.button
-                  className="hire-button w-full sm:w-auto"
+                  className="hire-button"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -259,7 +256,7 @@ export function Home() {
                 </motion.button>
               </Link>
               <motion.button
-                className="copy-button flex items-center justify-center gap-2 w-full sm:w-auto"
+                className="copy-button flex items-center gap-2"
                 onClick={handleCopyEmail}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -280,13 +277,10 @@ export function Home() {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="fixed top-4 sm:top-2 right-4 sm:right-2 z-50 max-w-[calc(100vw-2rem)]"
+            className="fixed top-2 right-2 transform -translate-x-1/3 -translate-y-1/3 z-50"
           >
-            <div className="bg-green-500 text-white px-4 sm:px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 font-medium backdrop-blur-sm border border-green-400/30 text-sm sm:text-base truncate">
-              <FontAwesomeIcon
-                icon={faCheck}
-                className="w-5 h-5 flex-shrink-0"
-              />
+            <div className="bg-green-500 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 font-medium backdrop-blur-sm border border-green-400/30">
+              <FontAwesomeIcon icon={faCheck} className="w-5 h-5" />
               Email copied to clipboard! 📧
             </div>
           </motion.div>
