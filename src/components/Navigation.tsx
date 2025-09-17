@@ -6,10 +6,10 @@ import {
   faFolderOpen, // better for "Projects"
   faBox, // better for "Products"
   faPen, // blog
-  faShoppingCart,
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { useTheme } from "./ThemeProvider";
 import { Link, useLocation } from "react-router-dom";
 
@@ -41,7 +41,7 @@ export function Navigation() {
         transition={{ duration: 0.45 }}
         className="
           pointer-events-auto
-          bg-white/8 dark:bg-black/30 backdrop-blur-md
+          bg-white/25 dark:bg-black/30 backdrop-blur-md
           border border-white/6 dark:border-black/20
           rounded-2xl px-5 py-3 shadow-lg
           flex items-center gap-4
@@ -138,21 +138,43 @@ export function Navigation() {
           </span>
         </div>
 
-        <Link to="/contact" aria-label="Hire me">
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="
-              px-3 py-1.5 rounded-lg font-medium text-sm
-              bg-primary text-primary-foreground
-              shadow-md
-              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50
-            "
-            title="Hire me"
+        <motion.a
+          href="https://www.linkedin.com/messaging/compose?recipients=ibwmahin"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Start chat on LinkedIn"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className="
+            hidden sm:flex
+            px-3 py-1.5 rounded-lg font-medium text-sm
+            bg-primary text-primary-foreground
+            shadow-md
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/50
+            text-decoration-none
+          "
+          title="Start chat on LinkedIn"
+        >
+          <motion.div
+            className="flex items-center gap-2"
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
           >
-            Hire Me
-          </motion.button>
-        </Link>
+            <FontAwesomeIcon icon={faLinkedin} className="w-4 h-4 dark:white" />
+            <span className="relative">
+              Chat
+              {/* Creative touch: subtle animated chat bubble underline */}
+              <motion.span
+                className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary/50 rounded-full"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.4, duration: 0.5, ease: "easeOut" }}
+                style={{ originX: 0 }}
+              />
+            </span>
+          </motion.div>
+        </motion.a>
       </motion.nav>
     </div>
   );

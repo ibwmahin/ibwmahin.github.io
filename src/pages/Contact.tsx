@@ -390,4 +390,3 @@ export function Contact() {
     </div>
   );
 }
-
