@@ -11,12 +11,14 @@ import { Projects } from "./pages/Projects";
 import { Products } from "./pages/Products";
 import { Contact } from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BloogPost";
 
 const queryClient = new QueryClient();
 
 /**
  * Main App Component
- * 
+ *
  * Root component that sets up routing, theme management, and global providers.
  * Includes navigation, theme switching, and animated page transitions.
  */
@@ -34,6 +36,8 @@ const App = () => (
             <Route path="/projects" element={<Projects />} />
             <Route path="/products" element={<Products />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
