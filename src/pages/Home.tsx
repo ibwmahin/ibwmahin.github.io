@@ -18,8 +18,8 @@ import { StatusBadge } from "../components/StatusBadge";
 import { ProjectCard } from "../components/ProjectCard";
 import { ProductCard } from "../components/ProductCard";
 import { Footer } from "../components/Footer";
-import profilePhoto from "../assets/profile-photo.jpg";
-
+// import profilePhoto from "../assets/profile-photo.jpg";
+import pfp from "../assets/prof.png";
 /**
  * Main home page with hero section and project previews
  */
@@ -152,7 +152,7 @@ export function Home() {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <img
-                  src={profilePhoto}
+                  src={pfp}
                   alt="Abdulla Al Mahin - Web Developer"
                   className="w-24 h-24 md:w-44 md:h-44 rounded-full object-cover ring-4 ring-border"
                 />
