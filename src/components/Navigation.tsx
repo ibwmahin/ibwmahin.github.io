@@ -5,7 +5,7 @@ import {
   faUser,
   faFolderOpen, // better for "Projects"
   faBox, // better for "Products"
-  faPen, // blog
+  faPen, // insights
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
@@ -22,8 +22,19 @@ export function Navigation() {
     { path: "/about", icon: faUser, label: "About" },
     { path: "/projects", icon: faFolderOpen, label: "Projects" }, // changed
     { path: "/products", icon: faBox, label: "Products" }, // changed
-    { path: "/blog", icon: faPen, label: "Blog" }, // new
+    { path: "/", icon: faPen, label: "Insights" }, // new (was "/")
   ];
+
+  // handle active state; for paths like /insights/:slug we want /insights to be treated as active
+  function isActive(path: string) {
+    if (path === "/insights") {
+      return (
+        location.pathname === "/insights" ||
+        location.pathname.startsWith("/insights/")
+      );
+    }
+    return location.pathname === path;
+  }
 
   return (
     // fixed top center
@@ -50,8 +61,8 @@ export function Navigation() {
       >
         <div className="flex items-center gap-2">
           {navItems.map((item) => {
-            const active = location.pathname === item.path;
-            const safeId = `tooltip-${item.path.replace(/[^a-zA-Z0-9]/g, "") || "home"}`;
+            const active = isActive(item.path);
+            const safeId = `tooltip-${(item.path || "").replace(/[^a-zA-Z0-9]/g, "") || "home"}`;
             return (
               <div key={item.path} className="relative group">
                 <Link
