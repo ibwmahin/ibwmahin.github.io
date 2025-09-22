@@ -22,15 +22,14 @@ export function Navigation() {
     { path: "/about", icon: faUser, label: "About" },
     { path: "/projects", icon: faFolderOpen, label: "Projects" }, // changed
     { path: "/products", icon: faBox, label: "Products" }, // changed
-    { path: "/insights", icon: faPen, label: "Insights" }, // new (was "/")
+    { path: "/blog", icon: faPen, label: "Blog" }, // new (was "/")
   ];
 
   // handle active state; for paths like /insights/:slug we want /insights to be treated as active
   function isActive(path: string) {
-    if (path === "/insights") {
+    if (path === "/blog") {
       return (
-        location.pathname === "/insights" ||
-        location.pathname.startsWith("/insights/")
+        location.pathname === "/blog" || location.pathname.startsWith("/blog/")
       );
     }
     return location.pathname === path;
