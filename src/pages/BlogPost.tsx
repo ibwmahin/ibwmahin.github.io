@@ -263,7 +263,7 @@ export default function BlogPost() {
                 <div className="flex items-center gap-3">
                   <Link
                     to="/blog"
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-white text-sm shadow hover:shadow-lg transition"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-foreground text-white dark:text-black text-sm shadow hover:shadow-lg transition"
                   >
                     Back to all posts
                   </Link>

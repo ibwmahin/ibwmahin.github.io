@@ -1,28 +1,34 @@
 /**
  * Footer Component
- * 
+ *
  * Site footer with social media links and copyright information.
  * Features animated social icons and clean typography.
  */
 
-import { motion } from 'framer-motion';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTwitter, 
-  faInstagram, 
-  faDribbble, 
-  faLinkedin 
-} from '@fortawesome/free-brands-svg-icons';
+import { motion } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTwitter,
+  faInstagram,
+  faFacebook,
+} from "@fortawesome/free-brands-svg-icons";
 
 /**
  * Site footer with social links and copyright
  */
 export function Footer() {
   const socialLinks = [
-    { icon: faTwitter, href: 'https://twitter.com/ibwmahin', label: 'Twitter' },
-    { icon: faInstagram, href: 'https://instagram.com/ibwmahin', label: 'Instagram' },
-    { icon: faDribbble, href: 'https://dribbble.com/ibwmahin', label: 'Dribbble' },
-    { icon: faLinkedin, href: 'https://linkedin.com/in/ibwmahin', label: 'LinkedIn' },
+    { icon: faTwitter, href: "https://twitter.com/ibwmahin", label: "Twitter" },
+    {
+      icon: faInstagram,
+      href: "https://instagram.com/ibwmahin",
+      label: "Instagram",
+    },
+    {
+      icon: faFacebook,
+      href: "https://www.facebook.com/ibwmahin",
+      label: "LinkedIn",
+    },
   ];
 
   return (
@@ -40,7 +46,7 @@ export function Footer() {
               <div className="w-2 h-2 bg-success rounded-full" />
               Follow Me
             </h3>
-            
+
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <motion.a
@@ -65,28 +71,28 @@ export function Footer() {
               © 2024 Abdulla Al Mahin – Web Developer Portfolio
             </p>
             <p className="text-xs text-muted-foreground">
-              Built with{' '}
-              <a 
-                href="https://react.dev" 
-                target="_blank" 
+              Built with{" "}
+              <a
+                href="https://react.dev"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors"
               >
                 React
               </a>
-              {' // '}
-              <a 
-                href="https://tailwindcss.com" 
-                target="_blank" 
+              {" // "}
+              <a
+                href="https://tailwindcss.com"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors"
               >
                 Tailwind CSS
               </a>
-              {' // '}
-              <a 
-                href="https://framer.com/motion" 
-                target="_blank" 
+              {" // "}
+              <a
+                href="https://framer.com/motion"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors"
               >
@@ -99,3 +105,4 @@ export function Footer() {
     </footer>
   );
 }
+
