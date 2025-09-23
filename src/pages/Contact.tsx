@@ -14,7 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
   faInstagram,
-  faDribbble,
   faLinkedin,
   faGithub,
 } from "@fortawesome/free-brands-svg-icons";
@@ -72,12 +71,6 @@ export function Contact() {
       icon: faGithub,
       href: "https://github.com/ibwmahin",
       label: "GitHub",
-      username: "@ibwmahin",
-    },
-    {
-      icon: faDribbble,
-      href: "https://dribbble.com/ibwmahin",
-      label: "Dribbble",
       username: "@ibwmahin",
     },
   ];

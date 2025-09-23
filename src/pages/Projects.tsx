@@ -182,7 +182,7 @@ export function Projects() {
                 <strong>Backend:</strong> Node.js, Express, MongoDB, PostgreSQL
               </p>
               <p>
-                <strong>Tools:</strong> Git, Docker, AWS, Vercel, Netlify
+                <strong>Tools:</strong> Git, Docker, AWS, Vercel, Netlify.
               </p>
             </div>
           </motion.div>

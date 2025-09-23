@@ -1,10 +1,3 @@
-/**
- * About Page Component
- *
- * Personal information page with detailed bio, profile photo, and side projects.
- * Features animated sections and responsive layout.
- */
-
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
@@ -55,19 +48,20 @@ export function About() {
           {/* Page Title */}
           <motion.div variants={itemVariants}>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground">
-              About Abdulla Al Mahin
+              About Me
             </h1>
           </motion.div>
 
           {/* Introduction */}
           <motion.div variants={itemVariants} className="space-y-4">
             <p className="text-muted-foreground leading-relaxed">
-              I'm Abdulla Al Mahin, a passionate web developer from Bangladesh
-              with expertise in modern web technologies. I specialize in
-              creating responsive, user-friendly applications using React,
-              TypeScript, and other cutting-edge tools. My goal is to build
-              digital solutions that make a real impact and provide exceptional
-              user experiences.
+              I’m Abdulla Al Mahin — a creative web developer from Bangladesh
+              who builds fast, reliable, and meaningful digital experiences. I
+              specialize in React, TypeScript, and modern web technologies, but
+              what defines my work is not just the tools — it’s the mindset. I
+              think like a developer and design like a problem-solver, combining
+              precision with creativity to deliver solutions that feel simple,
+              powerful, and lasting.
             </p>
           </motion.div>
 
@@ -93,18 +87,18 @@ export function About() {
 
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                As a dedicated web developer from Bangladesh, I bring passion
-                and expertise to every project. I stay current with the latest
-                web technologies and best practices, constantly learning and
-                evolving with the fast-paced world of web development.
+                I believe in quality over quantity. Every project I take on is
+                approached with focus, care, and attention to detail — ensuring
+                the end result is not only functional but also purposeful. My
+                style leans toward minimalism and clarity, always keeping
+                business growth and user needs at the center.{" "}
               </p>
-
               <p>
-                When I'm not coding, I enjoy exploring new technologies,
-                contributing to open-source projects, and sharing knowledge with
-                the developer community. I believe in writing clean,
-                maintainable code and creating applications that provide real
-                value to users.
+                Outside of coding, I explore emerging technologies, contribute
+                to open-source, and share knowledge within the developer
+                community. Clean code, scalable architecture, and thoughtful
+                execution are the principles that guide my work, helping me
+                build applications that provide real value.
               </p>
             </div>
           </motion.div>

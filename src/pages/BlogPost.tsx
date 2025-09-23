@@ -27,7 +27,7 @@ export default function BlogPost() {
   // fallback
   if (!post) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-white/60 to-gray-50 dark:from-slate-900/60 dark:to-slate-950">
+      <div className=" min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-white/60 to-gray-50 dark:from-slate-900/60 dark:to-slate-950 pt-12">
         <div className="text-center space-y-4">
           <p className="text-lg text-foreground/80">Post not found.</p>
           <div className="flex gap-2 justify-center">
@@ -256,7 +256,7 @@ export default function BlogPost() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-muted-foreground">
-                    © {new Date().getFullYear()} • Soft Pen
+                    © {new Date().getFullYear()} • Abdulla Al Mahin
                   </span>
                 </div>
 

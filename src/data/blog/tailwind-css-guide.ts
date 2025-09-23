@@ -2,7 +2,7 @@ import { Post } from "../posts";
 
 export const post: Post = {
   slug: "tailwind-css-guide",
-  title: "Why Tailwind CSS is Awesome: A Comprehensive Guide for 2025",
+  title: "Tailwind CSS is Awesome",
   date: "2025-09-10",
   excerpt:
     "Dive deep into the utility-first CSS framework that's revolutionizing web development. From basics to advanced customization, real-world examples, and best practices.",
@@ -254,6 +254,6 @@ Tailwind CSS isn't just a framework—it's a paradigm shift that democratizes de
 
 Ready to dive in? Check the [official docs](https://tailwindcss.com/docs)<grok-card data-id="935d19" data-type="citation_card"></grok-card> or experiment in a sandbox. What's your favorite Tailwind utility? Share in the comments!
 
-© 2025 Soft Pen • All rights reserved.
+© 2025 Abdulla al Mahin • All rights reserved.
 `,
 };
