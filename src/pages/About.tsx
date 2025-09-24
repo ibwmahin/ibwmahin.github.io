@@ -1,7 +1,7 @@
+// Updated About.tsx - Add import and insert Gallery after More About Me
 import { motion } from "framer-motion";
 import { StatusBadge } from "../components/StatusBadge";
 import { Footer } from "../components/Footer";
-import profilePhoto from "../assets/profile-photo.jpg";
 import { CTASection } from "@/components/ui/CTASection";
 import { ExperienceTimeline } from "@/components/subcomponents/ExperienceTimeline";
 /**
@@ -43,6 +43,9 @@ export function About(): JSX.Element {
               About Me
             </h1>
           </motion.div>
+
+          {/* NOTE:  I might add a "what song playing now , spotify thing here" */}
+
           {/* Introduction */}
           <motion.div variants={itemVariants} className="space-y-4">
             <p className="text-muted-foreground leading-relaxed">
@@ -54,20 +57,24 @@ export function About(): JSX.Element {
               precision with creativity to deliver solutions that feel simple,
               powerful, and lasting.
             </p>
+            <div className="h-[1px] bg-gray-700/20"></div>
+
+            {/* Profile Photo */}
+            {/* <motion.div variants={itemVariants} className="flex justify-center"> */}
+            {/*   <motion.div */}
+            {/*     whileHover={{ scale: 1.05, rotate: 1 }} */}
+            {/*     transition={{ type: "spring", stiffness: 300, damping: 20 }} */}
+            {/*     className="relative" */}
+            {/*   > */}
+            {/*     <img */}
+            {/*       src={profilePhoto} */}
+            {/*       alt="Abdulla Al Mahin - Full Profile Photo" */}
+            {/*       className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-2xl border-4 border-background/50 hover:border-indigo-500/50 transition-colors duration-300" */}
+            {/*     /> */}
+            {/*   </motion.div> */}
+            {/* </motion.div> */}
           </motion.div>
-          {/* Profile Photo */}
-          <motion.div variants={itemVariants} className="flex justify-center">
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <img
-                src={profilePhoto}
-                alt="Abdulla Al Mahin - Full Profile Photo"
-                className="w-full max-w-xs rounded-2xl object-cover"
-              />
-            </motion.div>
-          </motion.div>
+
           {/* More About Me Section */}
           <motion.div variants={itemVariants} className="space-y-4">
             <h2 className="text-2xl font-bold text-foreground">
@@ -91,10 +98,10 @@ export function About(): JSX.Element {
               </p>
             </div>
           </motion.div>
-          {/* Exprience section and other section will go from here */}
-
+          {/* narrow line */}
+          <div className="h-[1px] bg-gray-700/20"></div>
+          {/* narrow line */}
           <ExperienceTimeline />
-
           {/* cta button gose from here */}
 
           <CTASection />

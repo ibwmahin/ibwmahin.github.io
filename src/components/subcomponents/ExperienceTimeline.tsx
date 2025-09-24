@@ -89,7 +89,7 @@ export function ExperienceTimeline(): JSX.Element {
             className="mb-10 ml-6"
           >
             {/* Timeline Marker */}
-            <span className="absolute flex w-3 h-3 bg-indigo-400 rounded-full -left-2 ring-8 ring-white dark:ring-gray-900"></span>
+            <span className="absolute flex w-3 h-3 bg-indigo-400 rounded-full -left-2 ring-8 ring-gray-200 dark:ring-gray-900 transition duration-200"></span>
 
             {/* Date */}
             <motion.div
