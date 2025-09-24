@@ -21,7 +21,6 @@ export function Navigation() {
     { path: "/", icon: faHome, label: "Home" },
     { path: "/about", icon: faUser, label: "About" },
     { path: "/projects", icon: faFolderOpen, label: "Projects" }, // changed
-    { path: "/products", icon: faBox, label: "Products" }, // changed
     { path: "/blog", icon: faPen, label: "Blog" }, // new (was "/")
   ];
 

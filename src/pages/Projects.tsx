@@ -2,74 +2,33 @@
  * Projects Page Component
  *
  * Showcases all projects and work portfolio with detailed descriptions.
- * Features animated project cards and responsive grid layout.
+ * Uses ProjectCard and the centralized projects data.
  */
 
+import React from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
 import { ProjectCard } from "../components/ProjectCard";
-import { ProductCard } from "../components/ProductCard";
 import { Footer } from "../components/Footer";
-
-/**
- * Projects data array for easy management
- */
-const projects = [
-  {
-    title: "Digital Pathways",
-    description: "AI-powered educational platform",
-    icon: "🎓",
-    color: "morva" as const,
-    url: "https://digitalpathways.ai/",
-  },
-  {
-    title: "LazyNvim Config",
-    description: "Custom Neovim configuration",
-    icon: "⚡",
-    color: "rectangle" as const,
-    url: "https://github.com/ibwmahin/LazyNvim",
-  },
-  {
-    title: "Gaming Website",
-    description: "Interactive gaming platform",
-    icon: "🎮",
-    color: "simply" as const,
-    url: "https://ibwmahin.github.io/Gaming_Website/",
-  },
-  {
-    title: "Manae Shopping Mart",
-    description: "E-commerce platform",
-    icon: "🛍️",
-    color: "glassdoor" as const,
-    url: "https://manaeshoppingmartllc.com/",
-  },
-];
-
-/** Products data for side projects section */
-const products = [
-  {
-    title: "Pearni",
-    category: "Learning Platform",
-    icon: "📚",
-    href: "https://pearni.netlify.app/",
-  },
-  {
-    title: "Cyber Scan Guardian Shield",
-    category: "Security Tool",
-    icon: "🛡️",
-    href: "https://ibwmahin.github.io/cyber-scan-guardian-shield/",
-  },
-];
+import { projects as projectsData } from "../data/projects";
 
 /**
  * Projects page displaying portfolio of work
  */
 export function Projects() {
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("ibwmahin@gmail.com");
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText("ibwmahin@gmail.com");
+      // simple feedback
+      // If you have a toast system, replace with that
+      alert("Email copied to clipboard: ibwmahin@gmail.com");
+    } catch (err) {
+      console.error("Failed to copy email", err);
+      alert("Could not copy email. Please copy manually: ibwmahin@gmail.com");
+    }
   };
 
   const containerVariants = {
@@ -77,20 +36,20 @@ export function Projects() {
     visible: {
       opacity: 1,
       transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1,
+        delayChildren: 0.12,
+        staggerChildren: 0.08,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: { opacity: 1, y: 0 },
   };
 
   return (
     <div className="min-h-screen bg-background mt-5">
-      <div className="max-w-2xl mx-auto px-6 pt-24 pb-16">
+      <div className="max-w-3xl mx-auto px-6 pt-24 pb-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -120,47 +79,17 @@ export function Projects() {
               <div className="w-2 h-2 bg-success rounded-full" />
               Featured Projects
             </h2>
-            <div className="space-y-3">
-              {projects.map((project, index) => (
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {projectsData.map((p) => (
                 <ProjectCard
-                  key={index}
-                  title={project.title}
-                  description={project.description}
-                  icon={project.icon}
-                  color={project.color}
-                  onClick={() => window.open(project.url, "_blank")}
+                  key={p.id}
+                  title={p.title}
+                  description={p.description}
+                  icon={p.icon}
+                  onClick={() => window.open(p.url, "_blank")}
                 />
               ))}
-            </div>
-          </motion.div>
-
-          {/* Explore Products Section */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">
-              Explore My Products
-            </h2>
-            <p className="text-muted-foreground">
-              Some of the digital products that I worked on as side projects,
-              explore them now
-            </p>
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <div className="w-2 h-2 bg-success rounded-full" />
-                Products
-              </h3>
-
-              <div className="space-y-3">
-                {products.map((product, index) => (
-                  <ProductCard
-                    key={index}
-                    title={product.title}
-                    category={product.category}
-                    icon={product.icon}
-                    href={product.href}
-                  />
-                ))}
-              </div>
             </div>
           </motion.div>
 
@@ -182,7 +111,7 @@ export function Projects() {
                 <strong>Backend:</strong> Node.js, Express, MongoDB, PostgreSQL
               </p>
               <p>
-                <strong>Tools:</strong> Git, Docker, AWS, Vercel, Netlify.
+                <strong>Tools:</strong> Git, Docker, AWS, Vercel, Netlify
               </p>
             </div>
           </motion.div>
@@ -215,8 +144,11 @@ export function Projects() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <FontAwesomeIcon icon={faCopy} className="w-4 h-4" />
-                Copy Email
+                <FontAwesomeIcon
+                  icon={faCopy}
+                  style={{ width: 16, height: 16 }}
+                />
+                <span>Copy Email</span>
               </motion.button>
             </div>
           </motion.div>

@@ -11,7 +11,6 @@ import { faCopy, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
 import { ProjectCard } from "../components/ProjectCard";
-import { ProductCard } from "../components/ProductCard";
 import { Footer } from "../components/Footer";
 // import profilePhoto from "../assets/profile-photo.jpg";
 import pfp from "../assets/prof.png";
@@ -131,78 +130,6 @@ export function Home(): JSX.Element {
             </div>
           </motion.div>
 
-          {/* Projects Section */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <div className="w-2 h-2 bg-success rounded-full" />
-                Projects
-              </h2>
-              <Link
-                to="/projects"
-                className="text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 text-sm"
-              >
-                View All
-                <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
-              </Link>
-            </div>
-
-            <div className="space-y-3">
-              <ProjectCard
-                title="Digital Pathways"
-                description="AI-powered educational platform"
-                icon="🚀"
-                color="morva"
-                onClick={() =>
-                  window.open("https://digitalpathways.ai/", "_blank")
-                }
-              />
-              <ProjectCard
-                title="LazyNvim Config"
-                description="Custom Neovim configuration"
-                icon="⚡"
-                color="rectangle"
-                onClick={() =>
-                  window.open("https://github.com/ibwmahin/LazyNvim", "_blank")
-                }
-              />
-              <ProjectCard
-                title="Gaming Website"
-                description="Interactive gaming platform"
-                icon="🎮"
-                color="simply"
-                onClick={() =>
-                  window.open(
-                    "https://ibwmahin.github.io/Gaming_Website/",
-                    "_blank",
-                  )
-                }
-              />
-            </div>
-          </motion.div>
-
-          {/* Products Section */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-lg font-semibold text-foreground flex items-center gap-2">
-              <div className="w-2 h-2 bg-success rounded-full" />
-              Products
-            </h2>
-
-            <div className="space-y-3">
-              <ProductCard
-                title="Pearni"
-                category="Learning Platform"
-                icon="📚"
-                href="https://pearni.netlify.app/"
-              />
-              <ProductCard
-                title="Cyber Scan Guardian Shield"
-                category="Security Tool"
-                icon="🛡️"
-                href="https://ibwmahin.github.io/cyber-scan-guardian-shield/"
-              />
-            </div>
-          </motion.div>
           {/* CTA section added */}
           <CTASection />
         </motion.div>
