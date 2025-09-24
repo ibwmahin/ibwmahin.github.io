@@ -1,5 +1,4 @@
 // src/pages/BlogList.tsx
-import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { posts as allPosts, Post } from "../data/posts";

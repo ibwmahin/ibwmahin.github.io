@@ -11,6 +11,7 @@ import {
   faTwitter,
   faInstagram,
   faFacebook,
+  faGithub,
 } from "@fortawesome/free-brands-svg-icons";
 
 /**
@@ -27,6 +28,11 @@ export function Footer() {
     {
       icon: faFacebook,
       href: "https://www.facebook.com/ibwmahin",
+      label: "LinkedIn",
+    },
+    {
+      icon: faGithub,
+      href: "https://github.com/ibwmahin",
       label: "LinkedIn",
     },
   ];
@@ -105,4 +111,3 @@ export function Footer() {
     </footer>
   );
 }
-
