@@ -14,7 +14,7 @@ const item = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
 
 export default function BlogList() {
   return (
-    <div className="min-h-screen bg-background pb-24 mt-12">
+    <div className="min-h-screen mx-auto bg-background pb-24 mt-12">
       <div className="max-w-6xl mx-auto px-6 pt-24">
         <motion.header
           initial="hidden"
