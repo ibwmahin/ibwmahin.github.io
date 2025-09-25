@@ -24,7 +24,30 @@ const sampleProjects: Project[] = [
     demo: "https://example.com/demo1",
     repo: "https://github.com/you/project-one",
   },
-  // Add more projects if needed
+  {
+    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop",
+    title: "E-Commerce Platform",
+    description:
+      "Responsive online shopping site with cart functionality. Tech used: React, Tailwind, Stripe.",
+    demo: "https://example-ecommerce.com",
+    repo: "https://github.com/you/ecommerce-platform",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop",
+    title: "Task Manager App",
+    description:
+      "Full-stack task management tool with real-time updates. Tech used: Next.js, Supabase.",
+    demo: "https://example-taskmanager.com",
+    repo: "https://github.com/you/task-manager",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
+    title: "Portfolio Site",
+    description:
+      "Personal portfolio with animated sections and blog. Tech used: Gatsby, Framer Motion.",
+    demo: "https://example-portfolio.com",
+    repo: "https://github.com/you/portfolio-site",
+  },
 ];
 
 const containerVariants = {
@@ -131,7 +154,7 @@ export default function GalShow({
             Click any project to view details. Use ← → or Esc in the lightbox.
           </p>
           <button className="italic hover:underline transition duration-150">
-            <a href="/projects" className="text-black">
+            <a href="/projects" className="underline font-bold">
               See More!
             </a>
           </button>
@@ -163,7 +186,7 @@ export default function GalShow({
               animate={{ y: 0, scale: 1, opacity: 1 }}
               exit={{ y: 20, scale: 0.95, opacity: 0 }}
               transition={{ type: "spring", stiffness: 350, damping: 28 }}
-              className="relative z-10 max-w-6xl w-full bg-background/80 backdrop-blur-lg border border-border rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+              className="relative z-10 max-w-4xl w-full bg-background/80 backdrop-blur-lg border border-border rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[80vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
@@ -172,7 +195,7 @@ export default function GalShow({
                   <img
                     src={images[active].src}
                     alt={images[active].title ?? `project-${active}`}
-                    className="w-full max-h-[55vh] lg:max-h-[65vh] object-contain rounded-lg shadow-xl"
+                    className="w-full max-h-[40vh] lg:max-h-[50vh] object-contain rounded-lg shadow-xl"
                     loading="lazy"
                   />
                 </div>
@@ -187,10 +210,10 @@ export default function GalShow({
                   </button>
 
                   <div>
-                    <h4 className="text-2xl font-bold text-foreground mb-2">
+                    <h4 className="text-xl font-bold text-foreground mb-2">
                       {images[active].title ?? "Untitled Project"}
                     </h4>
-                    <p className="text-base text-muted-foreground leading-relaxed">
+                    <p className="text-sm text-muted-foreground leading-relaxed">
                       {images[active].description ?? "No description provided."}
                     </p>
                   </div>

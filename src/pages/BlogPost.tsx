@@ -7,7 +7,6 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import rehypeSanitize from "rehype-sanitize";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { posts as allPosts } from "../data/posts";
 
 interface Post {
@@ -19,15 +18,135 @@ interface Post {
   cover?: string;
 }
 
-export default function BlogPost() {
-  const { slug } = useParams<{ slug: string }>();
+export default function BlogPost(): JSX.Element {
+  // router hooks (must remain at top)
+  const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
-  const post = allPosts.find((p: Post) => p.slug === slug) as Post | undefined;
 
-  // fallback
+  // --- hooks (always called in the same order) ---
+  // reading progress
+  const articleRef = useRef<HTMLElement | null>(null);
+  const [progress, setProgress] = useState<number>(0);
+
+  // dynamic code style loader
+  const [codeStyle, setCodeStyle] = useState<any>(null);
+
+  // dynamic theme loader effect (unchanged logic)
+  useEffect(() => {
+    let mounted = true;
+
+    const tryImports = async () => {
+      const candidates = [
+        "react-syntax-highlighter/dist/esm/styles/prism/one-dark",
+        "react-syntax-highlighter/dist/esm/styles/prism",
+        "react-syntax-highlighter/dist/cjs/styles/prism/one-dark",
+        "react-syntax-highlighter/dist/cjs/styles/prism",
+      ];
+
+      for (const path of candidates) {
+        try {
+          // dynamic import (avoid Vite build-time resolve errors)
+          // @ts-ignore
+          const mod = await import(/* @vite-ignore */ path);
+          if (!mounted) return;
+          const style = mod.default ?? mod.oneDark ?? mod["oneDark"] ?? mod;
+          if (style) {
+            setCodeStyle(style);
+            return;
+          }
+        } catch (err) {
+          // ignore and try next
+        }
+      }
+
+      if (mounted) {
+        // fallback minimal style
+        setCodeStyle({
+          'code[class*="language-"]': {
+            color: "#e6eef6",
+            background: "transparent",
+            fontFamily: "monospace",
+          },
+        });
+      }
+    };
+
+    tryImports();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  // reading progress (bounding rect + RAF) effect
+  useEffect(() => {
+    const el = articleRef.current;
+    if (!el) {
+      // still set up a no-op RAF loop to keep behaviour consistent
+      let rafId = 0;
+      const noop = () => {
+        rafId = requestAnimationFrame(noop);
+      };
+      rafId = requestAnimationFrame(noop);
+      return () => cancelAnimationFrame(rafId);
+    }
+
+    let rafId = 0;
+    const update = () => {
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const viewportHeight =
+        window.innerHeight || document.documentElement.clientHeight;
+      const total = Math.max(el.scrollHeight - viewportHeight, 0);
+
+      if (total <= 0) {
+        setProgress(0);
+      } else {
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const pct = (scrolled / total) * 100;
+        setProgress(Math.min(100, Math.max(0, pct)));
+      }
+      rafId = requestAnimationFrame(update);
+    };
+
+    rafId = requestAnimationFrame(update);
+
+    const onResize = () => {
+      if (el) {
+        const total = Math.max(
+          el.scrollHeight -
+            (window.innerHeight || document.documentElement.clientHeight),
+          0,
+        );
+        if (total <= 0) setProgress(0);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", onResize);
+    };
+    // Note: no dependency on post.content here to keep hook order predictable.
+    // The effect uses articleRef which is stable, and progress calculations read live values.
+  }, []);
+
+  // --- now compute post and derived values (safe because hooks already declared) ---
+  const post = allPosts.find((p: Post) => p.slug === slug);
+
+  // reading time (safe if post is undefined)
+  const readingTime = useMemo(() => {
+    if (!post) return 1;
+    const words = (post.content || "")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
+    return Math.max(1, Math.round(words / 200));
+  }, [post?.content]);
+
+  // fallback when no post found (hooks already called above)
   if (!post) {
     return (
-      <div className=" min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-white/60 to-gray-50 dark:from-slate-900/60 dark:to-slate-950 pt-12">
+      <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-b from-white/60 to-gray-50 dark:from-slate-900/60 dark:to-slate-950 pt-12">
         <div className="text-center space-y-4">
           <p className="text-lg text-foreground/80">Post not found.</p>
           <div className="flex gap-2 justify-center">
@@ -49,50 +168,15 @@ export default function BlogPost() {
     );
   }
 
-  // reading time estimate
-  const readingTime = useMemo(() => {
-    const words = post.content.trim().split(/\s+/).length;
-    return Math.max(1, Math.round(words / 200));
-  }, [post.content]);
-
-  // reading progress
-  const articleRef = useRef<HTMLElement>(null);
-  const [progress, setProgress] = useState(0);
-  useEffect(() => {
-    const onScroll = () => {
-      if (!articleRef.current) return;
-      const el = articleRef.current;
-      const total = el.scrollHeight - window.innerHeight;
-      if (total <= 0) {
-        setProgress(0);
-        return;
-      }
-      const scrolled = Math.min(
-        Math.max(window.scrollY - (el.offsetTop - 80), 0),
-        total,
-      );
-      const pct = (scrolled / total) * 100;
-      setProgress(Math.min(100, Math.max(0, pct)));
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  // custom MD components
-  const mdComponents = {
-    code({ inline, className, children, ...props }: any) {
+  // typed custom MD components
+  const mdComponents: Record<string, React.ComponentType<any>> = {
+    code: ({ inline, className, children, ...props }: any) => {
       const match = /language-(\w+)/.exec(className || "");
       if (!inline && match) {
         return (
           <div className="my-4 overflow-x-auto rounded-lg bg-slate-900/20">
             <SyntaxHighlighter
-              style={oneDark}
+              style={codeStyle ?? undefined}
               language={match[1]}
               PreTag="div"
               showLineNumbers
@@ -113,7 +197,7 @@ export default function BlogPost() {
         </code>
       );
     },
-    a({ href, children, ...props }: any) {
+    a: ({ href, children, ...props }: any) => {
       const isExternal =
         typeof href === "string" && /^(http|https):/.test(href);
       return (
@@ -128,19 +212,17 @@ export default function BlogPost() {
         </a>
       );
     },
-    img({ src, alt, ...props }: any) {
-      return (
-        <div className="my-6 rounded-lg overflow-hidden shadow-sm">
-          <img
-            src={src}
-            alt={alt}
-            className="w-full h-auto object-cover"
-            loading="lazy"
-            {...props}
-          />
-        </div>
-      );
-    },
+    img: ({ src, alt, ...props }: any) => (
+      <div className="my-6 rounded-lg overflow-hidden shadow-sm">
+        <img
+          src={src}
+          alt={alt}
+          className="w-full h-auto object-cover"
+          loading="lazy"
+          {...props}
+        />
+      </div>
+    ),
     h1: (props: any) => (
       <h1 className="text-3xl md:text-4xl font-semibold mt-6 mb-4" {...props} />
     ),

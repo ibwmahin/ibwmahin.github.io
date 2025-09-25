@@ -20,7 +20,7 @@ export function Navigation() {
     { path: "/", icon: faHome, label: "Home" },
     { path: "/about", icon: faUser, label: "About" },
     { path: "/projects", icon: faFolderOpen, label: "Projects" }, // changed
-    { path: "/blog", icon: faPen, label: "Blog" }, // new (was "/")
+    // { path: "/blog", icon: faPen, label: "Blog" }, // new (was "/")
   ];
 
   // handle active state; for paths like /insights/:slug we want /insights to be treated as active
