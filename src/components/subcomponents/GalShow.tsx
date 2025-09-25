@@ -126,8 +126,15 @@ export default function GalShow({
           </AnimatePresence>
         </motion.div>
 
-        <p className="mt-6 text-base text-muted-foreground text-center">
-          Click any project to view details. Use ← → or Esc in the lightbox.
+        <p className="mt-6 text-base text-muted-foreground text-center space-x-2">
+          <p>
+            Click any project to view details. Use ← → or Esc in the lightbox.
+          </p>
+          <button className="italic hover:underline transition duration-150">
+            <a href="/projects" className="text-black">
+              See More!
+            </a>
+          </button>
         </p>
       </div>
 
