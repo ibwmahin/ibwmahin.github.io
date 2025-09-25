@@ -4,7 +4,6 @@ import {
   faHome,
   faUser,
   faFolderOpen, // better for "Projects"
-  faBox, // better for "Products"
   faPen, // insights
   faSun,
   faMoon,
@@ -51,11 +50,10 @@ export function Navigation() {
         className="
           pointer-events-auto
           bg-white/25 dark:bg-black/30 backdrop-blur-md
-          border border-white/6 dark:border-black/20
+          border border-white/6 dark:border-white/20
           rounded-2xl px-5 py-3 shadow-lg
           flex items-center gap-4
-          min-w-[260px] md:min-w-[460px]
-        "
+          min-w-[260px] md:min-w-[460px] "
       >
         <div className="flex items-center gap-2">
           {navItems.map((item) => {
@@ -148,7 +146,7 @@ export function Navigation() {
         </div>
 
         <motion.a
-          href="https://www.linkedin.com/messaging/compose?recipients=ibwmahin"
+          href="https://www.linkedin.com/in/ibwmahin/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Start chat on LinkedIn"

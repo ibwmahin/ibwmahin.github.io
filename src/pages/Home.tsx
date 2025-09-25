@@ -1,8 +1,8 @@
 /**
- * Home Page Component (CTA/popup moved to components/ui/CTASection.tsx)
- *
- * The main landing page featuring hero section, project preview, and products showcase.
- * Includes animated elements using Framer Motion and responsive design.
+ - Home Page Component (CTA/popup moved to components/ui/CTASection.tsx)
+ 
+ - The main landing page featuring hero section, project preview, and products showcase.
+ - Includes animated elements using Framer Motion and responsive design.
  */
 
 import { motion } from "framer-motion";
@@ -10,11 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
-import { ProjectCard } from "../components/ProjectCard";
 import { Footer } from "../components/Footer";
-// import profilePhoto from "../assets/profile-photo.jpg";
 import pfp from "../assets/prof.png";
 import { CTASection } from "@/components/ui/CTASection";
+import GalShow from "@/components/subcomponents/GalShow";
 
 /**
  * Main home page with hero section and project previews
@@ -37,7 +36,7 @@ export function Home(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-background mt-5">
+    <div className="min-h-screen bg-background mt-20">
       <div className="max-w-2xl mx-auto px-6 pt-24 pb-16">
         <motion.div
           variants={containerVariants}
@@ -128,6 +127,10 @@ export function Home(): JSX.Element {
                 />
               </motion.div>
             </div>
+          </motion.div>
+
+          <motion.div className="">
+            <GalShow />
           </motion.div>
 
           {/* CTA section added */}

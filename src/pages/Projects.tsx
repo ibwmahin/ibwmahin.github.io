@@ -5,7 +5,6 @@
  * Uses ProjectCard and the centralized projects data.
  */
 
-import React from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy } from "@fortawesome/free-solid-svg-icons";

@@ -82,4 +82,3 @@ export const getFeaturedProjects = (): Project[] => {
 export const getProjectById = (id: string): Project | undefined => {
   return projects.find((project) => project.id === id);
 };
-
