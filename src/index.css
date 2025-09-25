@@ -2,6 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+/* slider code gose here  */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee 40s linear infinite; /* Adjust duration here if needed */
+}
+
+/* Optional: Pause on hover */
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
 /* Portfolio Design System - All colors MUST be HSL */
 
 @layer base {
@@ -40,20 +59,22 @@
     /* Portfolio Specific Colors */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
-    
+
     --project-morva: 258 90% 66%;
     --project-rectangle: 258 90% 66%;
     --project-simply: 14 91% 60%;
     --project-glassdoor: 195 100% 50%;
     --project-seven: 258 90% 66%;
-    
+
     --nav-background: 0 0% 100%;
     --nav-border: 220 13% 91%;
-    
+
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
-    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
+    --shadow-md:
+      0 4px 6px -1px hsl(0 0% 0% / 0.1), 0 2px 4px -2px hsl(0 0% 0% / 0.1);
+    --shadow-lg:
+      0 10px 15px -3px hsl(0 0% 0% / 0.1), 0 4px 6px -4px hsl(0 0% 0% / 0.1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -107,20 +128,22 @@
     /* Portfolio Specific Dark Colors */
     --success: 142 76% 36%;
     --success-foreground: 0 0% 98%;
-    
+
     --project-morva: 258 90% 66%;
     --project-rectangle: 258 90% 66%;
     --project-simply: 14 91% 60%;
     --project-glassdoor: 195 100% 50%;
     --project-seven: 258 90% 66%;
-    
+
     --nav-background: 222 47% 6%;
     --nav-border: 217 33% 17%;
-    
+
     /* Dark Shadows */
     --shadow-sm: 0 1px 2px 0 hsl(0 0% 0% / 0.3);
-    --shadow-md: 0 4px 6px -1px hsl(0 0% 0% / 0.4), 0 2px 4px -2px hsl(0 0% 0% / 0.4);
-    --shadow-lg: 0 10px 15px -3px hsl(0 0% 0% / 0.5), 0 4px 6px -4px hsl(0 0% 0% / 0.5);
+    --shadow-md:
+      0 4px 6px -1px hsl(0 0% 0% / 0.4), 0 2px 4px -2px hsl(0 0% 0% / 0.4);
+    --shadow-lg:
+      0 10px 15px -3px hsl(0 0% 0% / 0.5), 0 4px 6px -4px hsl(0 0% 0% / 0.5);
 
     --sidebar-background: 222 47% 5%;
     --sidebar-foreground: 0 0% 98%;
@@ -140,12 +163,21 @@
 
   body {
     @apply bg-background text-foreground transition-colors duration-300;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
   }
 
   /* Smooth transitions for theme switching */
   * {
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    transition:
+      background-color 0.3s ease,
+      border-color 0.3s ease,
+      color 0.3s ease;
   }
 }
 
