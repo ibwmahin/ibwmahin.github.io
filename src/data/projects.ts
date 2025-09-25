@@ -21,57 +21,90 @@ export interface Project {
   description: string;
   icon: IconDefinition;
   url: string;
-  category: string;
+  category: "Projects" | "Products";
+  src: string; // Added for hover image
 }
 
 export const projects: Project[] = [
   {
     id: "digital-pathways",
     title: "Digital Pathways",
-    description: "AI-powered educational platform",
+    description:
+      "AI-powered educational platform designed to personalize learning experiences for students worldwide.",
     icon: faRocket,
     url: "https://digitalpathways.ai/",
-    category: "Web Development",
+    category: "Products",
+    src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
-    id: "lazy-nvim",
-    title: "LazyNvim Config",
-    description: "Custom Neovim configuration",
+    id: "visqodev2",
+    title: "VisqoDev2",
+    description:
+      "Modern web development showcase with advanced features and responsive design.",
     icon: faCode,
-    url: "https://github.com/ibwmahin/LazyNvim",
-    category: "Open Source",
+    url: "https://visqodev2.netlify.app/",
+    category: "Projects",
+    src: "https://images.unsplash.com/photo-1561336313-0dc4f3b1a1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "ibw-nextdev",
+    title: "iBW NextDev",
+    description:
+      "Next.js powered application with server-side rendering and API integrations.",
+    icon: faCode,
+    url: "https://ibw-nextdev.netlify.app/",
+    category: "Projects",
+    src: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "gaming-website",
     title: "Gaming Website",
-    description: "Interactive gaming platform",
+    description:
+      "Interactive gaming platform featuring immersive experiences and community-driven content creation.",
     icon: faGamepad,
     url: "https://ibwmahin.github.io/Gaming_Website/",
-    category: "Frontend Development",
+    category: "Projects",
+    src: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
-    id: "manae-shopping",
-    title: "Manae Shopping Mart",
-    description: "E-commerce platform",
+    id: "dotflow-clone",
+    title: "Dotflow Clone",
+    description:
+      "High-fidelity clone of a popular design tool with custom animations and UI components.",
     icon: faShoppingCart,
-    url: "https://manaeshoppingmartllc.com/",
-    category: "Full Stack Development",
+    url: "https://ibwmahin.github.io/dotflow-clone/",
+    category: "Projects",
+    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "pearni",
     title: "Pearni",
-    description: "Learning Platform",
+    description:
+      "Learning platform offering interactive courses, progress tracking, and certification upon completion.",
     icon: faBook,
     url: "https://pearni.netlify.app/",
-    category: "Educational Tool",
+    category: "Products",
+    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
   {
     id: "cyber-scan-guardian-shield",
     title: "Cyber Scan Guardian Shield",
-    description: "Security Tool",
+    description:
+      "Security tool providing real-time threat detection, vulnerability scanning, and automated remediation.",
     icon: faShieldAlt,
     url: "https://ibwmahin.github.io/cyber-scan-guardian-shield/",
-    category: "Security Application",
+    category: "Products",
+    src: "https://images.unsplash.com/photo-1632427635820-24f8b7e0d4e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+  },
+  {
+    id: "devboard",
+    title: "DevBoard",
+    description:
+      "Collaborative development board for teams with real-time updates and task management.",
+    icon: faCode,
+    url: "https://ibwmahin.github.io/DevBoard/",
+    category: "Products",
+    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
   },
 ];
 

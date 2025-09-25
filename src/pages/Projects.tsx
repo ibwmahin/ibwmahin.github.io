@@ -8,18 +8,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCopy,
-  faRocket,
-  faCode,
-  faGamepad,
-  faShoppingCart,
-  faBookOpen,
-  faShieldHalved,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCopy } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
 import { Footer } from "../components/Footer";
+import { Project, projects } from "../data/projects";
 
 /**
  * ProjectCard with hover expansion effect
@@ -34,14 +27,14 @@ function ProjectCard({
   hoveredId,
   setHoveredId,
 }: {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  icon: any; // FontAwesomeIcon
+  icon: any; // IconDefinition
   src: string;
   url: string;
-  hoveredId: number | null;
-  setHoveredId: (id: number | null) => void;
+  hoveredId: string | null;
+  setHoveredId: (id: string | null) => void;
 }) {
   const isHovered = hoveredId === id;
   const shortDesc =
@@ -51,8 +44,8 @@ function ProjectCard({
   return (
     <motion.div
       layout
-      className="group relative bg-card border border-border rounded-lg p-4 space-y-3 cursor-pointer overflow-hidden"
-      whileHover={{ y: -2, scale: 1.02 }}
+      className="group relative bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 space-y-3 cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
+      whileHover={{ y: -4, scale: 1.03 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       onHoverStart={() => setHoveredId(id)}
       onHoverEnd={() => setHoveredId(null)}
@@ -60,7 +53,7 @@ function ProjectCard({
     >
       <motion.div
         layout
-        className="relative overflow-hidden rounded-md"
+        className="relative overflow-hidden rounded-lg"
         animate={{ height: isHovered ? 200 : 60 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
@@ -99,13 +92,13 @@ function ProjectCard({
           )}
         </AnimatePresence>
         {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
           <span className="text-white text-sm font-medium">View Project</span>
         </div>
       </motion.div>
       <motion.div layout className="space-y-2">
         <p
-          className={`text-xs text-muted-foreground ${isHovered ? "line-clamp-none" : "line-clamp-1"}`}
+          className={`text-xs text-muted-foreground ${isHovered ? "line-clamp-none" : "line-clamp-1"} leading-relaxed`}
         >
           {isHovered ? description : shortDesc}
         </p>
@@ -130,64 +123,35 @@ export function Projects() {
     }
   };
 
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [visibleCount, setVisibleCount] = useState(6);
+  const [showAll, setShowAll] = useState(false);
 
-  const projectsData = [
-    {
-      id: 1,
-      title: "Digital Pathways",
-      description:
-        "AI-powered educational platform designed to personalize learning experiences for students worldwide.",
-      icon: faRocket,
-      src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      url: "https://example-digitalpathways.com",
-    },
-    {
-      id: 2,
-      title: "LazyVim Config",
-      description:
-        "Custom Neovim configuration optimized for developer productivity and seamless workflow integration.",
-      icon: faCode,
-      src: "https://images.unsplash.com/photo-1561336313-0dc4f3b1a1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      url: "https://example-lazyvim.com",
-    },
-    {
-      id: 3,
-      title: "Gaming Website",
-      description:
-        "Interactive gaming platform featuring immersive experiences and community-driven content creation.",
-      icon: faGamepad,
-      src: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      url: "https://example-gamingwebsite.com",
-    },
-    {
-      id: 4,
-      title: "Manae Shopping Mart",
-      description:
-        "E-commerce platform with advanced search, secure payments, and personalized shopping recommendations.",
-      icon: faShoppingCart,
-      src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      url: "https://example-manaeshopping.com",
-    },
-    {
-      id: 5,
-      title: "Pearni",
-      description:
-        "Learning platform offering interactive courses, progress tracking, and certification upon completion.",
-      icon: faBookOpen,
-      src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      url: "https://example-pearni.com",
-    },
-    {
-      id: 6,
-      title: "Cyber Scan Guard Shield",
-      description:
-        "Security tool providing real-time threat detection, vulnerability scanning, and automated remediation.",
-      icon: faShieldHalved,
-      src: "https://images.unsplash.com/photo-1632427635820-24f8b7e0d4e5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      url: "https://example-cyberscanguard.com",
-    },
-  ];
+  // Filter by category
+  const filteredProjects =
+    selectedCategory === "All"
+      ? projects
+      : projects.filter((p) => p.category === selectedCategory);
+
+  // Visible projects
+  const visibleProjects = filteredProjects.slice(0, visibleCount);
+
+  // Simplified categories for filter buttons
+  const categories = ["All", "Projects", "Products"];
+
+  const showMoreButton = visibleCount < filteredProjects.length && !showAll;
+  const showLessButton = showAll;
+
+  const handleShowMore = () => {
+    setShowAll(true);
+    setVisibleCount(filteredProjects.length);
+  };
+
+  const handleShowLess = () => {
+    setShowAll(false);
+    setVisibleCount(6);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -206,8 +170,8 @@ export function Projects() {
   };
 
   return (
-    <div className="min-h-screen bg-background mt-5">
-      <div className="max-w-3xl mx-auto px-6 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 mt-5">
+      <div className="max-w-4xl mx-auto px-6 pt-24 pb-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -220,51 +184,92 @@ export function Projects() {
           </motion.div>
 
           {/* Page Header */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+          <motion.div variants={itemVariants} className="space-y-4 text-center">
+            <h1 className="text-4xl md:text-6xl font-bold text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               My Works
             </h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Discover my portfolio of web development projects, where modern
               technology meets creative solutions. Each project represents my
               commitment to quality and innovation.
             </p>
           </motion.div>
 
+          {/* Filter Buttons */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap gap-2 justify-center"
+          >
+            {categories.map((cat) => (
+              <motion.button
+                key={cat}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  setSelectedCategory(cat);
+                  setVisibleCount(6);
+                  setShowAll(false);
+                }}
+                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 shadow-lg ${
+                  selectedCategory === cat
+                    ? "bg-gradient-to-r from-accent to-primary text-accent-foreground shadow-accent/20"
+                    : "border border-border/50 bg-background/80 hover:bg-muted/50 text-foreground"
+                }`}
+              >
+                {cat}
+              </motion.button>
+            ))}
+          </motion.div>
+
           {/* All Projects */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-xl font-semibold text-foreground flex items-center gap-2">
-              <div className="w-2 h-2 bg-success rounded-full" />
-              Featured Projects
+          <motion.div variants={itemVariants} className="space-y-6">
+            <h2 className="text-2xl font-semibold text-foreground flex items-center gap-2 justify-center">
+              <div className="w-3 h-3 bg-gradient-to-r from-success to-green-500 rounded-full shadow-lg" />
+              Featured {selectedCategory}
             </h2>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {projectsData.map((p) => (
-                <ProjectCard
-                  key={p.id}
-                  id={p.id}
-                  title={p.title}
-                  description={p.description}
-                  icon={p.icon}
-                  src={p.src}
-                  url={p.url}
-                  hoveredId={hoveredId}
-                  setHoveredId={setHoveredId}
-                />
-              ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AnimatePresence>
+                {visibleProjects.map((p) => (
+                  <ProjectCard
+                    key={p.id}
+                    id={p.id}
+                    title={p.title}
+                    description={p.description}
+                    icon={p.icon}
+                    src={p.src}
+                    url={p.url}
+                    hoveredId={hoveredId}
+                    setHoveredId={setHoveredId}
+                  />
+                ))}
+              </AnimatePresence>
             </div>
+
+            {(showMoreButton || showLessButton) && (
+              <div className="text-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={showMoreButton ? handleShowMore : handleShowLess}
+                  className="px-8 py-4 rounded-full text-sm font-semibold border border-border/50 bg-background/80 hover:bg-muted/50 transition-all duration-300 shadow-lg"
+                >
+                  {showMoreButton ? "Show All" : "Show Less"}
+                </motion.button>
+              </div>
+            )}
           </motion.div>
 
           {/* Technical Skills Highlight */}
           <motion.div
             variants={itemVariants}
-            className="bg-card border border-border rounded-2xl p-6 space-y-4"
+            className="bg-card/80 backdrop-blur-md border border-border/50 rounded-2xl p-6 space-y-4 shadow-xl"
           >
             <h3 className="text-xl font-semibold text-card-foreground flex items-center gap-2">
-              <div className="w-2 h-2 bg-primary rounded-full" />
+              <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-500 rounded-full" />
               Technologies I Use
             </h3>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground grid grid-cols-1 md:grid-cols-3 gap-4">
               <p className="mb-2">
                 <strong>Frontend:</strong> React, TypeScript, Tailwind CSS,
                 Framer Motion
@@ -283,17 +288,17 @@ export function Projects() {
             variants={itemVariants}
             className="text-center space-y-6 pt-8"
           >
-            <h3 className="text-2xl font-bold text-foreground">
+            <h3 className="text-3xl font-bold text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
               Let's work together.
             </h3>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground max-w-md mx-auto">
               Ready to bring your ideas to life with modern web technologies
             </p>
 
-            <div className="flex gap-3 justify-center">
+            <div className="flex gap-4 justify-center">
               <Link to="/contact">
                 <motion.button
-                  className="hire-button"
+                  className="hire-button px-8 py-4 rounded-full shadow-lg"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -301,7 +306,7 @@ export function Projects() {
                 </motion.button>
               </Link>
               <motion.button
-                className="copy-button flex items-center gap-2"
+                className="copy-button flex items-center gap-2 px-6 py-4 rounded-full border border-border/50 bg-background/80 hover:bg-muted/50 shadow-lg transition-all duration-300"
                 onClick={handleCopyEmail}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

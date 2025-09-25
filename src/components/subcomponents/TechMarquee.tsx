@@ -13,13 +13,10 @@ type TechMarqueeProps = {
 const sampleLogos: TechLogo[] = [
   { name: "HTML5", icon: "fab fa-html5" },
   { name: "CSS3", icon: "fab fa-css3-alt" },
-  { name: "Tailwind CSS", icon: "fab fa-css3-alt" },
+  { name: "Tailwind", icon: "fab fa-css3-alt" },
   { name: "React", icon: "fab fa-react" },
   { name: "JavaScript", icon: "fab fa-js-square" },
   { name: "TypeScript", icon: "fab fa-js-square" },
-  // Using CSS icon as placeholder
-  // Using JS icon as placeholder
-  // Add more as needed
 ];
 
 export default function TechMarquee({ logos = sampleLogos }: TechMarqueeProps) {
