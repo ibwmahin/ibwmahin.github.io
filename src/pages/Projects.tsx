@@ -1,22 +1,32 @@
 /**
- * Projects Page Component
- *
- * Showcases all projects and work portfolio with detailed descriptions.
- * Uses ProjectCard and the centralized projects data.
+ * Projects Page — centered featured header + solid Apple-style filters
+ * CTA removed per request.
  */
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
 import { Footer } from "../components/Footer";
 import { Project, projects } from "../data/projects";
+import { CTASection } from "@/components/ui/CTASection";
 
-/**
- * ProjectCard with hover expansion effect
- */
+type ProjectCardProps = {
+  id: string;
+  title: string;
+  description: string;
+  icon: any;
+  src?: string;
+  url: string;
+  tags?: string[];
+  date?: string | number;
+  hoveredId: string | null;
+  setHoveredId: (id: string | null) => void;
+  mobileExpandedId: string | null;
+  setMobileExpandedId: (id: string | null) => void;
+};
+
+/** Internal ProjectCard — unchanged behavior, same props */
 function ProjectCard({
   id,
   title,
@@ -24,122 +34,218 @@ function ProjectCard({
   icon,
   src,
   url,
+  tags = [],
+  date,
   hoveredId,
   setHoveredId,
-}: {
-  id: string;
-  title: string;
-  description: string;
-  icon: any; // IconDefinition
-  src: string;
-  url: string;
-  hoveredId: string | null;
-  setHoveredId: (id: string | null) => void;
-}) {
+  mobileExpandedId,
+  setMobileExpandedId,
+}: ProjectCardProps) {
   const isHovered = hoveredId === id;
+  const isMobileExpanded = mobileExpandedId === id;
+  const isExpanded = isHovered || isMobileExpanded;
+
   const shortDesc =
-    description.split(". ").slice(0, 1).join(". ") +
-    (description.endsWith(".") ? "" : ".");
+    (description || "").split(". ").slice(0, 1).join(". ") +
+    ((description || "").endsWith(".") ? "" : ".");
 
-  return (
-    <motion.div
-      layout
-      className="group relative bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 space-y-3 cursor-pointer overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
-      whileHover={{ y: -4, scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      onHoverStart={() => setHoveredId(id)}
-      onHoverEnd={() => setHoveredId(null)}
-      onClick={() => window.open(url, "_blank")}
-    >
-      <motion.div
-        layout
-        className="relative overflow-hidden rounded-lg"
-        animate={{ height: isHovered ? 200 : 60 }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
-      >
-        <AnimatePresence mode="wait">
-          {isHovered ? (
-            <motion.div
-              key="image"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2, type: "spring" }}
-              className="w-full h-full"
-            >
-              <img
-                src={src}
-                alt={title}
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="icon-row"
-              initial={{ opacity: 1, scale: 1 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2, type: "spring" }}
-              className="w-full h-full flex items-center justify-start gap-3 p-2"
-            >
-              <FontAwesomeIcon
-                icon={icon}
-                className="text-2xl flex-shrink-0 text-muted-foreground"
-              />
-              <h3 className="font-semibold text-foreground text-sm">{title}</h3>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-          <span className="text-white text-sm font-medium">View Project</span>
-        </div>
-      </motion.div>
-      <motion.div layout className="space-y-2">
-        <p
-          className={`text-xs text-muted-foreground ${isHovered ? "line-clamp-none" : "line-clamp-1"} leading-relaxed`}
-        >
-          {isHovered ? description : shortDesc}
-        </p>
-      </motion.div>
-    </motion.div>
-  );
-}
+  const toggleMobileExpand = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setMobileExpandedId(isMobileExpanded ? null : id);
+  };
 
-/**
- * Projects page displaying portfolio of work
- */
-export function Projects() {
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText("ibwmahin@gmail.com");
-      // simple feedback
-      // If you have a toast system, replace with that
-      alert("Email copied to clipboard: ibwmahin@gmail.com");
-    } catch (err) {
-      console.error("Failed to copy email", err);
-      alert("Could not copy email. Please copy manually: ibwmahin@gmail.com");
+  const handleOpenProject = (e?: React.MouseEvent) => {
+    e && e.stopPropagation();
+    if (typeof window !== "undefined") {
+      window.open(url, "_blank");
     }
   };
 
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (typeof window === "undefined") return;
+    const desktopLike =
+      window.matchMedia &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (desktopLike) {
+      window.open(url, "_blank");
+    } else {
+      e.stopPropagation();
+    }
+  };
+
+  return (
+    <motion.article
+      layout
+      role="button"
+      tabIndex={0}
+      onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleCardClick(e as unknown as React.MouseEvent);
+        }
+      }}
+      onMouseEnter={() => setHoveredId(id)}
+      onMouseLeave={() => setHoveredId(null)}
+      onFocus={() => setHoveredId(id)}
+      onBlur={() => setHoveredId(null)}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 6 }}
+      whileHover={{ translateY: -6, scale: 1.01 }}
+      transition={{ type: "spring", stiffness: 260, damping: 26 }}
+      className="group relative rounded-2xl p-4 bg-card/60 backdrop-blur-sm border border-border/30 shadow-[0_6px_20px_rgba(10,10,10,0.04)] cursor-pointer overflow-hidden"
+    >
+      <div className="flex items-start gap-3">
+        <div className="w-12 h-12 rounded-xl flex-shrink-0 bg-white/6 border border-border/10 flex items-center justify-center">
+          <FontAwesomeIcon
+            icon={icon}
+            fixedWidth
+            style={{ width: 18, height: 18 }}
+          />
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-3">
+            <h3 className="font-semibold text-foreground text-sm truncate">
+              {title}
+            </h3>
+
+            <button
+              type="button"
+              onClick={toggleMobileExpand}
+              aria-expanded={isMobileExpanded}
+              aria-controls={`proj-${id}-preview`}
+              className="ml-2 md:hidden inline-flex items-center justify-center p-1 rounded-full border border-border/20 bg-background/80"
+              title={isMobileExpanded ? "Collapse preview" : "Preview"}
+              onMouseDown={(e) => e.stopPropagation()}
+            >
+              <svg
+                className={`w-4 h-4 transform transition-transform ${isMobileExpanded ? "rotate-180" : "rotate-0"}`}
+                viewBox="0 0 24 24"
+                fill="none"
+                aria-hidden
+              >
+                <path
+                  d="M6 9l6 6 6-6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* short summary only when not expanded */}
+          {!isExpanded && (
+            <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
+              {shortDesc}
+            </p>
+          )}
+        </div>
+
+        <div className="ml-3 hidden md:flex items-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden
+          >
+            <path
+              d="M9 6l6 6-6 6"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <motion.div
+        id={`proj-${id}-preview`}
+        animate={{ height: isExpanded ? (src ? 160 : 96) : 0 }}
+        transition={{ duration: 0.26, ease: "easeInOut" }}
+        className="mt-3 overflow-hidden rounded-md"
+        aria-hidden={!isExpanded}
+      >
+        {isExpanded && (
+          <div className="w-full h-full flex gap-3">
+            {src ? (
+              <img
+                src={src}
+                alt={`${title} preview`}
+                className="w-1/2 h-36 object-cover rounded-md"
+                loading="lazy"
+              />
+            ) : null}
+            <div
+              className={`${src ? "w-1/2" : "w-full"} p-2 text-xs text-muted-foreground`}
+            >
+              {description}
+            </div>
+          </div>
+        )}
+      </motion.div>
+
+      <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
+        <div className="flex gap-2 items-center">
+          {tags?.slice(0, 3).map((t) => (
+            <span
+              key={t}
+              className="px-2 py-0.5 rounded-full border border-border/20 text-[11px]"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className="opacity-80 text-[12px]">
+            {date ? new Date(date).getFullYear() : ""}
+          </div>
+
+          <button
+            type="button"
+            onClick={handleOpenProject}
+            className="hidden md:inline-flex px-3 py-1 rounded-full border border-border/20 bg-background/50 text-sm"
+          >
+            Open
+          </button>
+
+          <button
+            type="button"
+            onClick={handleOpenProject}
+            className={`ml-2 md:hidden inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border/20 bg-accent/90 text-accent-foreground text-sm transition-opacity ${
+              isMobileExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
+            aria-hidden={!isMobileExpanded}
+            title="Open project"
+          >
+            Open
+          </button>
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+/** Projects page */
+export function Projects() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [visibleCount, setVisibleCount] = useState(6);
   const [showAll, setShowAll] = useState(false);
 
-  // Filter by category
   const filteredProjects =
     selectedCategory === "All"
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
-
-  // Visible projects
   const visibleProjects = filteredProjects.slice(0, visibleCount);
 
-  // Simplified categories for filter buttons
   const categories = ["All", "Projects", "Products"];
-
   const showMoreButton = visibleCount < filteredProjects.length && !showAll;
   const showLessButton = showAll;
 
@@ -154,13 +260,11 @@ export function Projects() {
   };
 
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 8 },
     visible: {
       opacity: 1,
-      transition: {
-        delayChildren: 0.12,
-        staggerChildren: 0.08,
-      },
+      y: 0,
+      transition: { delayChildren: 0.12, staggerChildren: 0.06 },
     },
   };
 
@@ -170,78 +274,89 @@ export function Projects() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 mt-5">
-      <div className="max-w-4xl mx-auto px-6 pt-24 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/10 mt-16 ">
+      <div className="max-w-6xl mx-auto px-6 pt-20 pb-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           className="space-y-8"
         >
-          {/* Status Badge */}
-          <motion.div variants={itemVariants}>
+          <motion.div
+            variants={itemVariants}
+            className="flex justify-center items-center"
+          >
             <StatusBadge status="Projects" isAvailable={false} />
           </motion.div>
 
-          {/* Page Header */}
-          <motion.div variants={itemVariants} className="space-y-4 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+          <motion.div variants={itemVariants} className="space-y-3 text-center">
+            <h1 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-muted-foreground py-6">
               My Works
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Discover my portfolio of web development projects, where modern
-              technology meets creative solutions. Each project represents my
-              commitment to quality and innovation.
+              Discover my portfolio of web development projects — clean,
+              performant, and thoughtfully designed.
             </p>
           </motion.div>
 
-          {/* Filter Buttons */}
+          {/* Filters — solid Apple-like pills */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap gap-2 justify-center"
+            className="flex flex-wrap gap-3 justify-center"
           >
-            {categories.map((cat) => (
-              <motion.button
-                key={cat}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  setSelectedCategory(cat);
-                  setVisibleCount(6);
-                  setShowAll(false);
-                }}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 shadow-lg ${
-                  selectedCategory === cat
-                    ? "bg-gradient-to-r from-accent to-primary text-accent-foreground shadow-accent/20"
-                    : "border border-border/50 bg-background/80 hover:bg-muted/50 text-foreground"
-                }`}
-              >
-                {cat}
-              </motion.button>
-            ))}
+            {categories.map((cat) => {
+              const selected = selectedCategory === cat;
+              return (
+                <motion.button
+                  key={cat}
+                  onClick={() => {
+                    setSelectedCategory(cat);
+                    setVisibleCount(6);
+                    setShowAll(false);
+                  }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  aria-pressed={selected}
+                  className={`px-5 py-2 rounded-lg text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/30 ${
+                    selected
+                      ? " decoration-white to-primary text-accent-foreground shadow-md border border-border/20"
+                      : "bg-card/90 text-foreground border border-border/20 shadow-sm"
+                  }`}
+                >
+                  {cat}
+                </motion.button>
+              );
+            })}
           </motion.div>
 
-          {/* All Projects */}
-          <motion.div variants={itemVariants} className="space-y-6">
-            <h2 className="text-2xl font-semibold text-foreground flex items-center gap-2 justify-center">
-              <div className="w-3 h-3 bg-gradient-to-r from-success to-green-500 rounded-full shadow-lg" />
-              Featured {selectedCategory}
-            </h2>
+          <motion.section variants={itemVariants} className="space-y-6">
+            {/* Centered featured header (green dot + label) */}
+            <div className="w-full flex justify-center mt-20">
+              <h2 className="text-2xl font-semibold flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-gradient-to-r from-success to-green-500 shadow-sm" />
+                <span>Featured {selectedCategory}</span>
+              </h2>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               <AnimatePresence>
-                {visibleProjects.map((p) => (
-                  <ProjectCard
-                    key={p.id}
-                    id={p.id}
-                    title={p.title}
-                    description={p.description}
-                    icon={p.icon}
-                    src={p.src}
-                    url={p.url}
-                    hoveredId={hoveredId}
-                    setHoveredId={setHoveredId}
-                  />
+                {visibleProjects.map((p: Project) => (
+                  <motion.div key={p.id} layout variants={itemVariants}>
+                    <ProjectCard
+                      id={p.id}
+                      title={p.title}
+                      description={p.description}
+                      icon={p.icon}
+                      src={p.src}
+                      url={p.url}
+                      tags={p.tags}
+                      date={p.date}
+                      hoveredId={hoveredId}
+                      setHoveredId={setHoveredId}
+                      mobileExpandedId={mobileExpandedId}
+                      setMobileExpandedId={setMobileExpandedId}
+                    />
+                  </motion.div>
                 ))}
               </AnimatePresence>
             </div>
@@ -249,80 +364,23 @@ export function Projects() {
             {(showMoreButton || showLessButton) && (
               <div className="text-center">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
                   onClick={showMoreButton ? handleShowMore : handleShowLess}
-                  className="px-8 py-4 rounded-full text-sm font-semibold border border-border/50 bg-background/80 hover:bg-muted/50 transition-all duration-300 shadow-lg"
+                  className="px-8 py-3 rounded-full text-sm font-semibold border border-border/40 bg-background/70 shadow-sm"
                 >
                   {showMoreButton ? "Show All" : "Show Less"}
                 </motion.button>
               </div>
             )}
-          </motion.div>
-
-          {/* Technical Skills Highlight */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-card/80 backdrop-blur-md border border-border/50 rounded-2xl p-6 space-y-4 shadow-xl"
-          >
-            <h3 className="text-xl font-semibold text-card-foreground flex items-center gap-2">
-              <div className="w-2 h-2 bg-gradient-to-r from-primary to-blue-500 rounded-full" />
-              Technologies I Use
-            </h3>
-            <div className="text-sm text-muted-foreground grid grid-cols-1 md:grid-cols-3 gap-4">
-              <p className="mb-2">
-                <strong>Frontend:</strong> React, TypeScript, Tailwind CSS,
-                Framer Motion
-              </p>
-              <p className="mb-2">
-                <strong>Backend:</strong> Node.js, Express, MongoDB, PostgreSQL
-              </p>
-              <p>
-                <strong>Tools:</strong> Git, Docker, AWS, Vercel, Netlify
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Call to Action */}
-          <motion.div
-            variants={itemVariants}
-            className="text-center space-y-6 pt-8"
-          >
-            <h3 className="text-3xl font-bold text-foreground bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-              Let's work together.
-            </h3>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Ready to bring your ideas to life with modern web technologies
-            </p>
-
-            <div className="flex gap-4 justify-center">
-              <Link to="/contact">
-                <motion.button
-                  className="hire-button px-8 py-4 rounded-full shadow-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Hire Me
-                </motion.button>
-              </Link>
-              <motion.button
-                className="copy-button flex items-center gap-2 px-6 py-4 rounded-full border border-border/50 bg-background/80 hover:bg-muted/50 shadow-lg transition-all duration-300"
-                onClick={handleCopyEmail}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <FontAwesomeIcon
-                  icon={faCopy}
-                  style={{ width: 16, height: 16 }}
-                />
-                <span>Copy Email</span>
-              </motion.button>
-            </div>
-          </motion.div>
+          </motion.section>
         </motion.div>
       </div>
 
-      <Footer />
+      <CTASection />
+      <div className=" mt-20">
+        <Footer />
+      </div>
     </div>
   );
 }

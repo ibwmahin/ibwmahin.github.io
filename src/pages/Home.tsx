@@ -8,7 +8,6 @@ import { Footer } from "../components/Footer";
 import pfp from "../assets/prof.png";
 import { CTASection } from "@/components/ui/CTASection";
 import GalShow from "@/components/subcomponents/GalShow";
-import TechMarquee from "@/components/subcomponents/TechMarquee";
 import FAQSection from "@/components/FAQSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ClientLogosSection from "@/components/ClientLogosSection";
@@ -79,7 +78,7 @@ export function Home(): JSX.Element {
   };
 
   return (
-    <div className="min-h-screen bg-background mt-20 relative overflow-hidden">
+    <div className="min-h-screen bg-background mt-5 sm:mt-20 relative overflow-hidden">
       <div className="max-w-2xl mx-auto px-6 pt-24 pb-16">
         <motion.div
           variants={containerVariants}
@@ -87,12 +86,15 @@ export function Home(): JSX.Element {
           animate="visible"
           className="space-y-12"
         >
-          <motion.div variants={itemVariants}>
+          <motion.div
+            variants={itemVariants}
+            className="hidden sm:inline-block"
+          >
             <StatusBadge status="Web Developer" />
           </motion.div>
 
           <motion.div variants={itemVariants} className="space-y-3">
-            <div className="flex items-center justify-between gap-6">
+            <div className="flex sm:text-left  justify-between flex-col-reverse sm:flex-row gap-6">
               <div className="space-y-2">
                 <h1 className="text-4xl md:text-5xl font-bold text-foreground flex gap-2 items-center">
                   <span>I'm Mahin</span>
@@ -129,7 +131,7 @@ export function Home(): JSX.Element {
                       whileTap={{ scale: 0.98 }}
                     >
                       <span className="flex items-center gap-2">
-                        Know More!
+                        Know Me!
                         <motion.span
                           initial={{ x: -4, opacity: 0 }}
                           whileHover={{ x: 0, opacity: 1 }}
@@ -168,7 +170,6 @@ export function Home(): JSX.Element {
                   </a>
                 </div>
               </div>
-
               <motion.div
                 ref={profileRef}
                 className="flex-shrink-0 relative"
@@ -201,30 +202,27 @@ export function Home(): JSX.Element {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6">
-            <div className="rounded-2xl p-2">
-              <TechMarquee />
-            </div>
+          <motion.div variants={itemVariants} className="py-1 sm:p-3">
+            <ClientLogosSection speed={31} />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6">
+          <motion.div variants={itemVariants} className="py-1  sm:p-3">
             <GalShow />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6">
+          <motion.div variants={itemVariants} className="py-6  sm:p-3">
             <TestimonialsSection speed={35} />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6">
-            <CTASection />
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="py-6">
+          <motion.div variants={itemVariants} className="py-6  sm:p-3">
             <FAQSection />
-          </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6">
-            <ClientLogosSection />
+            <motion.div
+              variants={itemVariants}
+              className=" mt-12 py-6   sm:p-3"
+            >
+              <CTASection />
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>

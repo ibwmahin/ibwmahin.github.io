@@ -38,7 +38,7 @@ export function Navigation() {
     <div
       className="
         fixed left-1/2 top-4 transform -translate-x-1/2 z-50
-        sm:top-4 md:top-6
+        sm:top-4 md:top-6 
       "
     >
       <motion.nav
@@ -53,7 +53,7 @@ export function Navigation() {
           border border-white/6 dark:border-white/20
           rounded-2xl px-5 py-3 shadow-lg
           flex items-center gap-4
-          min-w-[260px] md:min-w-[460px] "
+          min-w-[260px] md:min-w-[460px]"
       >
         <div className="flex items-center gap-2">
           {navItems.map((item) => {

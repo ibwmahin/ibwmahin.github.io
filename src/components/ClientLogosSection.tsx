@@ -1,3 +1,4 @@
+// ClientLogosSection.tsx
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 
@@ -11,17 +12,22 @@ type ClientLogosSectionProps = {
   logos?: ClientLogo[];
   // px per second
   speed?: number;
+  // optional fallback if you want to override default placeholder
+  fallbackSrc?: string;
 };
+
+const DEFAULT_FALLBACK =
+  "https://via.placeholder.com/160x40/cccccc/222222?text=logo+placeholder";
 
 const sampleLogos: ClientLogo[] = [
   {
     name: "DigitalPathways.ai",
-    src: "https://via.placeholder.com/160x40/4F46E5/FFFFFF?text=DigitalPathways.ai",
+    src: "https://img.freepik.com/free-vector/bird-colorful-gradient-design-vector_343694-2506.jpg?semt=ais_hybrid&w=740&q=80",
     url: "https://digitalpathways.ai",
   },
   {
     name: "Dataxpie",
-    src: "https://via.placeholder.com/140x40/059669/FFFFFF?text=Dataxpie",
+    src: "https://www.dataxpie.com/wp-content/uploads/2022/07/DataXpie-White-Logo.png",
     url: "https://dataxpie.com",
   },
   {
@@ -38,9 +44,59 @@ const sampleLogos: ClientLogo[] = [
   },
 ];
 
+/**
+ * SafeImg
+ * - fallback on error
+ * - prevents infinite fallback loops
+ * - preserves user-provided props
+ * - sets sensible defaults: decoding, draggable, loading
+ */
+const SafeImg: React.FC<
+  React.ImgHTMLAttributes<HTMLImageElement> & { fallback?: string }
+> = ({ fallback, src, alt, onError, ...rest }) => {
+  const placeholder = fallback ?? DEFAULT_FALLBACK;
+  const [currentSrc, setCurrentSrc] = useState<string | undefined>(src);
+
+  useEffect(() => {
+    setCurrentSrc(src);
+  }, [src]);
+
+  return (
+    <img
+      {...rest}
+      src={currentSrc}
+      alt={alt ?? ""}
+      decoding="async"
+      draggable={false}
+      loading={rest.loading ?? "lazy"}
+      crossOrigin="anonymous"
+      onError={(e) => {
+        const imgEl = e.currentTarget as HTMLImageElement;
+        // if current src is already placeholder, don't loop
+        if (!imgEl.src.includes(placeholder)) {
+          console.warn(
+            `[SafeImg] failed to load "${src}". Falling back to placeholder.`,
+          );
+          setCurrentSrc(placeholder);
+        }
+        if (typeof onError === "function") onError(e);
+      }}
+      // make sure image doesn't collapse layout
+      style={{
+        display: "block",
+        height: "40px",
+        width: "auto",
+        objectFit: "contain",
+        ...((rest && rest.style) || {}),
+      }}
+    />
+  );
+};
+
 const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
   logos = sampleLogos,
   speed = 40,
+  fallbackSrc,
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const rafRef = useRef<number | null>(null);
@@ -54,6 +110,7 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
   const [isPaused, setIsPaused] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
+  // duplicate items for seamless marquee
   const items = logos.length ? [...logos, ...logos] : [];
 
   useEffect(() => {
@@ -77,6 +134,7 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
       container.scrollLeft += distance;
 
       const half = container.scrollWidth / 2; // because we duplicated
+      // wrap around when we pass half width
       if (container.scrollLeft >= half) {
         container.scrollLeft -= half;
       }
@@ -91,7 +149,9 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = null;
     };
-  }, [speed, isPaused, isDragging, logos]);
+    // we intentionally omit isDragging/isPaused from dependencies to avoid restarting RAF loops too often
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [speed, logos]);
 
   useEffect(
     () => () => {
@@ -106,7 +166,11 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
     if (!container) return;
 
     isPointerDownRef.current = true;
-    container.setPointerCapture(e.pointerId);
+    try {
+      container.setPointerCapture(e.pointerId);
+    } catch (err) {
+      /* ignore if not supported */
+    }
     startXRef.current = e.clientX;
     startScrollRef.current = container.scrollLeft;
     setIsDragging(true);
@@ -137,7 +201,7 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
   if (logos.length === 0) return null;
 
   return (
-    <section className="py-12">
+    <section className="py-6" aria-roledescription="carousel">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-6">
           <h3 className="text-xl md:text-2xl font-semibold">Trusted by</h3>
@@ -156,17 +220,30 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
           onPointerCancel={onPointerUp}
           role="region"
           aria-label="Client logos carousel — auto scrolling"
+          // keep keyboard focusability for accessibility
+          tabIndex={0}
+          style={{
+            // ensure the container has a stable height even if images fail
+            minHeight: 48,
+          }}
         >
           <div
             className="flex items-center gap-8 select-none"
-            style={{ width: "max-content" }}
+            style={{
+              width: "max-content",
+              // reduce accidental text selection in some browsers
+              userSelect: "none",
+              WebkitUserSelect: "none",
+              MozUserSelect: "none",
+            }}
           >
             {items.map((logo, idx) => {
               const key = `${logo.name}-${idx}`;
-              const img = (
-                <img
+              const content = (
+                <SafeImg
                   src={logo.src}
                   alt={logo.name}
+                  fallback={fallbackSrc}
                   className="h-10 w-auto opacity-80 grayscale hover:grayscale-0 transition-all duration-300"
                 />
               );
@@ -185,10 +262,10 @@ const ClientLogosSection: React.FC<ClientLogosSectionProps> = ({
                       rel="noopener noreferrer"
                       aria-label={`Open ${logo.name} in a new tab`}
                     >
-                      {img}
+                      {content}
                     </a>
                   ) : (
-                    <div>{img}</div>
+                    <div>{content}</div>
                   )}
                 </motion.div>
               );

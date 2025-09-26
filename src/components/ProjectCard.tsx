@@ -1,80 +1,148 @@
-/**
- * Project Card Component
- *
- * Displays individual project information with hover animations.
- * Used in project listings with monochrome icons and descriptions.
- */
-
+import React from "react";
 import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
-interface ProjectCardProps {
+export interface ProjectCardAppleProps {
+  id?: string;
   title: string;
+  subtitle?: string;
   description: string;
   icon: IconDefinition;
+  image?: string; // optional preview image (cover)
+  tags?: string[];
   onClick?: () => void;
 }
 
 /**
- * Individual project card with hover animations
+ * ProjectCard — Apple Developer style
+ * - Clean spacing, thin border, soft glass effect
+ * - Subtle elevation + spring hover
+ * - Accessible (keyboard + focus styles)
+ *
+ * Usage:
+ * <ProjectCardApple title="My App" description="Short desc..." icon={faApple} onClick={() => {}} />
+ *
+ * Notes: requires Tailwind CSS and Framer Motion. Works well in both light/dark
+ * themes when your Tailwind palette follows standard tokens (background/foreground/etc.).
  */
-export function ProjectCard({
+export default function ProjectCardApple({
+  id,
   title,
+  subtitle,
   description,
   icon,
+  image,
+  tags = [],
   onClick,
-}: ProjectCardProps) {
+}: ProjectCardAppleProps) {
   return (
-    <motion.div
-      className="project-card group bg-card border border-border/50 rounded-xl p-4 cursor-pointer overflow-hidden"
+    <motion.article
+      layout
+      role={onClick ? "button" : "article"}
+      tabIndex={0}
       onClick={onClick}
-      whileHover={{
-        y: -2,
-        scale: 1.02,
-        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+      onKeyDown={(e) => {
+        if (!onClick) return;
+        if (e.key === "Enter" || e.key === " ") onClick();
       }}
-      transition={{
-        duration: 0.28,
-        ease: "easeOut",
-      }}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ translateY: -6, scale: 1.01 }}
+      whileTap={{ scale: 0.995 }}
+      transition={{ type: "spring", stiffness: 280, damping: 28 }}
+      className={
+        "group relative rounded-2xl p-5 bg-card/60 backdrop-blur-sm border border-border/30 shadow-[0_6px_30px_rgba(10,10,10,0.06)] overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary/40 cursor-pointer"
+      }
     >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          {/* Project Icon */}
-          <div className="w-12 h-12 rounded-xl bg-muted/50 flex items-center justify-center text-foreground font-bold text-lg group-hover:bg-muted transition-colors duration-300">
-            <FontAwesomeIcon
-              icon={icon}
-              fixedWidth
-              style={{ width: 20, height: 20 }}
-            />
-          </div>
+      {/* Optional cover image — subtle top preview */}
+      {image && (
+        <div className="absolute -top-4 right-4 w-28 h-16 rounded-lg overflow-hidden opacity-90 ring-1 ring-border/20">
+          <img
+            src={image}
+            alt={`${title} preview`}
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
 
-          {/* Project Info */}
-          <div className="flex-1">
-            <h3 className="font-semibold text-foreground text-base group-hover:text-foreground/90 transition-colors duration-300">
-              {title}
-            </h3>
-            <p className="text-muted-foreground text-sm leading-relaxed">
-              {description}
-            </p>
-          </div>
+      <div className="flex items-start gap-4">
+        {/* Icon */}
+        <div className="w-14 h-14 flex-shrink-0 rounded-xl bg-white/6 backdrop-blur-sm border border-border/20 flex items-center justify-center text-foreground/90 group-hover:bg-white/8 transition-colors duration-250">
+          <FontAwesomeIcon
+            icon={icon}
+            fixedWidth
+            style={{ width: 22, height: 22 }}
+          />
         </div>
 
-        {/* Arrow Icon */}
+        {/* Title & description */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-3">
+            <h3 className="font-semibold text-foreground text-base truncate">
+              {title}
+            </h3>
+            {subtitle && (
+              <span className="text-xs text-muted-foreground truncate">
+                {subtitle}
+              </span>
+            )}
+          </div>
+
+          <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-h-12 overflow-hidden transition-all duration-300 group-hover:max-h-48">
+            {description}
+          </p>
+
+          {/* tags (small pills) */}
+          {tags.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {tags.map((t) => (
+                <span
+                  key={t}
+                  className="text-[11px] px-2 py-1 rounded-full border border-border/20 bg-background/40 text-muted-foreground"
+                >
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Right chevron / affordance */}
         <motion.div
-          className="opacity-0 group-hover:opacity-100 transition-all duration-300"
-          initial={{ x: 10 }}
-          animate={{ x: 0 }}
+          className="ml-3 flex items-center justify-center"
+          initial={{ opacity: 0, x: 8 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.28 }}
         >
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            style={{ width: 16, height: 16 }}
-            className="text-muted-foreground group-hover:text-foreground transition-colors duration-300"
-          />
+          <div className="rounded-full w-9 h-9 flex items-center justify-center border border-border/20 bg-background/30 group-hover:bg-background/40 transition-colors duration-200">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-muted-foreground"
+              aria-hidden
+            >
+              <path
+                d="M9 6l6 6-6 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
         </motion.div>
       </div>
-    </motion.div>
+
+      {/* subtle divider for large cards */}
+      <div className="mt-4 border-t border-border/10 pt-4 text-xs text-muted-foreground flex items-center justify-between">
+        <span>Updated • {new Date().getFullYear()}</span>
+        <span className="opacity-80">{tags.length} tags</span>
+      </div>
+    </motion.article>
   );
 }

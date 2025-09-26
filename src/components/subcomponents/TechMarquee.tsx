@@ -23,7 +23,7 @@ export default function TechMarquee({ logos = sampleLogos }: TechMarqueeProps) {
   const duplicatedLogos = [...logos, ...logos];
   // Double for seamless loop
   return (
-    <div className="relative overflow-hidden py-7">
+    <div className="relative overflow-hidden py-2">
       {/* Marquee Track */}
       <div className="w-full h-20 flex items-center justify-center">
         <div

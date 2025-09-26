@@ -4,6 +4,7 @@ import { StatusBadge } from "../components/StatusBadge";
 import { Footer } from "../components/Footer";
 import { CTASection } from "@/components/ui/CTASection";
 import { ExperienceTimeline } from "@/components/subcomponents/ExperienceTimeline";
+import TechMarquee from "@/components/subcomponents/TechMarquee";
 /**
  * About page with personal information and background
  */
@@ -58,22 +59,9 @@ export function About(): JSX.Element {
               powerful, and lasting.
             </p>
             <div className="h-[1px] bg-gray-700/20"></div>
-
-            {/* Profile Photo */}
-            {/* <motion.div variants={itemVariants} className="flex justify-center"> */}
-            {/*   <motion.div */}
-            {/*     whileHover={{ scale: 1.05, rotate: 1 }} */}
-            {/*     transition={{ type: "spring", stiffness: 300, damping: 20 }} */}
-            {/*     className="relative" */}
-            {/*   > */}
-            {/*     <img */}
-            {/*       src={profilePhoto} */}
-            {/*       alt="Abdulla Al Mahin - Full Profile Photo" */}
-            {/*       className="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-2xl border-4 border-background/50 hover:border-indigo-500/50 transition-colors duration-300" */}
-            {/*     /> */}
-            {/*   </motion.div> */}
-            {/* </motion.div> */}
           </motion.div>
+          <TechMarquee />
+          <div className="h-[1px] bg-gray-700/20"></div>
 
           {/* More About Me Section */}
           <motion.div variants={itemVariants} className="space-y-4">
@@ -100,6 +88,7 @@ export function About(): JSX.Element {
           </motion.div>
           {/* narrow line */}
           <div className="h-[1px] bg-gray-700/20"></div>
+
           {/* narrow line */}
           <ExperienceTimeline />
           {/* cta button gose from here */}

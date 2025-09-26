@@ -65,7 +65,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ faqs = sampleFAQs }) => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-20 bg-gradient-to-b from-background to-muted/20 rounded-xl">
       <div className="max-w-4xl mx-auto px-6">
         <motion.div
           variants={containerVariants}
