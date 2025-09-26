@@ -1,8 +1,4 @@
-/**
- * Projects Page — centered featured header + solid Apple-style filters
- * CTA removed per request.
- */
-
+// Projects.tsx
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,7 +22,6 @@ type ProjectCardProps = {
   setMobileExpandedId: (id: string | null) => void;
 };
 
-/** Internal ProjectCard — unchanged behavior, same props */
 function ProjectCard({
   id,
   title,
@@ -66,11 +61,8 @@ function ProjectCard({
     const desktopLike =
       window.matchMedia &&
       window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-    if (desktopLike) {
-      window.open(url, "_blank");
-    } else {
-      e.stopPropagation();
-    }
+    if (desktopLike) window.open(url, "_blank");
+    else e.stopPropagation();
   };
 
   return (
@@ -80,9 +72,7 @@ function ProjectCard({
       tabIndex={0}
       onClick={handleCardClick}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          handleCardClick(e as unknown as React.MouseEvent);
-        }
+        if (e.key === "Enter" || e.key === " ") handleCardClick(e as any);
       }}
       onMouseEnter={() => setHoveredId(id)}
       onMouseLeave={() => setHoveredId(null)}
@@ -136,7 +126,6 @@ function ProjectCard({
             </button>
           </div>
 
-          {/* short summary only when not expanded */}
           {!isExpanded && (
             <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
               {shortDesc}
@@ -172,14 +161,14 @@ function ProjectCard({
       >
         {isExpanded && (
           <div className="w-full h-full flex gap-3">
-            {src ? (
+            {src && (
               <img
                 src={src}
                 alt={`${title} preview`}
                 className="w-1/2 h-36 object-cover rounded-md"
                 loading="lazy"
               />
-            ) : null}
+            )}
             <div
               className={`${src ? "w-1/2" : "w-full"} p-2 text-xs text-muted-foreground`}
             >
@@ -231,7 +220,7 @@ function ProjectCard({
   );
 }
 
-/** Projects page */
+/** Projects Page */
 export function Projects() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [mobileExpandedId, setMobileExpandedId] = useState<string | null>(null);
@@ -244,7 +233,6 @@ export function Projects() {
       ? projects
       : projects.filter((p) => p.category === selectedCategory);
   const visibleProjects = filteredProjects.slice(0, visibleCount);
-
   const categories = ["All", "Projects", "Products"];
   const showMoreButton = visibleCount < filteredProjects.length && !showAll;
   const showLessButton = showAll;
@@ -274,7 +262,7 @@ export function Projects() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/10 mt-16 ">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/10 mt-16">
       <div className="max-w-6xl mx-auto px-6 pt-20 pb-16">
         <motion.div
           variants={containerVariants}
@@ -299,7 +287,6 @@ export function Projects() {
             </p>
           </motion.div>
 
-          {/* Filters — solid Apple-like pills */}
           <motion.div
             variants={itemVariants}
             className="flex flex-wrap gap-3 justify-center"
@@ -330,7 +317,6 @@ export function Projects() {
           </motion.div>
 
           <motion.section variants={itemVariants} className="space-y-6">
-            {/* Centered featured header (green dot + label) */}
             <div className="w-full flex justify-center mt-20">
               <h2 className="text-2xl font-semibold flex items-center gap-3">
                 <span className="w-3 h-3 rounded-full bg-gradient-to-r from-success to-green-500 shadow-sm" />
@@ -378,7 +364,7 @@ export function Projects() {
       </div>
 
       <CTASection />
-      <div className=" mt-20">
+      <div className="mt-20">
         <Footer />
       </div>
     </div>

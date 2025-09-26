@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCopy, faArrowUp } from "@fortawesome/free-solid-svg-icons";
@@ -10,17 +10,14 @@ import { CTASection } from "@/components/ui/CTASection";
 import GalShow from "@/components/subcomponents/GalShow";
 import FAQSection from "@/components/FAQSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import ClientLogosSection from "@/components/ClientLogosSection";
+import Skills from "@/components/subcomponents/Skills";
 
 export function Home(): JSX.Element {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        delayChildren: 0.2,
-        staggerChildren: 0.1,
-      },
+      transition: { delayChildren: 0.2, staggerChildren: 0.1 },
     },
   };
 
@@ -32,25 +29,22 @@ export function Home(): JSX.Element {
   const [isHovered, setIsHovered] = useState(false);
   const [showTop, setShowTop] = useState(false);
   const profileRef = useRef<HTMLDivElement | null>(null);
-  const tiltRef = useRef({ rx: 0, ry: 0 });
 
-  // subtle profile tilt based on mouse position inside the profile container
+  // subtle profile tilt on hover
   useEffect(() => {
     const el = profileRef.current;
     if (!el) return;
 
     function onMove(e: MouseEvent) {
       const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2; // -w/2 .. w/2
-      const y = e.clientY - rect.top - rect.height / 2; // -h/2 .. h/2
-      const ry = (x / (rect.width / 2)) * 6; // rotateY up to ~6deg
-      const rx = -(y / (rect.height / 2)) * 6; // rotateX up to ~6deg
-      tiltRef.current = { rx, ry };
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const ry = (x / (rect.width / 2)) * 3; // subtle tilt
+      const rx = -(y / (rect.height / 2)) * 3;
       el.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
     }
 
     function onLeave() {
-      tiltRef.current = { rx: 0, ry: 0 };
       el.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg)";
     }
 
@@ -63,117 +57,105 @@ export function Home(): JSX.Element {
     };
   }, []);
 
-  // show back-to-top button after scrolling a bit
+  // back-to-top button
   useEffect(() => {
     function onScroll() {
-      setShowTop(window.scrollY > 320);
+      setShowTop(window.scrollY > 300);
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <div className="min-h-screen bg-background mt-5 sm:mt-20 relative overflow-hidden">
-      <div className="max-w-2xl mx-auto px-6 pt-24 pb-16">
+    <div className="min-h-screen bg-white dark:bg-gray-900 relative">
+      <div className="max-w-3xl mx-auto px-6 pt-36 pb-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
           className="space-y-12"
         >
-          <motion.div
-            variants={itemVariants}
-            className="hidden sm:inline-block"
-          >
-            <StatusBadge status="Web Developer" />
+          {/* Status Badge */}
+          <motion.div variants={itemVariants} className="hidden sm:block">
+            <StatusBadge status="Front-End Developer" />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="space-y-3">
-            <div className="flex sm:text-left  justify-between flex-col-reverse sm:flex-row gap-6">
-              <div className="space-y-2">
-                <h1 className="text-4xl md:text-5xl font-bold text-foreground flex gap-2 items-center">
+          {/* Hero Section */}
+          <motion.div variants={itemVariants} className="space-y-4">
+            <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-6">
+              <div className="space-y-2 text-center sm:text-left">
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center sm:justify-start gap-2">
                   <span>I'm Mahin</span>
-                  <motion.div
+                  <motion.span
                     animate={{ rotate: [0, 20, -10, 20, 0] }}
                     transition={{
-                      duration: 5.5,
+                      duration: 5,
                       repeat: Infinity,
                       ease: "easeInOut",
                     }}
-                    style={{ display: "inline-block", fontSize: "2.2rem" }}
+                    style={{ display: "inline-block", fontSize: "2rem" }}
                     title="wave"
                     aria-hidden
                   >
                     👋
-                  </motion.div>
+                  </motion.span>
                 </h1>
 
-                <div className="text-xs text-gray-400 font-bold italic">
+                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium italic">
                   HE/HIM
                 </div>
 
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mt-2 text-balance w-[80%] mx-auto sm:w-full">
                   Web Developer from Bangladesh.
                   <br />
-                  Creating amazing digital experiences.
+                  Creating elegant and high-performing digital experiences.
                 </p>
 
-                <div className="flex gap-3 pt-2 items-center">
-                  <Link to="/about" className="group inline-block">
+                <div className="flex flex-row sm:flex-row gap-3 mt-4 justify-center sm:justify-start items-center">
+                  <Link to="/about">
                     <motion.button
-                      className="hire-button px-4 py-2 rounded-md bg-foreground text-background font-medium shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400"
                       whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="px-5 py-2 rounded-md bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 font-medium transition-colors duration-200"
                     >
-                      <span className="flex items-center gap-2">
-                        Know Me!
-                        <motion.span
-                          initial={{ x: -4, opacity: 0 }}
-                          whileHover={{ x: 0, opacity: 1 }}
-                          transition={{ type: "spring", stiffness: 300 }}
-                          className="text-sm opacity-70"
-                        >
-                          →
-                        </motion.span>
-                      </span>
+                      Know Me!
                     </motion.button>
                   </Link>
 
                   <motion.button
-                    className="copy-button flex items-center gap-2 px-3 py-2 rounded-md border border-border bg-background/60"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                    className="flex items-center gap-2 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 text-sm transition-colors"
                     onClick={() =>
                       navigator.clipboard.writeText("ibwmahin@gmail.com")
                     }
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.98 }}
                     aria-label="Copy email"
                   >
                     <FontAwesomeIcon icon={faCopy} className="w-4 h-4" />
-                    <span className="text-sm">Copy Email</span>
+                    Copy Email
                   </motion.button>
                 </div>
 
-                <div className="flex items-center gap-3 mt-3 text-sm">
-                  <div className="bg-red-700/30 h-4 w-4 rounded-full flex justify-center items-center">
-                    <div className="bg-red-500 h-2 w-2 rounded-full" />
+                <div className="flex items-center gap-2 mt-3 text-sm justify-center sm:justify-start">
+                  <div className="bg-red-500/30 h-3 w-3 rounded-full flex justify-center items-center">
+                    <div className="bg-red-500 h-1.5 w-1.5 rounded-full" />
                   </div>
                   <a
                     href="mailto:ibwmahin@gmail.com"
-                    className="text-gray-500 hover:text-black dark:text-white/50 dark:hover:text-white transition"
+                    className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition"
                   >
                     ibwmahin@gmail.com
                   </a>
                 </div>
               </div>
+
               <motion.div
                 ref={profileRef}
                 className="flex-shrink-0 relative"
-                whileHover={{ scale: 1.06 }}
+                whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 onHoverStart={() => setIsHovered(true)}
                 onHoverEnd={() => setIsHovered(false)}
@@ -181,10 +163,9 @@ export function Home(): JSX.Element {
               >
                 <img
                   src={pfp}
-                  alt="Abdulla Al Mahin - Web Developer"
-                  className="w-24 h-24 md:w-44 md:h-44 rounded-full object-cover ring-4 ring-border shadow-lg"
+                  alt="Mahin - Web Developer"
+                  className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover ring-4 ring-gray-200 dark:ring-gray-700 shadow-md"
                 />
-
                 <AnimatePresence>
                   {isHovered && (
                     <motion.div
@@ -192,9 +173,9 @@ export function Home(): JSX.Element {
                       animate={{ opacity: 1, scale: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95, y: 10 }}
                       transition={{ duration: 0.12, type: "spring" }}
-                      className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-background text-foreground px-3 py-1 rounded-md text-sm font-medium shadow-lg border border-border whitespace-nowrap z-10"
+                      className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-md text-sm font-medium shadow-sm border border-gray-200 dark:border-gray-700"
                     >
-                      Whasup mate?
+                      Hello there!
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -202,34 +183,32 @@ export function Home(): JSX.Element {
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-1 sm:p-3">
-            <ClientLogosSection speed={31} />
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="py-1  sm:p-3">
+          {/* Gallery */}
+          <motion.div variants={itemVariants} className="py-4">
             <GalShow />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6  sm:p-3">
+          {/* Skills */}
+          <motion.div variants={itemVariants} className="py-4">
+            <Skills />
+          </motion.div>
+
+          {/* Testimonials */}
+          <motion.div variants={itemVariants} className="py-4">
             <TestimonialsSection speed={35} />
           </motion.div>
 
-          <motion.div variants={itemVariants} className="py-6  sm:p-3">
+          {/* FAQ + CTA */}
+          <motion.div variants={itemVariants} className="py-4 space-y-6">
             <FAQSection />
-
-            <motion.div
-              variants={itemVariants}
-              className=" mt-12 py-6   sm:p-3"
-            >
-              <CTASection />
-            </motion.div>
+            <CTASection />
           </motion.div>
         </motion.div>
       </div>
 
       <Footer />
 
-      {/* Back to top */}
+      {/* Back-to-top button */}
       <AnimatePresence>
         {showTop && (
           <motion.button
@@ -239,7 +218,7 @@ export function Home(): JSX.Element {
             transition={{ duration: 0.18 }}
             onClick={scrollToTop}
             aria-label="Scroll to top"
-            className="fixed right-6 bottom-8 z-50 rounded-full bg-foreground text-background p-3 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2"
+            className="fixed right-6 bottom-6 z-50 rounded-full bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 p-3 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
           >
             <FontAwesomeIcon icon={faArrowUp} />
           </motion.button>
