@@ -1,3 +1,4 @@
+// GalShow.tsx
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -16,35 +17,33 @@ type GalShowProps = {
 
 const sampleProjects: Project[] = [
   {
-    src: "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop",
-    title: "Project One",
+    src: "/DemoImg/digital_pathways_ai.png",
+    title: "DigitalPathways",
     description:
-      "A short description of project one. Tech used: React, Tailwind.",
-    demo: "https://example.com/demo1",
-    repo: "https://github.com/you/project-one",
+      "A modern WordPress website designed to elevate your consulting agency’s presence.",
+    demo: "https://digitalpathways.ai/",
+    repo: "",
   },
   {
-    src: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1200&auto=format&fit=crop",
-    title: "E-Commerce Platform",
+    src: "/DemoImg/pear-ni.png",
+    title: "Pear-NI",
     description:
-      "Responsive online shopping site with cart functionality. Tech used: React, Tailwind, Stripe.",
-    demo: "https://example-ecommerce.com",
-    repo: "https://github.com/you/ecommerce-platform",
+      "Modern Netural Inteliggents for the future earth and march eco system and evulation.",
+    demo: "https://pearni.netlify.app/",
+    repo: "https://github.com/ibwmahin/pearni-genesis-ui",
   },
   {
-    src: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=1200&auto=format&fit=crop",
+    src: "/DemoImg/dev_board.png",
     title: "Task Manager App",
-    description:
-      "Full-stack task management tool with real-time updates. Tech used: Next.js, Supabase.",
-    demo: "https://example-taskmanager.com",
+    description: "Ui Dev-Board Desing with NextJs and Shad-CN.",
+    demo: "https://ibw-nextdev.netlify.app/",
     repo: "https://github.com/you/task-manager",
   },
   {
-    src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
-    title: "Portfolio Site",
-    description:
-      "Personal portfolio with animated sections and blog. Tech used: Gatsby, Framer Motion.",
-    demo: "https://example-portfolio.com",
+    src: "/DemoImg/visqode.png",
+    title: "Modern Digital Agency",
+    description: "A Modern Development & consulting agency for everyone.",
+    demo: "https://visqode.netlify.app/",
     repo: "https://github.com/you/portfolio-site",
   },
 ];
@@ -55,8 +54,18 @@ const containerVariants = {
 };
 const itemVariants = {
   hidden: { opacity: 0, y: 6, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1 },
-  exit: { opacity: 0, y: 4, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.075, ease: "easeOut" },
+  },
+  exit: {
+    opacity: 0,
+    y: 4,
+    scale: 0.97,
+    transition: { duration: 0.075, ease: "easeIn" },
+  },
 };
 
 export default function GalShow({
@@ -85,13 +94,13 @@ export default function GalShow({
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
             Made by Me
           </h3>
           {images.length > initialCount && (
             <button
               onClick={() => setShowAll((s) => !s)}
-              className="px-4 py-2 rounded-lg text-sm border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors font-medium"
+              className="px-4 py-2 rounded-lg text-sm border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-75 font-medium"
             >
               {showAll
                 ? "Show less"
@@ -118,7 +127,7 @@ export default function GalShow({
                   initial="hidden"
                   animate="visible"
                   exit="exit"
-                  className="relative rounded-lg overflow-hidden cursor-pointer group shadow-sm hover:shadow-md transition-shadow bg-gray-50 dark:bg-gray-800"
+                  className="relative rounded-lg overflow-hidden cursor-pointer group shadow-sm hover:shadow-md transition-all duration-75 bg-slate-50 dark:bg-slate-800"
                   onClick={() => setActive(index)}
                   whileHover={{ scale: 1.03 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -131,9 +140,9 @@ export default function GalShow({
                     whileHover={{ y: -4, rotate: [0, -1, 1, 0] }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   />
-                  <div className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="px-3 py-2 rounded bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-gray-100 text-sm font-medium">
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-75 rounded-lg" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-75">
+                    <span className="px-3 py-2 rounded bg-white/95 dark:bg-slate-900/95 text-slate-900 dark:text-slate-100 text-sm font-medium">
                       View
                     </span>
                   </div>
@@ -143,11 +152,11 @@ export default function GalShow({
           </AnimatePresence>
         </motion.div>
 
-        <p className="mt-6 text-sm text-gray-500 dark:text-gray-400">
+        <p className="mt-6 text-sm text-slate-500 dark:text-slate-400">
           Click any project to view details. Use ← → or Esc in the lightbox.{" "}
           <a
             href="/projects"
-            className="underline font-semibold hover:text-gray-900 dark:hover:text-white"
+            className="underline font-semibold hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-75"
           >
             See More!
           </a>
@@ -162,6 +171,7 @@ export default function GalShow({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.075 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
             onClick={() => setActive(null)}
           >
@@ -170,21 +180,22 @@ export default function GalShow({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.075 }}
               className="absolute inset-0 bg-black/60 backdrop-blur-md"
             />
 
             {/* Modal content */}
             <motion.div
-              initial={{ y: 20, scale: 0.95, opacity: 0 }}
+              initial={{ y: 20, scale: 0.98, opacity: 0 }}
               animate={{ y: 0, scale: 1, opacity: 1 }}
-              exit={{ y: 20, scale: 0.95, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 350, damping: 28 }}
-              className="relative z-10 max-w-4xl w-full bg-white dark:bg-gray-900 backdrop-blur-lg border border-gray-300 dark:border-gray-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[80vh]"
+              exit={{ y: 20, scale: 0.98, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 320, damping: 28 }}
+              className="relative z-10 max-w-4xl w-full bg-white dark:bg-slate-900 backdrop-blur-lg border border-slate-200 dark:border-slate-700 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[80vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col lg:flex-row flex-1 overflow-hidden">
                 {/* Left: Image */}
-                <div className="lg:w-2/3 w-full flex items-center justify-center bg-gray-100 dark:bg-gray-800 p-6 flex-shrink-0">
+                <div className="lg:w-2/3 w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 p-6 flex-shrink-0">
                   <img
                     src={images[active].src}
                     alt={images[active].title ?? `project-${active}`}
@@ -197,63 +208,62 @@ export default function GalShow({
                 <div className="lg:w-1/3 w-full p-6 flex flex-col gap-4 overflow-y-auto relative">
                   <button
                     onClick={() => setActive(null)}
-                    className="absolute top-4 right-4 p-3 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition text-gray-900 dark:text-white font-bold"
+                    className="absolute top-4 right-4 p-2 rounded-full bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors duration-75 text-slate-700 dark:text-slate-200"
+                    aria-label="Close"
                   >
                     ✕
                   </button>
-                  <h4 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+
+                  <h4 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                     {images[active].title ?? "Untitled Project"}
                   </h4>
-                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                  <p className="text-sm text-slate-600 dark:text-slate-300">
                     {images[active].description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {images[active].demo && (
+                  <div className="flex flex-col sm:flex-row gap-2 mt-2">
+                    {images[active].demo ? (
                       <a
                         href={images[active].demo}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium transition"
+                        className="flex-1 inline-flex items-center justify-center px-4 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition-colors duration-75"
                       >
                         Live Demo
                       </a>
-                    )}
-                    {images[active].repo && (
+                    ) : null}
+
+                    {images[active].repo ? (
                       <a
                         href={images[active].repo}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium transition"
+                        className="flex-1 inline-flex items-center justify-center px-4 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-transparent hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-medium transition-colors duration-75"
                       >
                         Repository
                       </a>
-                    )}
-                    <button
-                      onClick={() =>
-                        navigator.clipboard.writeText(
-                          images[active].demo ??
-                            images[active].repo ??
-                            images[active].src,
-                        )
-                      }
-                      className="px-3 py-2 rounded-md border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium transition"
-                    >
-                      Copy Link
-                    </button>
+                    ) : null}
                   </div>
+
+                  {/* if neither demo nor repo, show subtle external link to image source */}
+                  {!images[active].demo && !images[active].repo && (
+                    <div className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                      No live demo or repository available for this project.
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* Navigation */}
-              <div className="px-6 py-3 border-t border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+              <div className="px-6 py-3 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
                 <span>
                   {active + 1} / {images.length}
                 </span>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setActive((s) => (s! > 0 ? s! - 1 : s))}
-                    className="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="px-3 py-1 rounded-md border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-75"
+                    aria-label="Previous project"
                   >
                     ‹ Prev
                   </button>
@@ -261,7 +271,8 @@ export default function GalShow({
                     onClick={() =>
                       setActive((s) => (s! < images.length - 1 ? s! + 1 : s))
                     }
-                    className="px-3 py-1 rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                    className="px-3 py-1 rounded-md border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-75"
+                    aria-label="Next project"
                   >
                     Next ›
                   </button>

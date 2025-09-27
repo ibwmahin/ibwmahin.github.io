@@ -13,34 +13,55 @@ type FAQSectionProps = {
 
 const sampleFAQs: FAQItem[] = [
   {
-    question: "What services do you provide?",
+    question: "What front-end technologies do you specialize in?",
     answer:
-      "As a full-stack web developer specializing in React, TypeScript, and modern technologies, I offer end-to-end solutions including UI/UX design, frontend and backend development, performance optimization, and deployment. From custom websites to scalable applications, I focus on delivering clean, efficient code tailored to your business goals.",
+      "I primarily build with React and Next.js using TypeScript for type safety. For styling I use Tailwind CSS and CSS Modules, and I apply modern build tools (Vite, Webpack) and testing with Jest/React Testing Library.",
   },
   {
-    question: "What is your development process?",
+    question: "Can you improve our site's performance?",
     answer:
-      "My process follows agile principles: initial consultation to understand requirements, wireframing and prototyping, iterative development with regular feedback, thorough testing, and seamless deployment. This ensures alignment with your vision while maintaining high standards of quality and scalability.",
+      "Absolutely — I audit bundle size, optimize images and fonts, implement code-splitting and lazy loading, and tune server-side rendering or edge caching. Typical wins include faster Time to First Byte (TTFB) and lower Largest Contentful Paint (LCP).",
   },
   {
-    question: "How do you handle project timelines and pricing?",
+    question: "Do you handle accessibility (a11y)?",
     answer:
-      "Timelines are estimated based on project scope—typically 2-4 weeks for MVPs and 6-12 weeks for complex apps. Pricing is transparent: fixed quotes for defined scopes starting at $2,000, or hourly rates from $50. I provide detailed breakdowns upfront to fit your budget without compromising excellence.",
+      "Yes. I build with semantic HTML, keyboard navigation, ARIA where appropriate, and run automated and manual accessibility tests to help reach WCAG AA standards.",
   },
   {
-    question: "What technologies do you use?",
+    question: "How do you approach component architecture and code quality?",
     answer:
-      "Core stack includes React/Next.js for frontend, Node.js/Express for backend, Tailwind CSS for styling, and databases like MongoDB/PostgreSQL. I integrate tools like Framer Motion for animations, AWS/Vercel for hosting, and Git for version control, always selecting the best fit for performance and maintainability.",
+      "I organize UI into small, reusable components with clear props and separation of concerns. I enforce linting (ESLint), formatting (Prettier), and CI checks; write unit and integration tests; and keep documentation and type definitions up-to-date.",
   },
   {
-    question: "Do you offer post-launch support?",
+    question: "What about state management and data fetching?",
     answer:
-      "Yes, I provide ongoing maintenance packages including bug fixes, updates, and performance monitoring. Options range from ad-hoc hourly support to retainer plans, ensuring your digital presence remains secure, fast, and up-to-date long-term.",
+      "I prefer lightweight solutions: React Query / TanStack Query or SWR for server state, and local state with React Context or Zustand. For APIs I integrate REST or GraphQL depending on the backend, with retry and caching strategies.",
+  },
+  {
+    question:
+      "Do you build on CMSs or page builders like WordPress or Webflow?",
+    answer:
+      "Yes — I create custom themes, headless WordPress integrations, and polished Webflow builds. For headless setups I pair Next.js with a CMS (WordPress, Sanity, or Strapi) to deliver fast, maintainable sites.",
+  },
+  {
+    question: "How do you deploy and host projects?",
+    answer:
+      "I typically deploy static/SSR apps to Vercel or Netlify, and containerized services to AWS or DigitalOcean. I configure CI/CD pipelines, environment variables, monitoring, and automated rollbacks when needed.",
+  },
+  {
+    question: "What does post-launch support look like?",
+    answer:
+      "Options range from hourly ad-hoc fixes to monthly retainers. Support covers security updates, dependency upgrades, bug fixes, performance monitoring, and small feature iterations.",
+  },
+  {
+    question: "How long will my project take and how is pricing handled?",
+    answer:
+      "Timelines depend on scope; a marketing site is often 1–3 weeks, a complex app 6–12+ weeks. I provide fixed quotes for defined scopes or an hourly model. Every proposal includes milestones and a clear deliverables list.",
   },
   {
     question: "How do we get started?",
     answer:
-      "Schedule a free 30-minute consultation via the contact form. We'll discuss your goals, timeline, and budget, after which I'll deliver a customized proposal. Let's turn your ideas into impactful digital realities.",
+      "Send project details via the contact form or schedule a short discovery call. I’ll review requirements, share a rough timeline and estimate, and outline next steps to kick off development.",
   },
 ];
 
@@ -77,11 +98,11 @@ const FAQSection: React.FC<FAQSectionProps> = ({ faqs = sampleFAQs }) => {
           {/* Header */}
           <motion.div variants={itemVariants} className="text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Frequently Asked Questions
+              Front-End & Web Development FAQs
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Common inquiries about my services, process, and collaboration. If
-              your question isn't here, reach out—I'm here to help.
+              Answers to common questions about my stack, workflow, and how we
+              can ship fast, maintainable web products together.
             </p>
           </motion.div>
 

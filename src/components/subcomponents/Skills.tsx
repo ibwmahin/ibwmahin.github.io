@@ -1,19 +1,19 @@
 const skills = [
-  { title: "Brand Identity" },
-  { title: "End-to-End Product Design" },
-  { title: "User Experience Design" },
-  { title: "User Conversion Rate Improvement" },
-  { title: "User Interface Design" },
-  { title: "Webflow Development" },
+  { title: "Responsive Web Development" },
+  { title: "JavaScript (ES6+)" },
+  { title: "React & Next.js Development" },
+  { title: "CSS Architecture (Sass, Tailwind-Css)" },
+  { title: "Performance Optimization" },
+  { title: "API Integration & State Management" },
 ];
 
 const Skills = () => {
   return (
-    <section className="py-16 ">
+    <section className="py-0 ">
       <div className="max-w-4xl mx-auto px-6">
         {/* Main Title */}
         <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">
-          My Skills
+          My Expertise
         </h2>
 
         {/* Skills List */}

@@ -6,6 +6,7 @@ import {
   faHome,
   faUser,
   faFolderOpen,
+  faEnvelope,
   faSun,
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +27,7 @@ export function Navigation(): JSX.Element {
       { path: "/", icon: faHome, label: "Home" },
       { path: "/about", icon: faUser, label: "About" },
       { path: "/projects", icon: faFolderOpen, label: "Projects" },
+      { path: "/contact", icon: faEnvelope, label: "Contact" },
     ],
     [],
   );
@@ -62,7 +64,7 @@ export function Navigation(): JSX.Element {
         initial="hidden"
         animate="enter"
         variants={navAnim}
-        className="pointer-events-auto bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/6 dark:border-white/20 rounded-2xl px-4 py-3 shadow-lg flex items-center gap-3 min-w-[260px] md:min-w-[460px]"
+        className="pointer-events-auto bg-white/30 dark:bg-black/30 backdrop-blur-md border border-white/6 dark:border-white/20 rounded-2xl px-4 py-3 shadow-lg flex items-center gap-3 min-w-[320px] md:min-w-[520px]"
       >
         {/* Left: nav items */}
         <ul

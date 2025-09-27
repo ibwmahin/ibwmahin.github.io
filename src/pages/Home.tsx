@@ -1,7 +1,5 @@
+// src/pages/Home.tsx
 import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCopy, faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
 import { Footer } from "../components/Footer";
@@ -13,39 +11,29 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import Skills from "@/components/subcomponents/Skills";
 
 export function Home(): JSX.Element {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { delayChildren: 0.2, staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
-
-  const [isHovered, setIsHovered] = useState(false);
-  const [showTop, setShowTop] = useState(false);
   const profileRef = useRef<HTMLDivElement | null>(null);
+  const [hovering, setHovering] = useState(false);
+  const [showTop, setShowTop] = useState(false);
+  const [copied, setCopied] = useState(false);
 
-  // subtle profile tilt on hover
+  // Profile tilt (only uses mouse events)
   useEffect(() => {
     const el = profileRef.current;
     if (!el) return;
 
     function onMove(e: MouseEvent) {
+      if (!el) return;
       const rect = el.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      const ry = (x / (rect.width / 2)) * 3; // subtle tilt
+      const ry = (x / (rect.width / 2)) * 3;
       const rx = -(y / (rect.height / 2)) * 3;
-      el.style.transform = `perspective(600px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      el.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg)`;
     }
 
     function onLeave() {
-      el.style.transform = "perspective(600px) rotateX(0deg) rotateY(0deg)";
+      if (!el) return;
+      el.style.transform = "perspective(700px) rotateX(0deg) rotateY(0deg)";
     }
 
     el.addEventListener("mousemove", onMove);
@@ -57,173 +45,193 @@ export function Home(): JSX.Element {
     };
   }, []);
 
-  // back-to-top button
+  // Back-to-top visibility (run only on client)
   useEffect(() => {
     function onScroll() {
-      setShowTop(window.scrollY > 300);
+      setShowTop((prev) => {
+        if (typeof window === "undefined") return prev;
+        return window.scrollY > 320;
+      });
     }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+    }
+    return () => {
+      if (typeof window !== "undefined")
+        window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+  // Copy email safely
+  const copyEmail = async () => {
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText("ibwmahin@gmail.com");
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
+      } else {
+        const tmp = document.createElement("input");
+        tmp.value = "ibwmahin@gmail.com";
+        document.body.appendChild(tmp);
+        tmp.select();
+        document.execCommand?.("copy");
+        document.body.removeChild(tmp);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1600);
+      }
+    } catch (err) {
+      console.warn("copy failed", err);
+    }
+  };
+
+  const scrollToTop = () => {
+    if (typeof window !== "undefined")
+      window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 relative">
-      <div className="max-w-3xl mx-auto px-6 pt-36 pb-16">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-12"
-        >
-          {/* Status Badge */}
-          <motion.div variants={itemVariants} className="hidden sm:block">
+    <div className="min-h-screen ">
+      <div className="max-w-4xl mx-auto px-6 pt-28 pb-16">
+        <div className="space-y-10">
+          <div className="hidden sm:block">
             <StatusBadge status="Front-End Developer" />
-          </motion.div>
+          </div>
 
-          {/* Hero Section */}
-          <motion.div variants={itemVariants} className="space-y-4">
-            <div className="flex flex-col-reverse sm:flex-row justify-between items-center gap-6">
-              <div className="space-y-2 text-center sm:text-left">
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-gray-100 flex items-center justify-center sm:justify-start gap-2">
-                  <span>I'm Mahin</span>
-                  <motion.span
-                    animate={{ rotate: [0, 20, -10, 20, 0] }}
-                    transition={{
-                      duration: 5,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                    style={{ display: "inline-block", fontSize: "2rem" }}
-                    title="wave"
-                    aria-hidden
-                  >
-                    👋
-                  </motion.span>
-                </h1>
+          {/* Hero */}
+          <section className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+            <div className="sm:col-span-7 space-y-4">
+              <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-300  inline-block">
+                I'm Mahin{" "}
+                <span className="ml-2 inline-block" aria-hidden>
+                  👋
+                </span>
+              </h1>
 
-                <div className="text-sm text-gray-500 dark:text-gray-400 font-medium italic">
-                  HE/HIM
-                </div>
-
-                <p className="text-base md:text-lg text-gray-700 dark:text-gray-300 leading-relaxed mt-2 text-balance w-[80%] mx-auto sm:w-full">
-                  Web Developer from Bangladesh.
-                  <br />
-                  Creating elegant and high-performing digital experiences.
-                </p>
-
-                <div className="flex flex-row sm:flex-row gap-3 mt-4 justify-center sm:justify-start items-center">
-                  <Link to="/about">
-                    <motion.button
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                      className="px-5 py-2 rounded-md bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 font-medium transition-colors duration-200"
-                    >
-                      Know Me!
-                    </motion.button>
-                  </Link>
-
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className="flex items-center gap-2 px-3 py-2 rounded-md border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-200 text-sm transition-colors"
-                    onClick={() =>
-                      navigator.clipboard.writeText("ibwmahin@gmail.com")
-                    }
-                    aria-label="Copy email"
-                  >
-                    <FontAwesomeIcon icon={faCopy} className="w-4 h-4" />
-                    Copy Email
-                  </motion.button>
-                </div>
-
-                <div className="flex items-center gap-2 mt-3 text-sm justify-center sm:justify-start">
-                  <div className="bg-red-500/30 h-3 w-3 rounded-full flex justify-center items-center">
-                    <div className="bg-red-500 h-1.5 w-1.5 rounded-full" />
-                  </div>
-                  <a
-                    href="mailto:ibwmahin@gmail.com"
-                    className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition"
-                  >
-                    ibwmahin@gmail.com
-                  </a>
-                </div>
+              <div className="text-sm text-slate-600 dark:text-slate-300 font-medium italic">
+                HE/HIM
               </div>
 
-              <motion.div
+              <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed mt-1 max-w-prose">
+                Web developer from Bangladesh. Creating elegant, fast, and
+                accessible digital experiences with a focus on sustainability
+                and clarity.
+              </p>
+
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Link to="/about">
+                  <button className="inline-flex items-center px-5 py-2 rounded-md bg-gradient-to-r from-indigo-600 to-sky-500 text-white font-medium shadow-md hover:brightness-95 transition duration-75">
+                    Know me
+                  </button>
+                </Link>
+
+                <button
+                  onClick={copyEmail}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm transition-colors duration-75"
+                  aria-label="Copy email"
+                  type="button"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    aria-hidden
+                  >
+                    <path
+                      d="M8 7h8v10H8z"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16 7h2a2 2 0 0 1 2 2v8"
+                      stroke="currentColor"
+                      strokeWidth="1.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span>{copied ? "Copied" : "Copy email"}</span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-3 mt-3 text-sm">
+                <div className="w-3 h-3 rounded-full bg-red-500/60 flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500" />
+                </div>
+                <a
+                  href="mailto:ibwmahin@gmail.com"
+                  className="text-slate-600 dark:text-slate-300 hover:underline transition-colors duration-75"
+                >
+                  ibwmahin@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div className="sm:col-span-5 flex justify-center sm:justify-end">
+              <div
                 ref={profileRef}
-                className="flex-shrink-0 relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                onHoverStart={() => setIsHovered(true)}
-                onHoverEnd={() => setIsHovered(false)}
+                onMouseEnter={() => setHovering(true)}
+                onMouseLeave={() => setHovering(false)}
+                className="relative w-36 h-36 md:w-44 md:h-44 rounded-full ring-4 ring-slate-100 dark:ring-slate-800 overflow-hidden shadow-lg transition-all duration-75"
                 aria-hidden
               >
                 <img
-                  src={pfp}
-                  alt="Mahin - Web Developer"
-                  className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover ring-4 ring-gray-200 dark:ring-gray-700 shadow-md"
+                  src={String(pfp)}
+                  alt="Mahin"
+                  className="w-full h-full object-cover"
                 />
-                <AnimatePresence>
-                  {isHovered && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                      transition={{ duration: 0.12, type: "spring" }}
-                      className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-50 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-1 rounded-md text-sm font-medium shadow-sm border border-gray-200 dark:border-gray-700"
-                    >
-                      Hello there!
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
+
+                <div
+                  className={`absolute -top-10 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-md text-sm font-medium shadow-sm bg-white/90 dark:bg-slate-800 text-slate-900 dark:text-slate-100 transition-all duration-75 ${hovering ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}
+                >
+                  Hello there!
+                </div>
+              </div>
             </div>
-          </motion.div>
+          </section>
 
-          {/* Gallery */}
-          <motion.div variants={itemVariants} className="py-4">
+          <section className="py-4">
             <GalShow />
-          </motion.div>
+          </section>
 
-          {/* Skills */}
-          <motion.div variants={itemVariants} className="py-4">
+          <section className="py-4">
             <Skills />
-          </motion.div>
+          </section>
 
-          {/* Testimonials */}
-          <motion.div variants={itemVariants} className="py-4">
+          <section className="py-4">
             <TestimonialsSection speed={35} />
-          </motion.div>
+          </section>
 
-          {/* FAQ + CTA */}
-          <motion.div variants={itemVariants} className="py-4 space-y-6">
+          <section className="py-4 space-y-6">
             <FAQSection />
             <CTASection />
-          </motion.div>
-        </motion.div>
+          </section>
+        </div>
       </div>
 
       <Footer />
 
-      {/* Back-to-top button */}
-      <AnimatePresence>
-        {showTop && (
-          <motion.button
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 12 }}
-            transition={{ duration: 0.18 }}
-            onClick={scrollToTop}
-            aria-label="Scroll to top"
-            className="fixed right-6 bottom-6 z-50 rounded-full bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 p-3 shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
-          >
-            <FontAwesomeIcon icon={faArrowUp} />
-          </motion.button>
-        )}
-      </AnimatePresence>
+      <button
+        onClick={scrollToTop}
+        aria-label="Back to top"
+        className={`fixed right-6 bottom-6 z-50 rounded-full p-3 shadow-xl transition-all duration-75 ${showTop ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0 pointer-events-none"} bg-indigo-600 text-white`}
+        type="button"
+      >
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M5 15l7-7 7 7"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
     </div>
   );
 }
+
+// also provide default export so either import style works
+export default Home;

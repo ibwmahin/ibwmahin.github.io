@@ -17,29 +17,31 @@ export function About(): JSX.Element {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" },
+    },
   };
 
   const skills = [
-    "React",
-    "TypeScript",
-    "TailwindCSS",
-    "Framer Motion",
     "Next.js",
-    "Webflow",
-    "UI/UX Design",
+    "TypeScript",
+    "Optimization",
+    "Accessibility ",
+    "State Management",
     "Responsive Design",
   ];
 
   const stats = [
-    { value: "5+", label: "Years Experience" },
-    { value: "50+", label: "Projects Completed" },
-    { value: "20+", label: "Happy Clients" },
-    { value: "10", label: "Open Source Contributions" },
+    { value: "2+", label: "Years Experience" },
+    { value: "20+", label: "Projects Completed" },
+    { value: "6+", label: "Happy Clients" },
+    { value: "7", label: "Open Source Contributions" },
   ];
 
   return (
-    <div className="min-h-screen bg-background mt-5">
+    <div className="min-h-screen mt-5">
       <div className="max-w-2xl mx-auto px-6 pt-24 pb-16">
         <motion.div
           variants={containerVariants}
@@ -54,14 +56,14 @@ export function About(): JSX.Element {
 
           {/* Page Title */}
           <motion.div variants={itemVariants}>
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground">
+            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100">
               About Me
             </h1>
           </motion.div>
 
           {/* Introduction */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
               I’m Abdulla Al Mahin — a creative web developer from Bangladesh
               who builds fast, reliable, and meaningful digital experiences. I
               specialize in React, TypeScript, and modern web technologies, but
@@ -69,19 +71,19 @@ export function About(): JSX.Element {
               combine precision with creativity to deliver solutions that feel
               simple, powerful, and lasting.
             </p>
-            <div className="h-[1px] bg-gray-700/20"></div>
+            <div className="h-[1px] bg-slate-200 dark:bg-slate-700"></div>
           </motion.div>
 
           {/* Tech Marquee */}
           <TechMarquee />
-          <div className="h-[1px] bg-gray-700/20"></div>
+          <div className="h-[1px] bg-slate-200 dark:bg-slate-700"></div>
 
           {/* More About Me Section */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
               More About Me
             </h2>
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
+            <div className="space-y-4 text-slate-600 dark:text-slate-300 leading-relaxed">
               <p>
                 I believe in quality over quantity. Every project I take on is
                 approached with focus, care, and attention to detail — ensuring
@@ -98,13 +100,16 @@ export function About(): JSX.Element {
 
           {/* Skills Section */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">Skills</h2>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+              Skills
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {skills.map((skill) => (
                 <motion.div
                   key={skill}
                   whileHover={{ scale: 1.05 }}
-                  className="px-3 py-2 border border-border rounded-lg text-sm font-medium text-foreground bg-background/60 text-center shadow-sm"
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-medium text-slate-900 dark:text-slate-100 bg-slate-50 dark:bg-slate-800 text-center shadow-sm transition-all duration-300"
                 >
                   {skill}
                 </motion.div>
@@ -114,18 +119,21 @@ export function About(): JSX.Element {
 
           {/* Achievements / Stats Section */}
           <motion.div variants={itemVariants} className="space-y-4">
-            <h2 className="text-2xl font-bold text-foreground">Achievements</h2>
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+              Achievements
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
               {stats.map((stat) => (
                 <motion.div
                   key={stat.label}
                   whileHover={{ scale: 1.05 }}
-                  className="p-4 rounded-lg bg-background/50 border border-border shadow-sm"
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm transition-all duration-300"
                 >
-                  <div className="text-2xl font-bold text-foreground">
+                  <div className="text-2xl font-bold text-slate-900 dark:text-slate-100">
                     {stat.value}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-slate-600 dark:text-slate-300">
                     {stat.label}
                   </div>
                 </motion.div>

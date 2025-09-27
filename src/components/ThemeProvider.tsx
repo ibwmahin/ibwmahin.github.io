@@ -3,6 +3,7 @@
  *
  * Manages the application's theme state (light/dark mode) using React Context.
  * Provides theme toggle functionality and persists theme preference in localStorage.
+ * Respects system preference on initial load if no user preference is stored.
  */
 
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -33,26 +34,68 @@ export function ThemeProvider({
   defaultTheme = "light",
   storageKey = "portfolio-theme",
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme,
-  );
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Initialize theme on mount
   useEffect(() => {
-    const root = window.document.documentElement;
+    if (typeof window === "undefined") return;
 
+    const root = window.document.documentElement;
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const storedTheme = localStorage.getItem(storageKey) as Theme | null;
+    const systemTheme = mediaQuery.matches ? "dark" : "light";
+    const initialTheme = (storedTheme || systemTheme) as Theme;
+
+    // Apply initial theme to avoid flash
+    root.classList.remove("light", "dark");
+    root.classList.add(initialTheme);
+
+    setTheme(initialTheme);
+    setIsInitialized(true);
+  }, []);
+
+  // Apply theme changes
+  useEffect(() => {
+    if (!isInitialized || typeof window === "undefined") return;
+
+    const root = window.document.documentElement;
     root.classList.remove("light", "dark");
     root.classList.add(theme);
-  }, [theme]);
+  }, [theme, isInitialized]);
+
+  // Optional: Listen to system theme changes (only if no user preference stored)
+  useEffect(() => {
+    if (!isInitialized || typeof window === "undefined") return;
+
+    const storedTheme = localStorage.getItem(storageKey) as Theme | null;
+    if (storedTheme) return; // Don't follow system if user has set a preference
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const handleChange = (e: MediaQueryListEvent) => {
+      const newTheme = e.matches ? "dark" : "light";
+      setTheme(newTheme);
+      window.localStorage.setItem(storageKey, newTheme); // Persist as user preference now
+    };
+
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [isInitialized, storageKey]);
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+    setTheme: (newTheme: Theme) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem(storageKey, newTheme);
+      }
+      setTheme(newTheme);
     },
     toggleTheme: () => {
       const newTheme = theme === "light" ? "dark" : "light";
-      localStorage.setItem(storageKey, newTheme);
+      if (typeof window !== "undefined") {
+        localStorage.setItem(storageKey, newTheme);
+      }
       setTheme(newTheme);
     },
   };
@@ -76,4 +119,3 @@ export const useTheme = () => {
 
   return context;
 };
-

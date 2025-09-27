@@ -51,7 +51,7 @@ export function ExperienceTimeline(): JSX.Element {
         "Built high-performance, responsive websites using WordPress, Elementor, and modern animation libraries. Translated complex ideas into clean, interactive interfaces that elevated brand presence.",
     },
     {
-      date: "Jun 2020 - Dec 2021",
+      date: "Jun 2024 - Dec 2022",
       title: "Junior Web Developer",
       company: "Freelance",
       description:

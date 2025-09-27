@@ -19,6 +19,12 @@ type TestimonialsSectionProps = {
 const sampleTestimonials: Testimonial[] = [
   {
     quote:
+      "Mahin’s WordPress skills shine with fast, reliable, and clean work—delivered without hesitation, for the best experience.",
+    author: "Abdul Hakim",
+    role: "Founder & CEO",
+  },
+  {
+    quote:
       "Mahin's React expertise turned our vision into a fast, delightful product. They shipped clean code and polished animations.",
     author: "Sofia Rahman",
     role: "Product Manager",
@@ -102,7 +108,7 @@ export default function TestimonialsSection({
   return (
     <section className="relative w-full">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-2xl font-semibold">What people say</h3>
+        <h3 className="text-2xl font-semibold">Words That Matter</h3>
       </div>
 
       <div
