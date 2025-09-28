@@ -6,7 +6,7 @@ type FAQItem = {
   question: string;
   answer: string;
 };
-
+// test
 type FAQSectionProps = {
   faqs?: FAQItem[];
 };
