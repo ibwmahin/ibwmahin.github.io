@@ -1,14 +1,30 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en-US">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
     />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="referrer" content="origin-when-cross-origin" />
 
-    <!-- font awesome icon import -->
+    <!-- ======================================================
+         PERF: preconnect & dns-prefetch for third-party origins
+         ====================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
+
+    <!-- Fonts & icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -16,7 +32,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/brands.min.css"
@@ -24,26 +39,182 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <!-- font awesome icon import -->
-    <title>Mahin - Front End Developer</title>
+
+    <!-- ======================================================
+         Primary metadata
+         ====================================================== -->
+    <title>Abdulla Al Mahin — Front End & Product Developer</title>
     <meta
       name="description"
-      content="Product Developer from Bangladesh, ID. Currently Lead Developer at DigitalPathways. Available for freelance work."
+      content="Abdulla Al Mahin — Product & Front End NextJS Developer from Bangladesh. Lead Developer at DigitalPathways. Available for freelance, contract, and collaboration."
     />
-    <meta name="Abdulla" content="ibwmahin" />
+    <meta name="author" content="Abdulla Al Mahin" />
+    <meta
+      name="keywords"
+      content="Abdulla Al Mahin, Front End Developer, Product Developer, DigitalPathways, React, TypeScript, UI Engineer, Bangladesh"
+    />
+    <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://ibwmahin.github.io/" />
 
-    <meta property="og:title" content="" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="" />
-    <meta property="og:image" content="" />
+    <!-- ======================================================
+         High-quality Open Graph (multiple images + fallbacks)
+         - Replace /assets/og-image.png with your designed OG image (1200×630)
+         - GitHub avatar used as fallback
+         ====================================================== -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:site_name"
+      content="Abdulla Al Mahin — Front End Developer"
+    />
+    <meta
+      property="og:title"
+      content="Abdulla Al Mahin — Front End & Product Developer"
+    />
+    <meta
+      property="og:description"
+      content="Product & Front End Developer from Bangladesh. Lead Developer at DigitalPathways. Available for freelance and contract work."
+    />
+    <meta property="og:url" content="https://ibwmahin.github.io/" />
+    <!-- Primary OG image (host this in your repo: /assets/og-image.png) -->
+    <meta
+      property="og:image"
+      content="https://ibwmahin.github.io/assets/og-image.png"
+    />
+    <meta
+      property="og:image:secure_url"
+      content="https://ibwmahin.github.io/assets/og-image.png"
+    />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Abdulla Al Mahin — Front End & Product Developer"
+    />
+    <!-- Secondary/fallback OG images (GitHub avatar fallback) -->
+    <meta property="og:image" content="https://github.com/ibwmahin.png" />
+    <meta property="og:image:type" content="image/png" />
 
+    <!-- ======================================================
+         Twitter Cards
+         ====================================================== -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@ibwmahin" />
-    <meta name="twitter:image" content="" />
+    <meta name="twitter:creator" content="@ibwmahin" />
+    <meta
+      name="twitter:title"
+      content="Abdulla Al Mahin — Front End & Product Developer"
+    />
+    <meta
+      name="twitter:description"
+      content="Product & Front End Developer from Bangladesh. Lead Developer at DigitalPathways. Available for freelance and contract work."
+    />
+    <meta
+      name="twitter:image"
+      content="https://ibwmahin.github.io/assets/og-image.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Abdulla Al Mahin — Front End & Product Developer"
+    />
+
+    <!-- ======================================================
+         Progressive Web App / Apple integration
+         ====================================================== -->
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0b1220" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Mahin — Dev" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="msapplication-TileColor" content="#0b1220" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0b1220" />
+
+    <!-- Favicons (replace these files with your icons in the repo) -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+
+    <!-- ======================================================
+         Preload critical image assets (speeds up social preview generation)
+         - Preload your OG image if hosted locally
+         ====================================================== -->
+    <link rel="preload" as="image" href="/assets/og-image.png" />
+
+    <!-- ======================================================
+         Structured Data (JSON-LD) — Person + WebSite
+         ====================================================== -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://ibwmahin.github.io/#person",
+            "name": "Abdulla Al Mahin",
+            "url": "https://ibwmahin.github.io/",
+            "sameAs": [
+              "https://www.linkedin.com/in/ibwmahin/",
+              "https://github.com/ibwmahin"
+            ],
+            "jobTitle": "Lead Developer",
+            "worksFor": {
+              "@type": "Organization",
+              "name": "DigitalPathways"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "BD"
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://ibwmahin.github.io/#website",
+            "url": "https://ibwmahin.github.io/",
+            "name": "Mahin — Front End Developer",
+            "publisher": {
+              "@id": "https://ibwmahin.github.io/#person"
+            },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://ibwmahin.github.io/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- ======================================================
+         Accessibility & UX: declare supported color schemes
+         ====================================================== -->
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- ======================================================
+         Optional verification tags (uncomment and replace when needed)
+         <meta name="google-site-verification" content="..." />
+         <meta name="yandex-verification" content="..." />
+         ====================================================== -->
+
+    <!-- ======================================================
+         Small note: keep the <title> & primary meta up to date for each page.
+         If you implement multiple routes/pages, use a dynamic meta solution:
+          - Vite/CRA: react-helmet-async
+          - Next.js: next/head or app metadata
+         ====================================================== -->
   </head>
 
   <body>
     <div id="root"></div>
+
+    <!-- Your entrypoint -->
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Optional: lightweight inline JSON for client bootstrapping (if required) -->
+    <!-- <script id="site-metadata" type="application/json">
+      {"name":"Abdulla Al Mahin","url":"https://ibwmahin.github.io/"}
+    </script> -->
   </body>
 </html>
