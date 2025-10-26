@@ -114,9 +114,9 @@ export function Home(): JSX.Element {
               </div>
 
               <p className="text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed mt-1 max-w-prose">
-                Web developer from Bangladesh. Creating elegant, fast, and
-                accessible digital experiences with a focus on sustainability
-                and clarity.
+                Web developer from Bangladesh. <br /> Work With Web Developer,
+                Next.js, React & WordPress, I Help Small & Mid Businesses Grow
+                Their Brand Online.
               </p>
 
               <div className="flex flex-wrap gap-3 mt-4">
