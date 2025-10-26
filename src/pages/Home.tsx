@@ -101,13 +101,14 @@ export function Home(): JSX.Element {
           {/* Hero */}
           <section className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
             <div className="sm:col-span-7 space-y-4">
-              <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-300  inline-block">
-                I'm Mahin{" "}
-                <span className="ml-2 inline-block" aria-hidden>
+              <div className="flex items-center">
+                <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-indigo-600 dark:from-white dark:to-indigo-300  inline-block">
+                  I'm Mahin
+                </h1>
+                <div className="ml-2 inline-block text-4xl" aria-hidden>
                   👋
-                </span>
-              </h1>
-
+                </div>
+              </div>
               <div className="text-sm text-slate-600 dark:text-slate-300 font-medium italic">
                 HE/HIM
               </div>
@@ -184,7 +185,11 @@ export function Home(): JSX.Element {
                 />
 
                 <div
-                  className={`absolute -top-10 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-md text-sm font-medium shadow-sm bg-white/90 dark:bg-slate-800 text-slate-900 dark:text-slate-100 transition-all duration-75 ${hovering ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2 pointer-events-none"}`}
+                  className={`absolute -top-10 left-1/2 transform -translate-x-1/2 px-3 py-1 rounded-md text-sm font-medium shadow-sm bg-white/90 dark:bg-slate-800 text-slate-900 dark:text-slate-100 transition-all duration-75 ${
+                    hovering
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
                 >
                   Hello there!
                 </div>
@@ -216,7 +221,11 @@ export function Home(): JSX.Element {
       <button
         onClick={scrollToTop}
         aria-label="Back to top"
-        className={`fixed right-6 bottom-6 z-50 rounded-full p-3 shadow-xl transition-all duration-75 ${showTop ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0 pointer-events-none"} bg-indigo-600 text-white`}
+        className={`fixed right-6 bottom-6 z-50 rounded-full p-3 shadow-xl transition-all duration-75 ${
+          showTop
+            ? "translate-y-0 opacity-100"
+            : "translate-y-6 opacity-0 pointer-events-none"
+        } bg-indigo-600 text-white`}
         type="button"
       >
         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" aria-hidden>
